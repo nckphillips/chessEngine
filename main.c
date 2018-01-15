@@ -4,5 +4,6 @@
 int main(void){
 	boardInit();
 	printf("Done");
+	boardDestroy();
 	return 0;
 }

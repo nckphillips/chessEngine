@@ -9,3 +9,8 @@ void boardDestroy()
 {
 
 }
+
+void update(char * move)
+{
+
+}
