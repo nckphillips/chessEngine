@@ -1,5 +1,5 @@
 # chessEngine
 Chess engine written in C for 181AB
 ## Interface
-Our engine communicates with a gui using the protocol UCI which is currently the most popular. Specifications were taken from [here](http://wbec-ridderkerk.nl/html/UCIProtocol.html).
+Our engine communicates with a gui using the Xboard protocol. Specifications were taken from [here](https://www.gnu.org/software/xboard/engine-intf.html#8).
 Bitboards are used for internal representation.
