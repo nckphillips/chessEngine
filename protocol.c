@@ -48,13 +48,13 @@ int proto_exec(char *cmd)
   if (!strcmp(cmd, "xboard")) {
     printf("\n");
   } else if (!strcmp(cmd, "new")) {
-
+    return 1;
   } else if (!strcmp(cmd, "force")) {
-
+    return 2;
   } else if (!strcmp(cmd,"quit")) {
-
+    return 3;
   } else if (!strcmp(cmd, "go")) {
-
+    return 4;
   }
   return 0;
 }
