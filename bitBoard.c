@@ -1,8 +1,9 @@
+#include <stdint.h>
 #include "bitBoard.h"
 
-void boardInit()
+Bitboard *boardInit()
 {
-
+  return 0;
 }
 
 void boardDestroy()
