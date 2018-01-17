@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "uci.h"
+#include "protocol.h"
 
 void move_next_cmd(char *cmd,int i) {
   int j = i+1;

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bitBoard.h"
-#include "uci.h"
+#include "protocol.h"
 
 static Bitboard *boards;//the array of board representations
 
@@ -23,8 +23,8 @@ void play(void)
 		cmd[0] = '\n';
 		while(cmd[0] != '\0') {
 			fgets(cmd, MAX_CMD_LEN, stdin);
-			uci_clean(cmd);
-			//action = uci_exec(cmd);//TODO: im thinking uci exec can return here if this is a go command or something.
+			proto_clean(cmd);
+			//action = proto_exec(cmd);//TODO: im thinking uci exec can return here if this is a go command or something.
 			printf("%s\n", cmd);
 		}
 		free(cmd);

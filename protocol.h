@@ -3,7 +3,7 @@
 
 #define MAX_CMD_LEN 256 //maximum length of one line of input to engine
 
-void uci_clean(char *);
-int uci_exec(char *);
+void proto_clean(char *);
+int proto_exec(char *);
 
 #endif
