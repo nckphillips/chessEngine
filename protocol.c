@@ -22,7 +22,7 @@ void move_next_cmd(char *cmd,int i) {
 }
 
 /*The following function receives a string and cleans all whitespace and unrecognized commands*/
-void uci_clean(char *cmd)
+void proto_clean(char *cmd)
 {
   /*Remove whitespace and replace with delimiters (+) until null char is reached*/
   for(int i = 0; i < MAX_CMD_LEN && cmd[i] != '\0'; i++) {
@@ -43,15 +43,13 @@ void uci_clean(char *cmd)
  ******************************************************************
  *NOTE::::if the command sent is something that requires the engine to think,
  *return a unique value. All other commands should be performed here*/
-int uci_exec(char *cmd)
+int proto_exec(char *cmd)
 {
-  if (!strcmp(cmd, "uci")) {
+  if (!strcmp(cmd, "xboard")) {
+    printf("\n");
+  } else if (!strcmp(cmd, "new")) {
 
-  } else if (!strcmp(cmd,"isready")) {
-
-  } else if (!strcmp(cmd, "ucinewgame")) {
-
-  } else if (!strcmp(cmd, "stop")) {
+  } else if (!strcmp(cmd, "force")) {
 
   } else if (!strcmp(cmd,"quit")) {
 
