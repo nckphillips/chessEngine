@@ -21,7 +21,7 @@ void play(void)
 																												// command
 	  //unsigned int action = 0;//TODO: will be assigned a value depending on action required from engine
 		cmd[0] = '\n';
-		while(cmd[0] != EOF) {
+		while(cmd[0] != '\0') {
 			fgets(cmd, MAX_CMD_LEN, stdin);
 			uci_clean(cmd);
 			//action = uci_exec(cmd);//TODO: im thinking uci exec can return here if this is a go command or something.
