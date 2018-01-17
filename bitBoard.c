@@ -1,14 +1,16 @@
 #include <stdint.h>
+#include <stdlib.h>
 #include "bitBoard.h"
 
-Bitboard *boardInit()
+Bitboard **boardInit()
 {
-  return 0;
+  Bitboard **b = (Bitboard **)malloc(sizeof(Bitboard));
+  return b;
 }
 
-void boardDestroy()
+void boardDestroy(Bitboard** b)
 {
-
+  free(b);
 }
 
 void update(char * move)

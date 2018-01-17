@@ -4,7 +4,7 @@
 #include "bitBoard.h"
 #include "protocol.h"
 
-static Bitboard *boards;//the array of board representations
+static Bitboard **boards;//the array of board representations
 
 void play(void);//main control loop for engine
 

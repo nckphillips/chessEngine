@@ -9,10 +9,10 @@ typedef uint64_t Bitboard;
 
 /*Used to initialize a board at the start of a game. Return a reference to the
  * array of all newly initialized boards.*/
-Bitboard* boardInit();
+Bitboard** boardInit();
 
 /*Used to destroy a board at the end of a game or on exit.*/
-void boardDestroy();
+void boardDestroy(Bitboard **b);
 
 /*Called after move is made to update the boards*/
 void update(char * move);
