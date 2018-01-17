@@ -4,7 +4,7 @@
 
 Bitboard **boardInit()
 {
-  Bitboard **b = (Bitboard **)malloc(sizeof(Bitboard));
+  Bitboard **b = (Bitboard **)malloc(sizeof(Bitboard)*33*NUM_BOARDS_PP);
   return b;
 }
 
