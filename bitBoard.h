@@ -17,4 +17,7 @@ void boardDestroy(Bitboard **b);
 
 /*Called after move is made to update the boards*/
 void update(char * move);
+
+/*print a bitboard to the terminal*/
+void bitBoard_print(struct Bitboard* b);
 #endif
