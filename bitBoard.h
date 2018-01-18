@@ -45,7 +45,11 @@ struct Bitboard{
 //void boardDestroy(Bitboard **b);
 
 /*Called after move is made to update the boards*/
+
 //void update(char * move);
 
+
+=======
+void update(char * move);
 
 #endif

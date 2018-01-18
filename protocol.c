@@ -37,24 +37,26 @@ void proto_clean(char *cmd)
   }
 }
 
-/*The following receives a command and executes the command, and returns a value
- * depending on whether the engine needs to perform an action. This function
- * ignores unrecognized commands per the UCI specs.
+/*The following function just receives a command and returns a value
+ * that will tell the engine what to execute.
  ******************************************************************
- *NOTE::::if the command sent is something that requires the engine to think,
- *return a unique value. All other commands should be performed here*/
+*/
 int proto_exec(char *cmd)
 {
   if (!strcmp(cmd, "xboard")) {
     printf("\n");
   } else if (!strcmp(cmd, "new")) {
-    return 1;
+    return NEW;
   } else if (!strcmp(cmd, "force")) {
-    return 2;
+    return FORCE;
   } else if (!strcmp(cmd,"quit")) {
-    return 3;
+    return QUIT;
   } else if (!strcmp(cmd, "go")) {
-    return 4;
+    return GO;
+  } else if (!strcmp(cmd, "setboard")) {
+    return SETBOARD;
+  } else if (!strcmp(cmd, "move")) {
+    return MOVE;
   }
-  return 0;
+  return NONE;
 }
