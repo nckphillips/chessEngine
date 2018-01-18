@@ -30,8 +30,8 @@ void play(void)
 				case FORCE: /*do whatever force requires*/;
 				case QUIT: /*quit*/;
 				case GO: /*start thinking and make move when done*/;
-				case SETBOARD:;
-				case MOVE:;
+				case SETBOARD:/*receive a fen string and update boards*/;
+				case MOVE:/*receive an algebraic move and update internal boards.*/;
 			}
 			printf("%s\n", cmd);
 		}
