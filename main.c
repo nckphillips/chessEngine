@@ -25,6 +25,14 @@ void play(void)
 			fgets(cmd, MAX_CMD_LEN, stdin);
 			proto_clean(cmd);
 			action = proto_exec(cmd);
+			switch (action) {
+				case NEW:
+				case FORCE:
+				case QUIT:
+				case GO:
+				case 5:
+				case 6:
+			}
 			printf("%s\n", cmd);
 		}
 		free(cmd);
