@@ -26,12 +26,12 @@ void play(void)
 			proto_clean(cmd);
 			action = proto_exec(cmd);
 			switch (action) {
-				case NEW:;
-				case FORCE:;
-				case QUIT:;
-				case GO:;
-				case 5:;
-				case 6:;
+				case NEW: /*newgame()*/;
+				case FORCE: /*do whatever force requires*/;
+				case QUIT: /*quit*/;
+				case GO: /*start thinking and make move when done*/;
+				case SETBOARD:;
+				case MOVE:;
 			}
 			printf("%s\n", cmd);
 		}
