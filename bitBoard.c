@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "bitBoard.h"
 
+
+
+//Commented out Array representation
+/*
 Bitboard **boardInit()
 {
   Bitboard **b = (Bitboard **)malloc(sizeof(Bitboard)*33*NUM_BOARDS_PP);
@@ -17,3 +21,4 @@ void update(char * move)
 {
 
 }
+*/
