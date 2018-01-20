@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "bitBoard.h"
 
-
+uint64_t get_collisions(uint64_t moves, Bitboard* board);
 
 void bitBoard_print(uint64_t b, int row){
   if (row == 8) {
@@ -41,7 +41,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
     //check which pawns have moved and fix the board
 
     //now check for collisions with other pieces
-    moves = (~allPieces(board)) & moves;
+    moves = get_collisions(moves, board);
     //now calculate attacks
     bitBoard_print(moves,0);
     break;
@@ -91,4 +91,9 @@ uint64_t allBlack(Bitboard *b)
 uint64_t allPieces(Bitboard *b)
 {
    return (allWhite(b) | allBlack(b));
+}
+
+uint64_t get_collisions(uint64_t moves, Bitboard* board)
+{
+  return (~allPieces(board)) & moves;
 }
