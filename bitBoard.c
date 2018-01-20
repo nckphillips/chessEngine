@@ -41,7 +41,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
     //check which pawns have moved and fix the board
 
     //now check for collisions with other pieces
-    moves = ~allPieces(board) & moves;
+    moves = (~allPieces(board)) & moves;
     //now calculate attacks
     bitBoard_print(moves,0);
     break;
@@ -86,9 +86,9 @@ uint64_t allWhite(Bitboard *b)
 }
 uint64_t allBlack(Bitboard *b)
 {
-  b->bPawns | b->bRooks | b->bKnights | b->bBishops | b->bQueen | b->bKing;
+  return b->bPawns | b->bRooks | b->bKnights | b->bBishops | b->bQueen | b->bKing;
 }
 uint64_t allPieces(Bitboard *b)
 {
-   return allWhite(b) | allBlack(b);
+   return (allWhite(b) | allBlack(b));
 }
