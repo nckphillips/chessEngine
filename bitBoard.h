@@ -34,10 +34,14 @@ typedef struct Bitboard{
 
 void bitBoard_print(uint64_t b, int row);
 
-void getLegalMoves(Bitboard *board, unsigned int piece_type);
+uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type);
 
 void update(char * move);
 
 void init(struct Bitboard* b);
+
+uint64_t allWhite(Bitboard *b);
+uint64_t allBlack(Bitboard *b);
+uint64_t allPieces(Bitboard *b);
 
 #endif

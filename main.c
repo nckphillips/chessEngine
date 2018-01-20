@@ -4,26 +4,30 @@
 #include "bitBoard.h"
 #include "protocol.h"
 
-//static Bitboard **boards; //the array of board representations
+static uint64_t squares[64];//array of masks
 
-void play(void);//main control loop for engine
+void play(Bitboard *b);//main control loop for engine
 
 int main(void){
   //boards = boardInit();
+ uint64_t temp = 1;
+  for (int i = 0; i < 64; i++) {
+    squares[i] = temp;
+    temp <<= 1;
+  }
 
   Bitboard  b;
   init(&b);
 
-  uint64_t allWhite = b.wPawns | b.wRooks | b.wKnights | b.wBishops | b.wQueen | b.wKing;
-  uint64_t allBlack = b.bPawns | b.bRooks | b.bKnights | b.bBishops | b.bQueen | b.bKing;
-  uint64_t allPieces = allWhite | allBlack;
-  // play();
-  bitBoard_print(allPieces, 0);
+  ////////////////////TODO This is modifying the PAWN board for testing????///////////////
+  b.bPawns = b.bPawns - squares[54] + squares[46];
+  bitBoard_print(b.bPawns,0);
+  play(&b);
   //boardDestroy(boards);
   return 0;
 }
 
-void play(void)
+void play(Bitboard * b)
 {
 
 		char * cmd = (char*)malloc(sizeof(char)*MAX_CMD_LEN);//allocate space for
@@ -41,9 +45,18 @@ void play(void)
 				case GO: /*start thinking and make move when done*/;
 				case SETBOARD:/*receive a fen string and update boards*/;
 				case MOVE:/*receive an algebraic move and update internal boards.*/;
+        default:
+        if(makeMove(cmd, b)) printf("Error\n");
+        break;
 			}
 			printf("%s\n", cmd);
 		}
 		free(cmd);
 
+}
+
+int makeMove(char * cmd, Bitboard * b)
+{
+  getLegalMoves(b, BPAWN);
+  return 0;
 }

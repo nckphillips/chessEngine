@@ -32,9 +32,23 @@ void bitBoard_print(uint64_t b, int row){
 } //Function that prints the board
 
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
-void getLegalMoves(Bitboard *board, unsigned int piece_type)
+uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 {
+  uint64_t moves;
+  switch (piece_type){
+    case BPAWN:
+    moves = board->bPawns >> 8 | board->bPawns >> 16;
+    //check which pawns have moved and fix the board
 
+    //now check for collisions with other pieces
+    moves = board
+    //now calculate attacks
+    bitBoard_print(moves,0);
+    break;
+    default:
+    break;
+  }
+  return moves;
 }
 
 /*updates the bitboard upon move*/
@@ -64,3 +78,17 @@ void init(struct Bitboard* b){
   b->bQueen = 0x0800000000000000;
   b->bKing = 0x1000000000000000;
 } //Initialize bitboard
+
+/*Returns a bitboard of all pieces*/
+uint64_t allWhite(Bitboard *b)
+{
+   return b.wPawns | b.wRooks | b.wKnights | b.wBishops | b.wQueen | b.wKing;
+}
+uint64_t allBlack(Bitboard *b)
+{
+  b.bPawns | b.bRooks | b.bKnights | b.bBishops | b.bQueen | b.bKing;
+}
+uint64_t allPieces(Bitboard *b)
+{
+   return allWhite(b) | allBlack(b);
+}
