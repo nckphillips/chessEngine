@@ -5,6 +5,8 @@
 
 #define NUM_BOARDS_PP 3 //number of boards per piece
 
+enum pieces {BROOK, BBISHOP, BKNIGHT, BQUEEN, BKING, BPAWN,
+            WROOK, WBISHOP, WKNIGHT, WQUEEN, WKING, WPAWN };
 
 typedef struct Bitboard{
 

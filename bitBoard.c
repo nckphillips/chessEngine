@@ -31,10 +31,13 @@ void bitBoard_print(uint64_t b, int row){
     }
 } //Function that prints the board
 
-void getLegalMoves(Bitboard *board, unsigned int piece_type){
+/*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
+void getLegalMoves(Bitboard *board, unsigned int piece_type)
+{
 
 }
 
+/*updates the bitboard upon move*/
 void update(char * move)
 {
 
