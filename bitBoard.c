@@ -31,8 +31,8 @@ void bitBoard_print(uint64_t b, int row){
     }
 } //Function that prints the board
 
-void getLegalMoves(bitBoard *board, unsigned int piece_type){
-  
+void getLegalMoves(Bitboard *board, unsigned int piece_type){
+
 }
 
 void update(char * move)

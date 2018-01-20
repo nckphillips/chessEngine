@@ -6,7 +6,7 @@
 #define NUM_BOARDS_PP 3 //number of boards per piece
 
 
-struct Bitboard{
+typedef struct Bitboard{
 
   uint64_t wPawns;
   uint64_t wRooks;
@@ -28,11 +28,11 @@ struct Bitboard{
 
   //OR the same color type pieces to get all same color type pieces on the board
 
-}; //Bitboard Structure
+}Bitboard; //Bitboard Structure
 
 void bitBoard_print(uint64_t b, int row);
 
-void getLegalMoves(bitBoard *board, unsigned int piece_type);
+void getLegalMoves(Bitboard *board, unsigned int piece_type);
 
 void update(char * move);
 

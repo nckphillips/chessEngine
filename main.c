@@ -11,7 +11,7 @@ void play(void);//main control loop for engine
 int main(void){
   //boards = boardInit();
 
-  struct Bitboard  b;
+  Bitboard  b;
   init(&b);
 
   uint64_t allWhite = b.wPawns | b.wRooks | b.wKnights | b.wBishops | b.wQueen | b.wKing;
