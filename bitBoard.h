@@ -30,26 +30,12 @@ struct Bitboard{
 
 }; //Bitboard Structure
 
+void bitBoard_print(uint64_t b, int row);
 
+void getLegalMoves(bitBoard *board, unsigned int piece_type);
 
-
-
-//typedef uint64_t Bitboard;
-
-/*Used to initialize a board at the start of a game. Return a reference to the
- * array of all newly initialized boards. Boards [1-16][] are white [17-32][]
- * are black. Board[0][] is the board containing positions of all pieces.*/
-//Bitboard** boardInit();
-
-/*Used to destroy all boards at the end of a game or on exit.*/
-//void boardDestroy(Bitboard **b);
-
-/*Called after move is made to update the boards*/
-
-//void update(char * move);
-
-
-=======
 void update(char * move);
+
+void init(struct Bitboard* b);
 
 #endif
