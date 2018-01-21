@@ -22,7 +22,7 @@ int main(void){
 	////////////////////TODO This is modifying the PAWN board for testing????///////////////
 	b.bPawns = b.bPawns - squares[54] + squares[38];
 	////modify white for testing
-	b.wPawns = b.wPawns - squares[13] + squares[29];
+	b.wPawns = b.wPawns - squares[13] + squares[45];
 	bitBoard_print(b.bPawns,0);
 	play(&b);
 	//boardDestroy(boards);

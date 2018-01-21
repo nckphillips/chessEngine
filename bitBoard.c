@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "bitBoard.h"
 
-uint64_t get_collisions(uint64_t moves, Bitboard* board);
+uint64_t get_collisions(Bitboard* board);
 uint64_t find_moved_black_pawns(uint64_t bPawns);
 uint64_t black_pawn_attacks(Bitboard* board);
 
@@ -39,11 +39,14 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 	uint64_t moves;
 	switch (piece_type){
 		case BPAWN:
-		moves = board->bPawns >> 8 | board->bPawns >> 16;
+		//moves is initialized to one square in front or'ed with two squares
+		//as long as the second square is not being blocked.
+		moves = board->bPawns >> 8 | (board->bPawns >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
 		moves = moves - (find_moved_black_pawns(board->bPawns) >> 16);
 		//now check for collisions with other pieces
-		moves = get_collisions(moves, board);
+		moves = moves & get_collisions(board);
+		
 		//now calculate attacks
 		moves += black_pawn_attacks(board);
 		bitBoard_print(moves,0);
@@ -102,9 +105,9 @@ uint64_t find_moved_black_pawns(uint64_t bPawns)
 										squares[53] | squares[54] | squares[55]);
 }
 
-uint64_t get_collisions(uint64_t moves, Bitboard* board)
+uint64_t get_collisions(Bitboard* board)
 {
-	return (~allPieces(board)) & moves;
+	return (~allPieces(board));
 }
 
 uint64_t black_pawn_attacks(Bitboard* b)
