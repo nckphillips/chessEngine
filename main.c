@@ -4,7 +4,7 @@
 #include "bitBoard.h"
 #include "protocol.h"
 
-static uint64_t squares[64];//array of masks
+
 
 void play(Bitboard *b);//main control loop for engine
 

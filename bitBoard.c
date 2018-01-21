@@ -3,6 +3,7 @@
 #include "bitBoard.h"
 
 uint64_t get_collisions(uint64_t moves, Bitboard* board);
+uint64_t find_moved_black_pawns(uint64_t bPawns);
 
 void bitBoard_print(uint64_t b, int row){
   if (row == 8) {
@@ -39,7 +40,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
     case BPAWN:
     moves = board->bPawns >> 8 | board->bPawns >> 16;
     //check which pawns have moved and fix the board
-
+    moves = moves - (find_moved_black_pawns(board->bPawns) >> 16);
     //now check for collisions with other pieces
     moves = get_collisions(moves, board);
     //now calculate attacks
@@ -91,6 +92,12 @@ uint64_t allBlack(Bitboard *b)
 uint64_t allPieces(Bitboard *b)
 {
    return (allWhite(b) | allBlack(b));
+}
+
+uint64_t find_moved_black_pawns(uint64_t bPawns)
+{
+  return bPawns & ~(squares[48] | squares[49] | squares[50] | squares[51] | squares[52] | \
+                    squares[53] | squares[54] | squares[55]);
 }
 
 uint64_t get_collisions(uint64_t moves, Bitboard* board)

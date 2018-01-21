@@ -8,6 +8,8 @@
 enum pieces {BROOK, BBISHOP, BKNIGHT, BQUEEN, BKING, BPAWN,
             WROOK, WBISHOP, WKNIGHT, WQUEEN, WKING, WPAWN };
 
+uint64_t squares[64];//array of masks
+
 typedef struct Bitboard{
 
   uint64_t wPawns;
