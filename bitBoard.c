@@ -45,7 +45,8 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
-		//as long as the second square is not being blocked.
+		//as long as the second square is not being blocked be a white
+		//piece residing on the first square.
 		moves = board->bPawns >> 8 | (board->bPawns >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
 		moves = moves - (find_moved_black_pawns(board->bPawns) >> 16);
@@ -58,12 +59,10 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case WPAWN:
-		//moves is initialized to one square in front or'ed with two squares
-		//as long as the second square is not being blocked.
+		//philosphy here is same as black pawn but for the opposite side
+		//of the board.
 		moves = board->wPawns << 8 | (board->wPawns << 16 & ~allPieces(board)<<8);
-		//check which pawns have moved and fix the board
 		moves = moves - (find_moved_white_pawns(board->wPawns) << 16);
-		//now check for collisions with other pieces
 		moves = moves & get_collisions(board);
 
 		//now calculate attacks
