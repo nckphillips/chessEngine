@@ -1,3 +1,6 @@
+/*This file holds all the informationg pertaining to the bitboard representaion
+ *and move calculations (legal moves, positions, etc)*/
+
 #ifndef _BIT_BOARD_H
 #define _BIT_BOARD_H
 

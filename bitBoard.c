@@ -1,3 +1,6 @@
+/*This file holds all the informationg pertaining to the bitboard representaion
+ *and move calculations (legal moves, positions, etc)*/
+
 #include <stdint.h>
 #include <stdlib.h>
 #include "bitBoard.h"
