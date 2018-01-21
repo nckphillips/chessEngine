@@ -4,7 +4,9 @@
 
 uint64_t get_collisions(Bitboard* board);
 uint64_t find_moved_black_pawns(uint64_t bPawns);
-uint64_t black_pawn_attacks(Bitboard* board);
+uint64_t black_pawn_attacks(Bitboard* b);
+uint64_t find_moved_white_pawns(uint64_t wPawns);
+uint64_t white_pawn_attacks(Bitboard* b);
 
 void bitBoard_print(uint64_t b, int row){
 	if (row == 8) {
@@ -46,9 +48,23 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		moves = moves - (find_moved_black_pawns(board->bPawns) >> 16);
 		//now check for collisions with other pieces
 		moves = moves & get_collisions(board);
-		
+
 		//now calculate attacks
 		moves += black_pawn_attacks(board);
+		bitBoard_print(moves,0);
+		break;
+
+		case WPAWN:
+		//moves is initialized to one square in front or'ed with two squares
+		//as long as the second square is not being blocked.
+		moves = board->wPawns << 8 | (board->wPawns << 16 & ~allPieces(board)<<8);
+		//check which pawns have moved and fix the board
+		moves = moves - (find_moved_white_pawns(board->wPawns) << 16);
+		//now check for collisions with other pieces
+		moves = moves & get_collisions(board);
+
+		//now calculate attacks
+		moves += white_pawn_attacks(board);
 		bitBoard_print(moves,0);
 		break;
 		default:
@@ -116,5 +132,18 @@ uint64_t black_pawn_attacks(Bitboard* b)
 	uint64_t diag = ((b->bPawns >> 7) & (~b->bPawns)) | ((b->bPawns >> 9) & (~b->bPawns));
 	attacks = diag & allWhite(b);
 
+	return attacks;
+}
+
+uint64_t find_moved_white_pawns(uint64_t wPawns)
+{
+	return wPawns & ~(squares[8] | squares[9] | squares[10] | squares[11] | squares[12] | \
+		          squares[13] | squares[14] | squares[15]);
+}
+uint64_t white_pawn_attacks(Bitboard* b)
+{
+	uint64_t attacks = 0;
+	uint64_t diag = ((b->wPawns << 7) & (~b->wPawns)) | ((b->wPawns << 9) & (~b->wPawns));
+	attacks = diag & allBlack(b);
 	return attacks;
 }
