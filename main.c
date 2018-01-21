@@ -59,6 +59,8 @@ void play(Bitboard * b)
 
 int makeMove(char * cmd, Bitboard * b)
 {
-	getLegalMoves(b, WPAWN);
+	uint64_t legal_moves = 0;
+	legal_moves = getLegalMoves(b, BROOK);
+	bitBoard_print(legal_moves,0);
 	return 0;
 }
