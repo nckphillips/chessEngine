@@ -120,10 +120,12 @@ uint64_t allWhite(Bitboard *b)
 {
 	 return b->wPawns | b->wRooks | b->wKnights | b->wBishops | b->wQueen | b->wKing;
 }
+/*Returns a bitboard of all black pieces*/
 uint64_t allBlack(Bitboard *b)
 {
 	return b->bPawns | b->bRooks | b->bKnights | b->bBishops | b->bQueen | b->bKing;
 }
+/*Returns a bitboard of all pieces*/
 uint64_t allPieces(Bitboard *b)
 {
 	 return (allWhite(b) | allBlack(b));
