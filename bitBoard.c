@@ -107,10 +107,11 @@ uint64_t get_collisions(uint64_t moves, Bitboard* board)
 	return (~allPieces(board)) & moves;
 }
 
-uint64_t black_pawn_attacks(Bitboard* board)
+uint64_t black_pawn_attacks(Bitboard* b)
 {
 	uint64_t attacks = 0;
-
+	uint64_t diag = ((b->bPawns >> 7) & (~b->bPawns)) | ((b->bPawns >> 9) & (~b->bPawns));
+	attacks = diag & allWhite(b);
 
 	return attacks;
 }
