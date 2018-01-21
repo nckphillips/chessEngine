@@ -3,12 +3,10 @@
 
 #include <stdint.h>
 
-#define NUM_BOARDS_PP 3 //number of boards per piece
-
 enum pieces {BROOK, BBISHOP, BKNIGHT, BQUEEN, BKING, BPAWN,
-						WROOK, WBISHOP, WKNIGHT, WQUEEN, WKING, WPAWN };
+	     WROOK, WBISHOP, WKNIGHT, WQUEEN, WKING, WPAWN };
 
-uint64_t squares[64];//array of masks
+uint64_t squares[64];//array of masks. example: e5 is squares[36] which corresponds to 0x0000001000000000
 
 typedef struct Bitboard{
 
@@ -34,16 +32,19 @@ typedef struct Bitboard{
 
 }Bitboard; //Bitboard Structure
 
+/*print a bitboard. starting with row*/
 void bitBoard_print(uint64_t b, int row);
 
+/*get all the legal moves on the board for a piece type*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type);
 
 void update(char * move);
 
+/*set up the bitboard structure*/
 void init(struct Bitboard* b);
 
-uint64_t allWhite(Bitboard *b);
-uint64_t allBlack(Bitboard *b);
-uint64_t allPieces(Bitboard *b);
+uint64_t allWhite(Bitboard *b);//returns bitboard of all white pieces
+uint64_t allBlack(Bitboard *b);//returns bitboard of all black pieces
+uint64_t allPieces(Bitboard *b);//returns bitboard of all pieces
 
 #endif
