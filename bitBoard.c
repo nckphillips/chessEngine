@@ -192,6 +192,7 @@ uint64_t find_moved_white_pawns(uint64_t wPawns)
 uint64_t white_pawn_attacks(Bitboard* b)
 {
 	uint64_t attacks = 0;
+	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
 	uint64_t diag = ((b->wPawns << 7) & (~b->wPawns)) | ((b->wPawns << 9) & (~b->wPawns));
 	attacks = diag & allBlack(b);
 	return attacks;
@@ -206,12 +207,14 @@ uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
 	r9 = piece_board;
 	l7 = piece_board;
 	l9 = piece_board;
-	for(int i = 1; i < 8; i++) {
+	for(int i = 0; i < 8; i++) {
 		r7 >>= 7;
 		//r9 >>= 9;
 		//l7 <<= 7;
-	//	l9 <<= 9;
-		diag |= r7 ;//| r9 | l7 | l9;
+		//l9 <<= 9;
+		diag |= r7;//| r9 | l7 | l9;
+		r7 &= ~squares[47] & ~squares[63] & ~squares[55] & ~squares[39] &\
+		      ~squares[31] & ~squares[23] & ~squares[15] & ~squares[7];
 	}
 
 	return diag;

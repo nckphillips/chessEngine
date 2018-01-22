@@ -13,4 +13,4 @@ main.o: main.c
 	$(CC) -c $(DEBUG) $(CFLAGS) $<
 
 clean:
-	rm *.o
+	rm *.out

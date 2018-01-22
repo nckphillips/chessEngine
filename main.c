@@ -24,6 +24,7 @@ int main(void){
 	b.bPawns = b.bPawns - squares[55] + squares[38];
 	b.bPawns = b.bPawns - squares[54] + squares[37];
 	b.bPawns = b.bPawns - squares[53] + squares[36];
+	b.bBishops = b.bBishops -squares[61] + squares[35];
 	////modify white for testing
 	b.wPawns = b.wPawns - squares[13] + squares[45];
 	bitBoard_print(b.bPawns,0);
