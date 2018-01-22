@@ -92,9 +92,16 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		case WROOK:
 		//initialize move to all squares along the same file or rank as
 		//the rook
-		moves = same_file(board, WROOK) | same_rank(board, WROOK);
-		//TODO:need to see if a piece is in front of the rook and disable those squares.
-		//TODO:leave the squares if there is a clear path to a black piece for an attack
+		moves = same_file(board, BROOK) | same_rank(board, BROOK);
+		moves &= ~(allWhite(board) >> 8);//rook can only move to attack black, not past
+		moves &= ~allBlack(board);//white rook cannot move to square occupied by white.
+		/*remove squares past pieces*/
+		temp = moves | board->wRooks;
+		for (int i = 0; i < 8; i++) {
+			temp <<= 8;
+			temp |= board->wRooks;
+			moves &= temp;
+		}
 		break;
 
 		default:
