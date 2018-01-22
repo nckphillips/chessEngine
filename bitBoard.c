@@ -203,18 +203,26 @@ uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
 	uint64_t diag = 0;
 	uint64_t piece_board = get_board(b, piece_type);
 	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc. for diagonals
+	uint64_t edge_files = squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
+	                      squares[h4] | squares[h3] | squares[h2] | squares[h1] |\
+			      squares[a1] | squares[a2] | squares[a3] | squares[a4] |\
+			      squares[a5] | squares[a6] | squares[a7] | squares[a8];
 	r7 = piece_board;
 	r9 = piece_board;
 	l7 = piece_board;
 	l9 = piece_board;
 	for(int i = 0; i < 8; i++) {
 		r7 >>= 7;
-		//r9 >>= 9;
-		//l7 <<= 7;
-		//l9 <<= 9;
-		diag |= r7;//| r9 | l7 | l9;
-		r7 &= ~squares[47] & ~squares[63] & ~squares[55] & ~squares[39] &\
-		      ~squares[31] & ~squares[23] & ~squares[15] & ~squares[7];
+		r9 >>= 9;
+		l7 <<= 7;
+		l9 <<= 9;
+		diag |= r7 | r9 | l7 | l9;
+		bitBoard_print(edge_files,0);
+		printf("\n");
+		r7 &= ~edge_files;
+		r9 &= ~edge_files;
+		l9 &= ~edge_files;
+		l7 &= ~edge_files;
 	}
 
 	return diag;
