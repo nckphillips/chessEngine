@@ -15,6 +15,7 @@ uint64_t white_pawn_attacks(Bitboard* b);
 uint64_t same_file(Bitboard* b, unsigned int piece_type);
 uint64_t same_rank(Bitboard* b, unsigned int piece_type);
 uint64_t same_diagonal(Bitboard* b, unsigned int piece_type);
+uint64_t get_board(Bitboard *b_ptr, int piece_type);//return the piece's bitboard
 
 void bitBoard_print(uint64_t b, int row){
 	if (row == 8) {
@@ -104,6 +105,14 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		}
 		break;
 
+		case BBISHOP:
+
+		break;
+
+		case WBISHOP:
+
+		break;
+
 		default:
 		break;
 	}
@@ -189,12 +198,57 @@ uint64_t white_pawn_attacks(Bitboard* b)
 /*return a bitboard with all squares on the same diagonals as the piece_type*/
 uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
 {
+	uint64_t diag = 0;
+	uint64_t piece_board = get_board(b, piece_type);
+	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc for diagonals
+	r7 = piece_board;
+	r9 = piece_board;
+	l7 = piece_board;
+	l9 = piece_board;
+	for(int i = 0; i < 8; i++) {
+		r7 >>= 7;
+		r9 >>= 9;
+		l7 <<= 7;
+		l9 <<= 9;
+		diag += r7 + r9 + l7 + l9;
 
+	}
+
+	return diag;
 }
 /*return a bitboard with all squares on the same rank as the piece_type*/
 uint64_t same_rank(Bitboard* b, unsigned int piece_type)
 {
 	uint64_t rank = 0;
+	uint64_t piece_board = get_board(b, piece_type);
+
+	uint64_t mask = 0xff;
+	for (int i = 0; i < 8 ; i+=1)  {
+		if (mask & piece_board) {
+			rank += mask;
+		}
+		mask <<= 8;
+	}
+
+	return rank;
+}
+
+/*return a bitboard with all squares on the same file as the piece_type*/
+uint64_t same_file(Bitboard* b, unsigned int piece_type)
+{
+
+	uint64_t file = 0;
+	uint64_t piece_board = get_board(b, piece_type);
+	for (int i = 8; i <=64; i+=8) {
+		file += piece_board >> i | piece_board << i;
+	}
+
+	return file;
+}
+
+/*return the requested bitboard*/
+uint64_t get_board(Bitboard *b_ptr, int piece_type)
+{
 	uint64_t piece_board = 0;
 	switch (piece_type) {
 		case BROOK: piece_board = b->bRooks;
@@ -228,87 +282,5 @@ uint64_t same_rank(Bitboard* b, unsigned int piece_type)
 		default: break;
 
 	}
-	uint64_t mask = 0xff;
-	for (int i = 0; i < 8 ; i+=1)  {
-		if (mask & piece_board) {
-			rank += mask;
-		}
-		mask <<= 8;
-	}
-
-	return rank;
-}
-
-/*return a bitboard with all squares on the same file as the piece_type*/
-uint64_t same_file(Bitboard* b, unsigned int piece_type)
-{
-
-		uint64_t file = 0;
-
-		switch (piece_type) {
-			case BROOK:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->bRooks >> i | b->bRooks << i;
-			}
-			break;
-
-			case BBISHOP:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->bRooks >> i | b->bRooks << i;
-			}
-			break;
-
-			case BKNIGHT:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->bKnights >> i | b->bKnights << i;
-			}
-			break;
-
-			case BQUEEN:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->bQueen >> i | b->bQueen << i;
-			}
-			break;
-
-			case BKING:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->bKing >> i | b->bKing << i;
-			}
-			break;
-
-			case WROOK:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->wRooks >> i | b->wRooks << i;
-			}
-			break;
-
-			case WBISHOP:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->wBishops >> i | b->wBishops << i;
-			}
-			break;
-
-			case WKNIGHT:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->wKnights >> i | b->wKnights << i;
-			}
-			break;
-
-			case WQUEEN:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->wQueen >> i | b->wQueen << i;
-			}
-			break;
-
-			case WKING:
-			for (int i = 8; i <=64; i+=8) {
-				file += b->wKing >> i | b->wKing << i;
-			}
-			break;
-			default: break;
-
-		}
-
-
-		return file;
+	return piece_board;
 }
