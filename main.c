@@ -7,6 +7,7 @@
 
 
 void play(Bitboard *b);//main control loop for engine
+int makeMove(char *cmd, Bitboard *b);
 
 int main(void){
 	//boards = boardInit();
