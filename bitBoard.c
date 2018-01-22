@@ -93,7 +93,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		case WROOK:
 		//initialize move to all squares along the same file or rank as
 		//the rook
-		moves = same_file(board, BROOK) | same_rank(board, BROOK);
+		moves = same_file(board, WROOK) | same_rank(board, WROOK);
 		moves &= ~(allWhite(board) >> 8);//rook can only move to attack black, not past
 		moves &= ~allBlack(board);//white rook cannot move to square occupied by white.
 		/*remove squares past pieces*/
@@ -106,6 +106,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BBISHOP:
+		moves = same_diagonal(board,BBISHOP);
 
 		break;
 
@@ -200,18 +201,17 @@ uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
 {
 	uint64_t diag = 0;
 	uint64_t piece_board = get_board(b, piece_type);
-	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc for diagonals
+	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc. for diagonals
 	r7 = piece_board;
 	r9 = piece_board;
 	l7 = piece_board;
 	l9 = piece_board;
-	for(int i = 0; i < 8; i++) {
+	for(int i = 1; i < 8; i++) {
 		r7 >>= 7;
-		r9 >>= 9;
-		l7 <<= 7;
-		l9 <<= 9;
-		diag += r7 + r9 + l7 + l9;
-
+		//r9 >>= 9;
+		//l7 <<= 7;
+	//	l9 <<= 9;
+		diag |= r7 ;//| r9 | l7 | l9;
 	}
 
 	return diag;
@@ -251,34 +251,34 @@ uint64_t get_board(Bitboard *b_ptr, int piece_type)
 {
 	uint64_t piece_board = 0;
 	switch (piece_type) {
-		case BROOK: piece_board = b->bRooks;
+		case BROOK: piece_board = b_ptr->bRooks;
 		break;
 
-		case BBISHOP: piece_board = b->bBishops;
+		case BBISHOP: piece_board = b_ptr->bBishops;
 		break;
 
-		case BKNIGHT: piece_board = b->bKnights;
+		case BKNIGHT: piece_board = b_ptr->bKnights;
 		break;
 
-		case BQUEEN: piece_board = b->bQueen;
+		case BQUEEN: piece_board = b_ptr->bQueen;
 		break;
 
-		case BKING: piece_board = b->bKing;
+		case BKING: piece_board = b_ptr->bKing;
 		break;
 
-		case WROOK: piece_board = b->wRooks;
+		case WROOK: piece_board = b_ptr->wRooks;
 		break;
 
-		case WBISHOP: piece_board = b->wBishops;
+		case WBISHOP: piece_board = b_ptr->wBishops;
 		break;
 
-		case WKNIGHT: piece_board = b->wKnights;
+		case WKNIGHT: piece_board = b_ptr->wKnights;
 		break;
 
-		case WQUEEN: piece_board = b->wQueen;
+		case WQUEEN: piece_board = b_ptr->wQueen;
 		break;
 
-		case WKING: piece_board = b->wKing;
+		case WKING: piece_board = b_ptr->wKing;
 		default: break;
 
 	}
