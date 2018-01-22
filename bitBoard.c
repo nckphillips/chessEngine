@@ -46,7 +46,8 @@ void bitBoard_print(uint64_t b, int row){
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 {
-	uint64_t moves;
+	uint64_t temp = 0;
+	uint64_t moves = 0;
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
@@ -74,9 +75,17 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		//initialize move to all squares along the same file or rank as
 		//the rook
 		moves = same_file(board, BROOK) | same_rank(board, BROOK);
-		moves &= ~(allWhite(board) >> 8);
-		moves &= ~allBlack(board);
-		//TODO:need to see if a piece is in front of the rook and disable those squares.
+		moves &= ~(allWhite(board) >> 8);//rook can only move to attack white, not past
+		moves &= ~allBlack(board);//black rook cannot move to square occupied by black.
+		/*remove squares past pieces*/
+		temp = moves | board->bRooks;
+		for (int i = 0; i < 8; i++) {
+			temp >>= 8;
+			temp |= board->bRooks;
+			moves &= temp;
+
+		}
+
 		//TODO:leave the squares if there is a clear path to a white piece for an attack
 		break;
 
