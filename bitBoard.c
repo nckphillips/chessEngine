@@ -7,6 +7,8 @@
 
 uint64_t HFILE;
 uint64_t AFILE;
+uint64_t RANK1;
+uint64_t RANK8;
 
 /*helper functions*/
 uint64_t find_moved_black_pawns(uint64_t bPawns);
@@ -74,19 +76,61 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BROOK:
-		//initialize move to all squares along the same file or rank as
-		//the rook
-		moves = same_file(board, BROOK) | same_rank(board, BROOK);
-		moves &= ~(allWhite(board) >> 8);//rook can only move to attack white, not past
-		moves &= ~allBlack(board);//black rook cannot move to square occupied by black.
-		/*remove squares past pieces*/
-		temp = moves | board->bRooks;
-		for (int i = 0; i < 8; i++) {
-			temp >>= 8;
-			temp |= board->bRooks;
-			moves &= temp;
-
+		//fire a ray from each rook in every direction
+		for(int i = 0; i < 64; i++) {
+			if(squares[i] & board->bRooks) {
+				//set moves to the right
+				for (int j = i; (squares[j] & ~HFILE); j++) {
+					if (squares[j] & allWhite(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allBlack(board)-board->bRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves to the left
+				for (int j = i; (squares[j] & ~AFILE); j--) {
+					if (squares[j] & allWhite(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allBlack(board)-board->bRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves down
+				for (int j = i; (squares[j] & ~RANK1); j-=8) {
+					if (squares[j] & allWhite(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allBlack(board)-board->bRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves up
+				for (int j = i; (squares[j] & ~RANK8); j+=8) {
+					if (squares[j] & allWhite(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allBlack(board)-board->bRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+			}
+			/*subtract the rook positions from the moves*/
+			if (moves) {
+				moves &= ~board->bRooks;
+			}
 		}
+
+
 
 		//TODO:leave the squares if there is a clear path to a white piece for an attack
 		break;
@@ -108,6 +152,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 
 		case BBISHOP:
 		moves = same_diagonal(board,BBISHOP);
+		moves &= ~allPieces(board);
 
 		break;
 
@@ -148,9 +193,13 @@ void init(struct Bitboard* b){
 	b->bQueen = 0x0800000000000000;
 	b->bKing = 0x1000000000000000;
 	HFILE =      squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
-			      squares[h4] | squares[h3] | squares[h2] | squares[h1];
+		     squares[h4] | squares[h3] | squares[h2] | squares[h1];
 	AFILE =      squares[a1] | squares[a2] | squares[a3] | squares[a4] |\
-	                      squares[a5] | squares[a6] | squares[a7] | squares[a8];
+	             squares[a5] | squares[a6] | squares[a7] | squares[a8];
+	RANK1 =      squares[a1] | squares[b1] | squares[c1] | squares[d1] |\
+		     squares[e1] | squares[f1] | squares[g1] | squares[h1];
+	RANK8 =      squares[a8] | squares[b8] | squares[c8] | squares[d8] |\
+		     squares[e8] | squares[f8] | squares[g8] | squares[h8];
 } //Initialize bitboard
 
 /*Returns a bitboard of all white pieces*/

@@ -23,14 +23,15 @@ int main(void){
 	Bitboard  b;
 	init(&b);
 
-	////////////////////TODO This is modifying the PAWN board for testing????///////////////
+	////////////////////TODO This is modifying theboard for testing????///////////////
 	b.bPawns = b.bPawns - squares[55] + squares[38];
 	b.bPawns = b.bPawns - squares[54] + squares[37];
 	b.bPawns = b.bPawns - squares[53] + squares[36];
-	b.bBishops = b.bBishops -squares[61] + squares[d1];
+	b.bBishops = b.bBishops - squares[61] + squares[d1];
+	b.bKnights = 0;
+	b.bRooks = squares[e5];
 	////modify white for testing
 	b.wPawns = b.wPawns - squares[13] + squares[45];
-	bitBoard_print(b.bPawns,0);
 	play(&b);
 	//boardDestroy(boards);
 	return 0;
@@ -67,7 +68,7 @@ void play(Bitboard * b)
 int makeMove(char * cmd, Bitboard * b)
 {
 	uint64_t legal_moves = 0;
-	legal_moves = getLegalMoves(b, BPAWN);
+	legal_moves = getLegalMoves(b, BROOK);
 	bitBoard_print(legal_moves,0);
 	return 0;
 }
