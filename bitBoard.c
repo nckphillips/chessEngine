@@ -129,24 +129,60 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 				moves &= ~board->bRooks;
 			}
 		}
-
-
-
-		//TODO:leave the squares if there is a clear path to a white piece for an attack
 		break;
 
 		case WROOK:
-		//initialize move to all squares along the same file or rank as
-		//the rook
-		moves = same_file(board, WROOK) | same_rank(board, WROOK);
-		moves &= ~(allWhite(board) >> 8);//rook can only move to attack black, not past
-		moves &= ~allBlack(board);//white rook cannot move to square occupied by white.
-		/*remove squares past pieces*/
-		temp = moves | board->wRooks;
-		for (int i = 0; i < 8; i++) {
-			temp <<= 8;
-			temp |= board->wRooks;
-			moves &= temp;
+		for(int i = 0; i < 64; i++) {
+			if(squares[i] & board->wRooks) {
+				//set moves to the right
+				for (int j = i; (squares[j] & ~HFILE); j++) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves to the left
+				for (int j = i; (squares[j] & ~AFILE); j--) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves down
+				for (int j = i; (squares[j] & ~RANK1); j-=8) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves up
+				for (int j = i; (squares[j] & ~RANK8); j+=8) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+			}
+			/*subtract the rook positions from the moves*/
+			if (moves) {
+				moves &= ~board->wRooks;
+			}
 		}
 		break;
 
