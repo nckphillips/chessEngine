@@ -5,9 +5,10 @@
 #include <stdlib.h>
 #include "bitBoard.h"
 
+uint64_t HFILE;
+uint64_t AFILE;
 
 /*helper functions*/
-uint64_t get_collisions(Bitboard* board);
 uint64_t find_moved_black_pawns(uint64_t bPawns);
 uint64_t black_pawn_attacks(Bitboard* b);
 uint64_t find_moved_white_pawns(uint64_t wPawns);
@@ -58,7 +59,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		//check which pawns have moved and fix the board
 		moves = moves - (find_moved_black_pawns(board->bPawns) >> 16);
 		//now check for collisions with other pieces
-		moves = moves & get_collisions(board);
+		moves = moves & ~allPieces(board);
 		//now calculate attacks and add them to moves.
 		moves += black_pawn_attacks(board);
 		break;
@@ -68,7 +69,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		//of the board.
 		moves = board->wPawns << 8 | (board->wPawns << 16 & ~allPieces(board)<<8);
 		moves = moves - (find_moved_white_pawns(board->wPawns) << 16);
-		moves = moves & get_collisions(board);
+		moves = moves & ~allPieces(board);
 		moves += white_pawn_attacks(board);
 		break;
 
@@ -146,6 +147,10 @@ void init(struct Bitboard* b){
 	b->bBishops = 0x2400000000000000;
 	b->bQueen = 0x0800000000000000;
 	b->bKing = 0x1000000000000000;
+	HFILE =      squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
+			      squares[h4] | squares[h3] | squares[h2] | squares[h1];
+	AFILE =      squares[a1] | squares[a2] | squares[a3] | squares[a4] |\
+	                      squares[a5] | squares[a6] | squares[a7] | squares[a8];
 } //Initialize bitboard
 
 /*Returns a bitboard of all white pieces*/
@@ -169,16 +174,12 @@ uint64_t find_moved_black_pawns(uint64_t bPawns)
 	return bPawns & ~(squares[48] | squares[49] | squares[50] | squares[51] | squares[52] | \
 										squares[53] | squares[54] | squares[55]);
 }
-/*returns free squares on the board*/
-uint64_t get_collisions(Bitboard* board)
-{
-	return (~allPieces(board));
-}
+
 
 uint64_t black_pawn_attacks(Bitboard* b)
 {
 	uint64_t attacks = 0;
-	uint64_t diag = ((b->bPawns >> 7) & (~b->bPawns)) | ((b->bPawns >> 9) & (~b->bPawns));
+	uint64_t diag = (((b->bPawns & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & ~AFILE) >> 9) & ~allBlack(b));
 	attacks = diag & allWhite(b);
 
 	return attacks;
@@ -193,7 +194,8 @@ uint64_t white_pawn_attacks(Bitboard* b)
 {
 	uint64_t attacks = 0;
 	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
-	uint64_t diag = ((b->wPawns << 7) & (~b->wPawns)) | ((b->wPawns << 9) & (~b->wPawns));
+
+	uint64_t diag = (((b->wPawns & ~AFILE) << 7) & ~allWhite(b)) | (((b->wPawns & ~HFILE))<< 9) & ~allWhite(b);
 	attacks = diag & allBlack(b);
 	return attacks;
 }
@@ -203,22 +205,20 @@ uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
 	uint64_t diag = 0;
 	uint64_t piece_board = get_board(b, piece_type);
 	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc. for diagonals
-	uint64_t edge_files = squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
-	                      squares[h4] | squares[h3] | squares[h2] | squares[h1] |\
-			      squares[a1] | squares[a2] | squares[a3] | squares[a4] |\
-			      squares[a5] | squares[a6] | squares[a7] | squares[a8];
+	//create bitboard for edge files
+	uint64_t edge_files = HFILE | AFILE;
 	r7 = piece_board;
 	r9 = piece_board;
 	l7 = piece_board;
 	l9 = piece_board;
+	//generate diagonals
 	for(int i = 0; i < 8; i++) {
 		r7 >>= 7;
 		r9 >>= 9;
 		l7 <<= 7;
 		l9 <<= 9;
 		diag |= r7 | r9 | l7 | l9;
-		bitBoard_print(edge_files,0);
-		printf("\n");
+		//if a representation is about to loop around, clear that one.
 		r7 &= ~edge_files;
 		r9 &= ~edge_files;
 		l9 &= ~edge_files;

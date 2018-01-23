@@ -12,6 +12,9 @@ int makeMove(char *cmd, Bitboard *b);
 int main(void){
 	//boards = boardInit();
  uint64_t temp = 1;
+ /*the following loop initializes an array of 64 boards with just the square that
+  *it refers to set. this allows you to use the array to manipulate a single square
+  *on the board.*/
 	for (int i = 0; i < 64; i++) {
 		squares[i] = temp;
 		temp <<= 1;
@@ -24,7 +27,7 @@ int main(void){
 	b.bPawns = b.bPawns - squares[55] + squares[38];
 	b.bPawns = b.bPawns - squares[54] + squares[37];
 	b.bPawns = b.bPawns - squares[53] + squares[36];
-	b.bBishops = b.bBishops -squares[61] + squares[35];
+	b.bBishops = b.bBishops -squares[61] + squares[d1];
 	////modify white for testing
 	b.wPawns = b.wPawns - squares[13] + squares[45];
 	bitBoard_print(b.bPawns,0);
@@ -64,7 +67,7 @@ void play(Bitboard * b)
 int makeMove(char * cmd, Bitboard * b)
 {
 	uint64_t legal_moves = 0;
-	legal_moves = getLegalMoves(b, BBISHOP);
+	legal_moves = getLegalMoves(b, BPAWN);
 	bitBoard_print(legal_moves,0);
 	return 0;
 }
