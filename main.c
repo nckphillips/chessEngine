@@ -54,7 +54,13 @@ void play(Bitboard * b)
 				case QUIT: /*quit*/;
 				case GO: /*start thinking and make move when done*/;
 				case SETBOARD:/*receive a fen string and update boards*/;
-				case MOVE:/*receive an algebraic move and update internal boards.*/;
+				case MOVE:
+				for (int i = 0; i < MAX_CMD_LEN; i++) {
+					if(cmd[i] == '+' ) {
+						update(b, cmd+i+1);//pass the start of the move.
+					}
+				}
+				break;
 				default:
 				if(makeMove(cmd, b)) printf("Error\n");
 				break;
