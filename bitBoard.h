@@ -51,7 +51,7 @@ void bitBoard_print(uint64_t b, int row);
 /*get all the legal moves on the board for a piece type*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type);
 
-void update(char * move);
+void update(Bitboard * b_ptr, char * move);
 
 /*set up the bitboard structure*/
 void init(struct Bitboard* b);

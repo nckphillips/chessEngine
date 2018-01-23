@@ -102,21 +102,64 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 				moves &= ~board->bRooks;
 			}
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2124ab3f07a6b7672178e2c8232f538c0db2dd96
 		break;
 
 		case WROOK:
-		//initialize move to all squares along the same file or rank as
-		//the rook
-		moves = same_file(board, WROOK) | same_rank(board, WROOK);
-		moves &= ~(allWhite(board) >> 8);//rook can only move to attack black, not past
-		moves &= ~allBlack(board);//white rook cannot move to square occupied by white.
-		/*remove squares past pieces*/
-		temp = moves | board->wRooks;
-		for (int i = 0; i < 8; i++) {
-			temp <<= 8;
-			temp |= board->wRooks;
-			moves &= temp;
+		for(int i = 0; i < 64; i++) {
+			if(squares[i] & board->wRooks) {
+				//set moves to the right
+				for (int j = i; (squares[j] & ~HFILE); j++) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves to the left
+				for (int j = i; (squares[j] & ~AFILE); j--) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves down
+				for (int j = i; (squares[j] & ~RANK1); j-=8) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+				//set moves up
+				for (int j = i; (squares[j] & ~RANK8); j+=8) {
+					if (squares[j] & allBlack(board)) {
+						moves |= squares[j];
+						break;
+					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
+						break;
+					} else {
+						moves |= squares[j];
+					}
+				}
+			}
+			/*subtract the rook positions from the moves*/
+			if (moves) {
+				moves &= ~board->wRooks;
+			}
 		}
 		break;
 
@@ -130,15 +173,90 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 
 		break;
 
-		default:
+		case BKNIGHT:
+
 		break;
+
+		case WKNIGHT:
+
+		break;
+
+		case BQUEEN:
+
+		break;
+
+		case WQUEEN:
+
+		break;
+
+		case BKING:
+
+		break;
+
+		case WKING:
+
+		break;
+
+		default: return -1;
 	}
 	return moves;
 }
 
 /*updates the bitboard upon move*/
-void update(char * move)
+void update(Bitboard * b_ptr, char * move)
 {
+	if (strlen(move) < 4) return;
+	/*commands are given: "e5e6" so the below lines convert the two part of
+	 *the command to squares.*/
+	int from_file = (int)move[0] - 97;
+	int from_rank = (int)move[1] - 48;
+	int to_file = (int)move[2] - 97;
+	int to_rank = (int)move[3] - 48;
+	uint64_t source_square = squares[(from_rank * 8) + from_file];
+	uint64_t dest_square = squares[(to_rank * 8) + to_file];
+
+	if (source_square & allWhite(b_ptr)) {
+		if (source_square & b_ptr->wPawns) {
+			b_ptr->wPawns -= source_square;
+			b_ptr->wPawns += dest_square;
+		} else if (source_square & b_ptr->wRooks) {
+			b_ptr->wRooks -= source_square;
+			b_ptr->wRooks += dest_square;
+		} else if (source_square & b_ptr->wBishops) {
+			b_ptr->wBishops -= source_square;
+			b_ptr->wBishops += dest_square;
+		} else if (source_square & b_ptr->wKing) {
+			b_ptr->wKing -= source_square;
+			b_ptr->wKing += dest_square;
+		} else if (source_square & b_ptr->wQueen) {
+			b_ptr->wQueen -= source_square;
+			b_ptr->wQueen += dest_square;
+		} else if (source_square & b_ptr->wKnights) {
+			b_ptr->wKnights -= source_square;
+			b_ptr->wKnights += dest_square;
+		}
+	} else {//its a black piece
+		if (source_square & b_ptr->bPawns) {
+			b_ptr->bPawns -= source_square;
+			b_ptr->bPawns += dest_square;
+		} else if (source_square & b_ptr->bRooks) {
+			b_ptr->bRooks -= source_square;
+			b_ptr->bRooks += dest_square;
+		} else if (source_square & b_ptr->bBishops) {
+			b_ptr->bBishops -= source_square;
+			b_ptr->bBishops += dest_square;
+		} else if (source_square & b_ptr->bKing) {
+			b_ptr->bKing -= source_square;
+			b_ptr->bKing += dest_square;
+		} else if (source_square & b_ptr->bQueen) {
+			b_ptr->bQueen -= source_square;
+			b_ptr->bQueen += dest_square;
+		} else if (source_square & b_ptr->bKnights) {
+			b_ptr->bKnights -= source_square;
+			b_ptr->bKnights += dest_square;
+		}
+	}
+
 
 }
 
