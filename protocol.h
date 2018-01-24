@@ -6,6 +6,6 @@
 enum action {NONE, NEW, FORCE, QUIT, GO, SETBOARD, MOVE};
 
 void proto_clean(char *);
-int proto_exec(char *);
+int proto_exec(const char *);
 
 #endif

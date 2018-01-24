@@ -232,10 +232,11 @@ void update(Bitboard * b_ptr, char * move)
 	/*commands are given: "e5e6" so the below lines convert the two part of
 	 *the command to squares.*/
 	int from_file = (int)move[0] - 97;
-	int from_rank = (int)move[1] - 48;
+	int from_rank = (int)move[1] - 48 - 1;
 	int to_file = (int)move[2] - 97;
-	int to_rank = (int)move[3] - 48;
+	int to_rank = (int)move[3] - 48 - 1;
 	uint64_t source_square = squares[(from_rank * 8) + from_file];
+	printf("source square: %d\n", from_rank);
 	uint64_t dest_square = squares[(to_rank * 8) + to_file];
 
 	if (source_square & allWhite(b_ptr)) {

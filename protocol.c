@@ -41,8 +41,15 @@ void proto_clean(char *cmd)
  * that will tell the engine what to execute.
  ******************************************************************
 */
-int proto_exec(char *cmd)
+int proto_exec(const char *cmd_full)
 {
+	char * cmd = (char*)malloc(MAX_CMD_LEN);
+	strcpy(cmd,cmd_full);
+for (int i = 0; i < MAX_CMD_LEN; i++) {
+	if(cmd[i] == '+') {
+		cmd[i] = '\0';
+	}
+}
   if (!strcmp(cmd, "xboard")) {
     printf("\n");
   } else if (!strcmp(cmd, "new")) {

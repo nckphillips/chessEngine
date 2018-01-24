@@ -23,15 +23,7 @@ int main(void){
 	Bitboard  b;
 	init(&b);
 
-	////////////////////TODO This is modifying theboard for testing????///////////////
-	b.bPawns = b.bPawns - squares[55] + squares[38];
-	b.bPawns = b.bPawns - squares[54] + squares[37];
-	b.bPawns = b.bPawns - squares[53] + squares[36];
-	b.bBishops = b.bBishops - squares[61] + squares[d1];
-	b.bKnights = 0;
-	b.bRooks = squares[e5];
-	////modify white for testing
-	b.wPawns = b.wPawns - squares[13] + squares[45];
+
 	play(&b);
 	//boardDestroy(boards);
 	return 0;
@@ -56,8 +48,12 @@ void play(Bitboard * b)
 				case SETBOARD:/*receive a fen string and update boards*/;
 				case MOVE:
 				for (int i = 0; i < MAX_CMD_LEN; i++) {
+					printf("%c\n", cmd[i]);
 					if(cmd[i] == '+' ) {
 						update(b, cmd+i+1);//pass the start of the move.
+						printf("new board config: \n");
+						bitBoard_print(allPieces(b),0);
+						break;
 					}
 				}
 				break;
@@ -65,7 +61,6 @@ void play(Bitboard * b)
 				if(makeMove(cmd, b)) printf("Error\n");
 				break;
 			}
-			printf("%s\n", cmd);
 		}
 		free(cmd);
 
