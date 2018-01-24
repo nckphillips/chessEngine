@@ -84,15 +84,15 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 				//set moves to the right
 				rookMove = translate(board, HFILE, i);
 				moves |= rookMove;
-				
+
 				//set moves to the left
 				rookMove = translate(board, AFILE, i);
 				moves |= rookMove;
-				
+
 				//set moves down
 				rookMove = translate(board, RANK1, i);
 				moves |= rookMove;
-				
+
 				//set moves up
 				rookMove = translate(board, RANK8, i);
 				moves |= rookMove;
@@ -102,10 +102,6 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 				moves &= ~board->bRooks;
 			}
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 2124ab3f07a6b7672178e2c8232f538c0db2dd96
 		break;
 
 		case WROOK:
@@ -213,7 +209,6 @@ void update(Bitboard * b_ptr, char * move)
 	int to_file = (int)move[2] - 97;
 	int to_rank = (int)move[3] - 48 - 1;
 	uint64_t source_square = squares[(from_rank * 8) + from_file];
-	printf("source square: %d\n", from_rank);
 	uint64_t dest_square = squares[(to_rank * 8) + to_file];
 
 	if (source_square & allWhite(b_ptr)) {
@@ -387,17 +382,17 @@ uint64_t translate(Bitboard *bb, uint64_t direction, int i)
 	//uint64_t dir = direction;
 	uint64_t newMove = 0;
 	int a = 0;
-	if(direction == HFILE){ 
+	if(direction == HFILE){
 		a = 1;
-	} else if (direction == AFILE){ 
+	} else if (direction == AFILE){
 		a = -1;
 	} else if (direction == RANK1){
 		a = -8;
 	} else if (direction == RANK8){
 		a = 8;
 	}
-
-	for (int j = i; (squares[j] & ~direction); j+=a) {
+	int j;
+	for (j = i; (squares[j] & ~direction); j+=a) {
 		if (squares[j] & allWhite(bb)) {
 			newMove |= squares[j];
 			break;
@@ -406,6 +401,9 @@ uint64_t translate(Bitboard *bb, uint64_t direction, int i)
 		} else {
 			newMove |= squares[j];
 		}
+	}
+	if(squares[j] & direction) {
+		newMove |= squares[j] & ~allBlack(bb);
 	}
 	return newMove;
 }
