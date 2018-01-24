@@ -48,6 +48,12 @@ typedef struct Bitboard{
 /*print a bitboard. starting with row*/
 void bitBoard_print(uint64_t b, int row);
 
+/*prints chess board with letters for pieces*/
+void printChessboard(Bitboard *b);
+
+/*loops through bitboard, assigning letters to the squares*/
+void loop(uint64_t b, char* board[8][8], unsigned int piece_type);
+
 /*get all the legal moves on the board for a piece type*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type);
 

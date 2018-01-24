@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -Wall -std=c99
+CFLAGS := -Wall 
 DEBUG := -g
 OBJS := main.o bitBoard.o protocol.o
 main: $(OBJS)

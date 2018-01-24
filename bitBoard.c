@@ -49,6 +49,108 @@ void bitBoard_print(uint64_t b, int row){
 		}
 } //Function that prints the board
 
+
+void printChessboard(Bitboard *b){
+	
+	char* board[8][8];
+
+	for(int row = 0; row < 8; row++)
+		for(int col = 0; col < 8; col++)
+			board[row][col] = '#'; //Initialize all squares to '#'
+
+	loop(b->wPawns, board, WPAWN);
+	loop(b->wRooks, board, WROOK);
+	loop(b->wKnights, board, WKNIGHT);
+	loop(b->wBishops, board, WBISHOP);
+	loop(b->wQueen, board, WQUEEN);
+	loop(b->wKing, board, WKING);
+
+	loop(b->bPawns, board, BPAWN);
+	loop(b->bRooks, board, BROOK);
+	loop(b->bKnights, board, BKNIGHT);
+	loop(b->bBishops, board, BBISHOP);
+	loop(b->bQueen, board, BQUEEN);
+	loop(b->bKing, board, BKING);
+
+	printf("\n");
+	
+	for(int row = 0; row < 8; row++){
+		for(int col = 0; col < 8; col++){
+			printf(" %c", board[row][col]);
+		}
+
+		printf("\n");
+	}
+} //Print Chess Pieces
+
+
+void loop(uint64_t b, char* board[8][8], unsigned int piece_type){
+
+	char piece;
+	
+	switch(piece_type){
+	case WPAWN:
+		piece = 'P';
+	break;
+
+	case WROOK:
+		piece = 'R';
+	break;
+
+	case WKNIGHT:
+		piece = 'N';
+	break;
+
+	case WBISHOP:
+		piece = 'B';
+	break;
+
+	case WQUEEN:
+		piece = 'Q';
+	break;
+
+	case WKING:
+		piece = 'K';
+	break;
+
+	case BPAWN:
+		piece = 'p';
+	break;
+
+	case BROOK:
+		piece = 'r';
+	break;
+
+	case BKNIGHT:
+		piece = 'n';
+	break;
+
+	case BBISHOP:
+		piece = 'b';
+	break;
+
+	case BQUEEN:
+		piece = 'q';
+	break;
+
+	case BKING:
+		piece = 'k';
+	break;
+	}
+
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if (b & 1 == 1){
+				board[row][col] = piece;
+				b>>=1;
+			}
+			else
+				b>>=1;
+		}
+	}
+} //Assign Letters to squares on the board
+
+
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 {

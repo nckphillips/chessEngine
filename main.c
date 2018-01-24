@@ -22,7 +22,7 @@ int main(void){
 
 	Bitboard  b;
 	init(&b);
-
+	//printChessboard(&b);
 
 	play(&b);
 	//boardDestroy(boards);
