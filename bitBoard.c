@@ -244,11 +244,27 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BKNIGHT:
-
+			//Moves for the Black Knight
+			moves = (((board->wKnights & ~(0xff03030303030303)) << 6) & ~allBlack(board)) |
+			(((board->wKnights & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allBlack(board)) |
+			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allBlack(board)) | 
+			(((board->wKnights & ~(0x3030303030303ff)) >> 10) & ~allBlack(board)) |
+			(((board->wKnights & ~(0xffff010101010101)) << 15 ) & ~allBlack(board)) |
+			(((board->wKnights & ~(0xffff808080808080)) << 17) & ~allBlack(board)) |
+			(((board->wKnights & ~(0x808080808080ffff)) >> 15) & ~allBlack(board)) |
+			(((board->wKnights & ~(0x10101010101ffff)) >> 17) & ~allBlack(board));
 		break;
 
 		case WKNIGHT:
-
+			//Moves for the White Knight
+			moves = (((board->wKnights & ~(0xff03030303030303)) << 6) & ~allWhite(board)) |
+			(((board->wKnights & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allWhite(board)) |
+			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allWhite(board)) | 
+			(((board->wKnights & ~(0x3030303030303ff)) >> 10) & ~allWhite(board)) |
+			(((board->wKnights & ~(0xffff010101010101)) << 15 ) & ~allWhite(board)) |
+			(((board->wKnights & ~(0xffff808080808080)) << 17) & ~allWhite(board)) |
+			(((board->wKnights & ~(0x808080808080ffff)) >> 15) & ~allWhite(board)) |
+			(((board->wKnights & ~(0x10101010101ffff)) >> 17) & ~allWhite(board));
 		break;
 
 		case BQUEEN:
