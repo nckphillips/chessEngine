@@ -48,10 +48,8 @@ void play(Bitboard * b)
 				case SETBOARD:/*receive a fen string and update boards*/;
 				case MOVE:
 				for (int i = 0; i < MAX_CMD_LEN; i++) {
-					printf("%c\n", cmd[i]);
 					if(cmd[i] == '+' ) {
 						update(b, cmd+i+1);//pass the start of the move.
-						printf("new board config: \n");
 						break;
 					}
 				}
