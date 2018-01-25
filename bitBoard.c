@@ -247,7 +247,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 			//Moves for the Black Knight
 			moves = (((board->wKnights & ~(0xff03030303030303)) << 6) & ~allBlack(board)) |
 			(((board->wKnights & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allBlack(board)) |
-			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allBlack(board)) | 
+			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allBlack(board)) |
 			(((board->wKnights & ~(0x3030303030303ff)) >> 10) & ~allBlack(board)) |
 			(((board->wKnights & ~(0xffff010101010101)) << 15 ) & ~allBlack(board)) |
 			(((board->wKnights & ~(0xffff808080808080)) << 17) & ~allBlack(board)) |
@@ -259,7 +259,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 			//Moves for the White Knight
 			moves = (((board->wKnights & ~(0xff03030303030303)) << 6) & ~allWhite(board)) |
 			(((board->wKnights & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allWhite(board)) |
-			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allWhite(board)) | 
+			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allWhite(board)) |
 			(((board->wKnights & ~(0x3030303030303ff)) >> 10) & ~allWhite(board)) |
 			(((board->wKnights & ~(0xffff010101010101)) << 15 ) & ~allWhite(board)) |
 			(((board->wKnights & ~(0xffff808080808080)) << 17) & ~allWhite(board)) |
@@ -277,7 +277,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 
 		case BKING:
 		//move up, down, right, left, or diagonal by 1 square
-		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 | 
+		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 |
 			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
 		//don't move where there's another black piece
 		moves &= ~allBlack(board);
@@ -286,7 +286,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 
 		case WKING:
 		//move up, down, right, left, or diagonal by 1 square
-		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 | 
+		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 |
 			board->wKing >> 1 | board->wKing >>7 | board->wKing >>8 | board->wKing >>9;
 		//don't move where there's another white piece
 		moves &= ~allWhite(board);
@@ -439,26 +439,40 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type)
 	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc. for diagonals
 	//create bitboard for edge files
 	uint64_t edge_files = HFILE | AFILE;
-	r7 = piece_board;
-	r9 = piece_board;
-	l7 = piece_board;
-	l9 = piece_board;
-	//generate diagonals
+	for (int j = 0; j < 64; j++) {
+		if (piece_board & squares[j]) {
+		r7 = squares[j];
+		r9 = squares[j];
+		l7 = squares[j];
+		l9 = squares[j];
+		//generate diagonals
 
-	for(int i = 0; i < 8; i++) {
-		r7 >>= 7;
-		r9 >>= 9;
-		l7 <<= 7;
-		l9 <<= 9;
+		for(int i = 0; i < 8; i++) {
+			r7 >>= 7;
+			r9 >>= 9;
+			l7 <<= 7;
+			l9 <<= 9;
 
-		diag |= r7 | r9|\
-		 l7  | l9 ;
-		//if a representation is about to loop around, clear that one.
-		r7 &= ~edge_files;
-		r9 &= ~edge_files;
-		l9 &= ~edge_files;
-		l7 &= ~edge_files;
+			diag |= r7 | r9|\
+			 l7  | l9 ;
+			 switch (piece_type) {
+				 case BBISHOP:
+				 if(r7 & allWhite(b)) {
+					 r7 = 0;
+				 } else if (r7 & allBlack(b)) {
+					 diag -= r7;
+					 r7 = 0;
+				 }
+				 break;
+			 }
+			//if a representation is about to loop around, clear that one.
+			r7 &= ~edge_files;
+			r9 &= ~edge_files;
+			l9 &= ~edge_files;
+			l7 &= ~edge_files;
 
+		}
+		}
 	}
 
 	return diag;
