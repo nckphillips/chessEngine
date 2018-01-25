@@ -66,7 +66,7 @@ void play(Bitboard * b)
 int makeMove(char * cmd, Bitboard * b)
 {
 	uint64_t legal_moves = 0;
-	legal_moves = getLegalMoves(b, BKING);
+	legal_moves = getLegalMoves(b, WKING);
 	printChessboard(b);
 	bitBoard_print(legal_moves,0);
 	return 0;

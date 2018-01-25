@@ -260,13 +260,20 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BKING:
+		//move up, down, right, left, or diagonal by 1 square
 		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 | 
 			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
+		//don't move where there's another black piece
 		moves &= ~allBlack(board);
+		//TODO: account for check and castling
 		break;
 
 		case WKING:
-
+		//move up, down, right, left, or diagonal by 1 square
+		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 | 
+			board->wKing >> 1 | board->wKing >>7 | board->wKing >>8 | board->wKing >>9;
+		//don't move where there's another white piece
+		moves &= ~allWhite(board);
 		break;
 
 		default: return -1;
