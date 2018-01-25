@@ -226,52 +226,6 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 				//set moves up
 				rookMove = wRookMoves(board, RANK8, i);
 				moves |= rookMove;
-			
-
-				/*//set moves to the right
-				for (int j = i; (squares[j] & ~HFILE); j++) {
-					if (squares[j] & allBlack(board)) {
-						moves |= squares[j];
-						break;
-					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
-						break;
-					} else {
-						moves |= squares[j];
-					}
-				}
-				//set moves to the left
-				for (int j = i; (squares[j] & ~AFILE); j--) {
-					if (squares[j] & allBlack(board)) {
-						moves |= squares[j];
-						break;
-					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
-						break;
-					} else {
-						moves |= squares[j];
-					}
-				}
-				//set moves down
-				for (int j = i; (squares[j] & ~RANK1); j-=8) {
-					if (squares[j] & allBlack(board)) {
-						moves |= squares[j];
-						break;
-					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
-						break;
-					} else {
-						moves |= squares[j];
-					}
-				}
-				//set moves up
-				for (int j = i; (squares[j] & ~RANK8); j+=8) {
-					if (squares[j] & allBlack(board)) {
-						moves |= squares[j];
-						break;
-					} else if (squares[j] & (allWhite(board)-board->wRooks)) {
-						break;
-					} else {
-						moves |= squares[j];
-					}
-				}*/
 			}
 			/*subtract the rook positions from the moves*/
 			if (moves) {
