@@ -6,12 +6,11 @@
 
 
 
-void play(Bitboard *b);//main control loop for engine
+void command(Bitboard *b);//main control loop for engine
 int makeMove(char *cmd, Bitboard *b);
 
 int main(void){
-	//boards = boardInit();
- uint64_t temp = 1;
+	uint64_t temp = 1;
  /*the following loop initializes an array of 64 boards with just the square that
   *it refers to set. this allows you to use the array to manipulate a single square
   *on the board.*/
@@ -20,16 +19,17 @@ int main(void){
 		temp <<= 1;
 	}
 
+	setbuf(stdout, NULL);//disable buffered output for xboard
+	setbuf(stdin, NULL);
+
 	Bitboard  b;
 	init(&b);
-	//printChessboard(&b);
 
 	play(&b);
-	//boardDestroy(boards);
 	return 0;
 }
 
-void play(Bitboard * b)
+void command(Bitboard * b)
 {
 
 		char * cmd = (char*)malloc(sizeof(char)*MAX_CMD_LEN);//allocate space for
@@ -41,21 +41,25 @@ void play(Bitboard * b)
 			proto_clean(cmd);//clean the command
 			action = proto_exec(cmd);//the the action value
 			switch (action) {
-				case NEW: /*newgame()*/;
+				case NEW:
+				init(b);
+				break;
 				case FORCE: /*do whatever force requires*/;
-				case QUIT: /*quit*/;
-				case GO: /*start thinking and make move when done*/;
+				case GO:
+				play(b);
+				break;
 				case SETBOARD:/*receive a fen string and update boards*/;
 				case MOVE:
 				for (int i = 0; i < MAX_CMD_LEN; i++) {
 					if(cmd[i] == '+' ) {
 						update(b, cmd+i+1);//pass the start of the move.
+						printChessboard(b);
 						break;
 					}
 				}
 				break;
+				case QUIT:
 				default:
-				if(makeMove(cmd, b)) printf("Error\n");
 				break;
 			}
 		}
