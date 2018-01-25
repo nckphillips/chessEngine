@@ -52,7 +52,6 @@ void play(Bitboard * b)
 					if(cmd[i] == '+' ) {
 						update(b, cmd+i+1);//pass the start of the move.
 						printf("new board config: \n");
-						bitBoard_print(allPieces(b),0);
 						break;
 					}
 				}
@@ -69,7 +68,8 @@ void play(Bitboard * b)
 int makeMove(char * cmd, Bitboard * b)
 {
 	uint64_t legal_moves = 0;
-	legal_moves = getLegalMoves(b, BROOK);
+	legal_moves = getLegalMoves(b, BBISHOP);
+	printChessboard(b);
 	bitBoard_print(legal_moves,0);
 	return 0;
 }

@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include "bitBoard.h"
 
 uint64_t HFILE;
@@ -19,7 +21,7 @@ uint64_t white_pawn_attacks(Bitboard* b);
 uint64_t same_file(Bitboard* b, unsigned int piece_type);
 uint64_t same_rank(Bitboard* b, unsigned int piece_type);
 uint64_t translate(Bitboard *bb, uint64_t direction, int i);
-uint64_t same_diagonal(Bitboard* b, unsigned int piece_type);
+uint64_t bishop_moves(Bitboard* b, unsigned int piece_type);
 uint64_t get_board(Bitboard *b_ptr, int piece_type);//return the piece's bitboard
 
 void bitBoard_print(uint64_t b, int row){
@@ -28,21 +30,21 @@ void bitBoard_print(uint64_t b, int row){
 	}
 	else {
 		bitBoard_print(b >> 8, row+1);
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
-		printf("%d ", (b & 0x0000001));
+		printf("%d ", (int)(b & 0x0000001));
 		b >>= 1;
 		printf("\n");
 		return;
@@ -51,8 +53,8 @@ void bitBoard_print(uint64_t b, int row){
 
 
 void printChessboard(Bitboard *b){
-	
-	char* board[8][8];
+
+	char board[8][8];
 
 	for(int row = 0; row < 8; row++)
 		for(int col = 0; col < 8; col++)
@@ -73,10 +75,10 @@ void printChessboard(Bitboard *b){
 	loop(b->bKing, board, BKING);
 
 	printf("\n");
-	
+
 	for(int row = 0; row < 8; row++){
 		for(int col = 0; col < 8; col++){
-			printf(" %c", board[row][col]);
+			printf(" %c", (char)board[row][col]);
 		}
 
 		printf("\n");
@@ -84,10 +86,10 @@ void printChessboard(Bitboard *b){
 } //Print Chess Pieces
 
 
-void loop(uint64_t b, char* board[8][8], unsigned int piece_type){
+void loop(uint64_t b, char board[8][8], unsigned int piece_type){
 
 	char piece;
-	
+
 	switch(piece_type){
 	case WPAWN:
 		piece = 'P';
@@ -140,7 +142,7 @@ void loop(uint64_t b, char* board[8][8], unsigned int piece_type){
 
 	for(int row = 7; row >= 0; row--){
 		for(int col = 0; col <= 7; col++){
-			if (b & 1 == 1){
+			if ((b & 1) == 1){
 				board[row][col] = piece;
 				b>>=1;
 			}
@@ -154,7 +156,6 @@ void loop(uint64_t b, char* board[8][8], unsigned int piece_type){
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 {
-	uint64_t temp = 0;
 	uint64_t moves = 0;
 	switch (piece_type){
 		case BPAWN:
@@ -262,13 +263,12 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BBISHOP:
-		moves = same_diagonal(board,BBISHOP);
-		moves &= ~allPieces(board);
+		moves = bishop_moves(board,BBISHOP);
 
 		break;
 
 		case WBISHOP:
-
+		moves = bishop_moves(board,WBISHOP);
 		break;
 
 		case BKNIGHT:
@@ -430,12 +430,12 @@ uint64_t white_pawn_attacks(Bitboard* b)
 	uint64_t attacks = 0;
 	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
 
-	uint64_t diag = (((b->wPawns & ~AFILE) << 7) & ~allWhite(b)) | (((b->wPawns & ~HFILE))<< 9) & ~allWhite(b);
+	uint64_t diag = (((b->wPawns & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & ~HFILE))<< 9) & ~allWhite(b));
 	attacks = diag & allBlack(b);
 	return attacks;
 }
 /*return a bitboard with all squares on the same diagonals as the piece_type*/
-uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
+uint64_t bishop_moves(Bitboard* b, unsigned int piece_type)
 {
 	uint64_t diag = 0;
 	uint64_t piece_board = get_board(b, piece_type);
@@ -447,17 +447,75 @@ uint64_t same_diagonal(Bitboard* b, unsigned int piece_type)
 	l7 = piece_board;
 	l9 = piece_board;
 	//generate diagonals
+	int stopr7 = 0;
+	int stopl7 = 0;
+	int stopr9 = 0;
+	int stopl9 = 0;
 	for(int i = 0; i < 8; i++) {
 		r7 >>= 7;
 		r9 >>= 9;
 		l7 <<= 7;
 		l9 <<= 9;
-		diag |= r7 | r9 | l7 | l9;
+		switch (piece_type) {
+			case BBISHOP:
+			case BQUEEN:
+			if(r7 & allWhite(b)) {
+				stopr7 = 1;
+			} else if(r9 & allWhite(b)) {
+				stopr9 = 1;
+			} else if(l7 & allWhite(b)) {
+				stopl7 = 1;
+			} else if(l9 & allWhite(b)) {
+				stopl9 = 1;
+			}
+			if(r7 & allBlack(b)) {
+				stopr7 = 1;
+				r7 = 0;
+			} else if(r9 & allBlack(b)) {
+				stopr9 = 1;
+				r9 = 0;
+			} else if(l7 & allBlack(b)) {
+				stopl7 = 1;
+				l7 = 0;
+			} else if(l9 & allBlack(b)) {
+				stopl9 = 1;
+				l9 = 0;
+			}
+			break;
+			case WBISHOP:
+			case WQUEEN:
+			if(r7 & allBlack(b)) {
+				stopr7 = 1;
+			} else if(r9 & allBlack(b)) {
+				stopr9 = 1;
+			} else if(l7 & allBlack(b)) {
+				stopl7 = 1;
+			} else if(l9 & allBlack(b)) {
+				stopl9 = 1;
+			}
+			if(r7 & allWhite(b)) {
+				stopr7 = 1;
+				r7 = 0;
+			} else if(r9 & allWhite(b)) {
+				stopr9 = 1;
+				r9 = 0;
+			} else if(l7 & allWhite(b)) {
+				stopl7 = 1;
+				l7 = 0;
+			} else if(l9 & allWhite(b)) {
+				stopl9 = 1;
+				l9 = 0;
+			}
+			break;
+		}
+		diag |= (r7 & (stopr7 != 0)) | (r9 & (stopr9 != 0)) |\
+		 (l7 & (stopl7 != 0)) | (l9 & (stopl9 != 0));
 		//if a representation is about to loop around, clear that one.
 		r7 &= ~edge_files;
 		r9 &= ~edge_files;
 		l9 &= ~edge_files;
 		l7 &= ~edge_files;
+
 	}
 
 	return diag;
