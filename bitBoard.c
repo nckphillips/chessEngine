@@ -419,69 +419,15 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type)
 	l7 = piece_board;
 	l9 = piece_board;
 	//generate diagonals
-	int stopr7 = 0;
-	int stopl7 = 0;
-	int stopr9 = 0;
-	int stopl9 = 0;
+
 	for(int i = 0; i < 8; i++) {
 		r7 >>= 7;
 		r9 >>= 9;
 		l7 <<= 7;
 		l9 <<= 9;
-		switch (piece_type) {
-			case BBISHOP:
-			case BQUEEN:
-			if(r7 & allWhite(b)) {
-				stopr7 = 1;
-			} else if(r9 & allWhite(b)) {
-				stopr9 = 1;
-			} else if(l7 & allWhite(b)) {
-				stopl7 = 1;
-			} else if(l9 & allWhite(b)) {
-				stopl9 = 1;
-			}
-			if(r7 & allBlack(b)) {
-				stopr7 = 1;
-				r7 = 0;
-			} else if(r9 & allBlack(b)) {
-				stopr9 = 1;
-				r9 = 0;
-			} else if(l7 & allBlack(b)) {
-				stopl7 = 1;
-				l7 = 0;
-			} else if(l9 & allBlack(b)) {
-				stopl9 = 1;
-				l9 = 0;
-			}
-			break;
-			case WBISHOP:
-			case WQUEEN:
-			if(r7 & allBlack(b)) {
-				stopr7 = 1;
-			} else if(r9 & allBlack(b)) {
-				stopr9 = 1;
-			} else if(l7 & allBlack(b)) {
-				stopl7 = 1;
-			} else if(l9 & allBlack(b)) {
-				stopl9 = 1;
-			}
-			if(r7 & allWhite(b)) {
-				stopr7 = 1;
-				r7 = 0;
-			} else if(r9 & allWhite(b)) {
-				stopr9 = 1;
-				r9 = 0;
-			} else if(l7 & allWhite(b)) {
-				stopl7 = 1;
-				l7 = 0;
-			} else if(l9 & allWhite(b)) {
-				stopl9 = 1;
-				l9 = 0;
-			}
-			break;
-		}
-		diag |= (r7 & (stopr7 != 0)) | (r9 & (stopr9 != 0)) |\
-		 (l7 & (stopl7 != 0)) | (l9 & (stopl9 != 0));
+
+		diag |= r7 | r9|\
+		 l7  | l9 ;
 		//if a representation is about to loop around, clear that one.
 		r7 &= ~edge_files;
 		r9 &= ~edge_files;
