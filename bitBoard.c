@@ -268,11 +268,13 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BQUEEN:
-
+		moves = bishop_moves(board, BQUEEN);
+		moves += 0;//TODO add rook moves
 		break;
 
 		case WQUEEN:
-
+		moves = bishop_moves(board, WQUEEN);
+		moves += 0;//TODO add rook moves
 		break;
 
 		case BKING:
