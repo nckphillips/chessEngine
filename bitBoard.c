@@ -459,11 +459,56 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type)
 			 l7  | l9 ;
 			 switch (piece_type) {
 				 case BBISHOP:
+				 case BQUEEN:
 				 if(r7 & allWhite(b)) {
-					 r7 = 0;
+					 r7 = 0;//it can take the white piece but cant move further
 				 } else if (r7 & allBlack(b)) {
+					 diag -= r7;//it can move only to the square before the black piece
+					 r7 = 0;//move no furth
+				 }
+				 if(r9 & allWhite(b)) {
+					 r9 = 0;
+				 } else if (r9 & allBlack(b)) {
+					 diag -= r9;
+					 r9 = 0;
+				 }
+				 if(l7 & allWhite(b)) {
+					 l7 = 0;
+				 } else if (l7 & allBlack(b)) {
+					 diag -= l7;
+					 l7 = 0;
+				 }
+				 if(l9 & allWhite(b)) {
+					 l9 = 0;
+				 } else if (l9 & allBlack(b)) {
+					 diag -= l9;
+					 l9 = 0;
+				 }
+				 case WBISHOP:
+				 case WQUEEN:
+				 if(r7 & allBlack(b)) {
+					 r7 = 0;
+				 } else if (r7 & allWhite(b)) {
 					 diag -= r7;
 					 r7 = 0;
+				 }
+				 if(r9 & allBlack(b)) {
+					 r9 = 0;
+				 } else if (r9 & allWhite(b)) {
+					 diag -= r9;
+					 r9 = 0;
+				 }
+				 if(l7 & allBlack(b)) {
+					 l7 = 0;
+				 } else if (l7 & allWhite(b)) {
+					 diag -= l7;
+					 l7 = 0;
+				 }
+				 if(l9 & allBlack(b)) {
+					 l9 = 0;
+				 } else if (l9 & allWhite(b)) {
+					 diag -= l9;
+					 l9 = 0;
 				 }
 				 break;
 			 }
