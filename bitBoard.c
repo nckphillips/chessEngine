@@ -260,7 +260,9 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
 		break;
 
 		case BKING:
-
+		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 | 
+			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
+		moves &= ~allBlack(board);
 		break;
 
 		case WKING:
