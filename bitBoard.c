@@ -478,7 +478,7 @@ uint64_t same_rank(Bitboard* b, unsigned int piece_type)
 
 	return rank;
 }
-
+/*return a bitboard showing all moves a black rook can make*/
 uint64_t translate(Bitboard *bb, uint64_t direction, int i)
 {
 	//uint64_t dir = direction;
