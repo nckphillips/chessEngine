@@ -55,16 +55,22 @@ void command(Bitboard * b)
 				case NEW:
 				init(b);
 				break;
+
 				case FORCE: /*do whatever force requires*/;
 				break;
+
+				case TIME:
 				case GO:
 				play(b);
 				break;
+
 				case SETBOARD:/*receive a fen string and update boards*/;
 				break;
+
 				case MOVE:
 				update(b, cmd+6);
 				break;
+
 				case QUIT:
 				default:
 				break;

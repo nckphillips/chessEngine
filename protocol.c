@@ -37,7 +37,12 @@ void proto_clean(char *cmd)
     }
   }
 }
-
+/*detect if the string is in the move format*/
+int is_move_format(char * cmd)
+{
+	if(isalpha(cmd[0]) && !isalpha(cmd[1]) && isalpha(cmd[2]) && !isalpha(cmd[3])) return 1;
+	else return 0;
+}
 /*The following function just receives a command and returns a value
  * that will tell the engine what to execute.
  ******************************************************************
@@ -63,8 +68,12 @@ for (int i = 0; i < MAX_CMD_LEN; i++) {
     return GO;
   } else if (!strcmp(cmd, "setboard")) {
     return SETBOARD;
-} else if (!strcmp(cmd, "move") || !strcmp(cmd, "usermove")) {
+} else if (!strcmp(cmd, "move") || !strcmp(cmd, "usermove") || is_move_format(cmd)) {
     return MOVE;
-  }
+} else if (!strcmp(cmd, "time")) {
+	return TIME;
+}
+  //printf("tellusererror %s\n", cmd);
+
   return NONE;
 }

@@ -8,6 +8,6 @@
 
 void play(Bitboard *b_ptr)
 {
-	fprintf(stdin,"move e6e5\n");
+	fprintf(stdout,"move g7g6\n");
 	return;
 }
