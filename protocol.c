@@ -63,7 +63,7 @@ for (int i = 0; i < MAX_CMD_LEN; i++) {
     return GO;
   } else if (!strcmp(cmd, "setboard")) {
     return SETBOARD;
-  } else if (!strcmp(cmd, "move")) {
+} else if (!strcmp(cmd, "move") || !strcmp(cmd, "usermove")) {
     return MOVE;
   }
   return NONE;

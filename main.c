@@ -3,6 +3,7 @@
 #include <string.h>
 #include "bitBoard.h"
 #include "protocol.h"
+#include "play.h"
 
 
 
@@ -14,6 +15,16 @@ int main(void){
  /*the following loop initializes an array of 64 boards with just the square that
   *it refers to set. this allows you to use the array to manipulate a single square
   *on the board.*/
+  	char *s = (char *)malloc(MAX_CMD_LEN);
+  	fgets(s, MAX_CMD_LEN, stdin);
+	if (!strcmp(s, "xboard\n")) {
+		printf("\n");
+	}
+	fgets(s, MAX_CMD_LEN, stdin);
+	if (!strcmp(s, "protover 2\n")) {
+		printf("feature done=1\n");
+	}
+	free(s);
 	for (int i = 0; i < 64; i++) {
 		squares[i] = temp;
 		temp <<= 1;
@@ -25,7 +36,7 @@ int main(void){
 	Bitboard  b;
 	init(&b);
 
-	play(&b);
+	command(&b);
 	return 0;
 }
 
@@ -34,9 +45,9 @@ void command(Bitboard * b)
 
 		char * cmd = (char*)malloc(sizeof(char)*MAX_CMD_LEN);//allocate space for
 																												// command
-		unsigned int action = 0;//TODO: will be assigned a value depending on action required from engine
+		unsigned int action = 0;
 		cmd[0] = '\n';
-		while(action != 3) {
+		while(action != QUIT) {
 			fgets(cmd, MAX_CMD_LEN, stdin);
 			proto_clean(cmd);//clean the command
 			action = proto_exec(cmd);//the the action value
@@ -45,23 +56,21 @@ void command(Bitboard * b)
 				init(b);
 				break;
 				case FORCE: /*do whatever force requires*/;
+				break;
 				case GO:
 				play(b);
 				break;
 				case SETBOARD:/*receive a fen string and update boards*/;
+				break;
 				case MOVE:
-				for (int i = 0; i < MAX_CMD_LEN; i++) {
-					if(cmd[i] == '+' ) {
-						update(b, cmd+i+1);//pass the start of the move.
-						printChessboard(b);
-						break;
-					}
-				}
+				update(b, cmd+6);
 				break;
 				case QUIT:
 				default:
 				break;
 			}
+			fflush(stdin);
+			fflush(stdout);
 		}
 		free(cmd);
 
