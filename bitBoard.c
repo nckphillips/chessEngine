@@ -24,6 +24,11 @@ uint64_t bRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i);
 uint64_t wRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i);
 uint64_t bishop_moves(Bitboard* b, unsigned int piece_type);
 uint64_t get_board(Bitboard *b_ptr, int piece_type);//return the piece's bitboard
+uint64_t black_moves(Bitboard *b);
+uint64_t white_moves(Bitboard *b);
+uint64_t all_moves(Bitboard *b);
+int black_check(Bitboard *b);
+int white_check(Bitboard *b);
 
 void bitBoard_print(uint64_t b, int row){
 	if (row == 8) {
@@ -662,6 +667,28 @@ uint64_t same_file(Bitboard* b, unsigned int piece_type)
 	}
 
 	return file;
+}
+
+uint64_t black_moves(Bitboard *b)
+{
+	uint64_t bm = 0;
+	bm = getLegalMoves(b, BBISHOP) | getLegalMoves(b, BROOK) | getLegalMoves(b, BKNIGHT) | getLegalMoves(b, BPAWN) | 
+		getLegalMoves(b, BKING) | getLegalMoves(b, BQUEEN);
+	return bm;
+}
+uint64_t white_moves(Bitboard *b)
+{
+	uint64_t wm = 0;
+	wm = getLegalMoves(b, WBISHOP) | getLegalMoves(b, WROOK) | getLegalMoves(b, WKNIGHT) | getLegalMoves(b, WPAWN) | 
+		getLegalMoves(b, WKING) | getLegalMoves(b, WQUEEN);
+	return wm;
+}
+
+uint64_t all_moves(Bitboard *b)
+{
+	uint64_t am = 0;
+	am = black_moves(b) | white_moves(b);
+	return am;
 }
 
 /*return the requested bitboard*/

@@ -109,7 +109,7 @@ void command(Bitboard * b)
 int makeMove(char * cmd, Bitboard * b)
 {
 	uint64_t legal_moves = 0;
-	legal_moves = getLegalMoves(b, WQUEEN);
+	legal_moves = getLegalMoves(b, BQUEEN);
 	printChessboard(b);
 	bitBoard_print(legal_moves,0);
 	return 0;
