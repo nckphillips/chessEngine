@@ -1,7 +1,12 @@
 #ifndef Q_LEARN_H
 #define Q_LEARN_H
-#define NUM_FEATURES 4
 
+#include "bitBoard.h"
+
+#define NUM_FEATURES 4
+#define ALPHA 0.2 //learning rate
+#define GAMMA 0.8 //discount factor
+#define EPSILON 0.5 //exploration rate
 /***********************************
 LIST OF FEATURES IDEAS:
 
@@ -20,10 +25,18 @@ king protection
 can you capture a high value pieces
 piece support
 
+TODO: draw
 TODO: castling
 **************************************/
 
 int features[NUM_FEATURES];//the feature vector to which weights will be applied
+
+
 int weights[NUM_FEATURES];//the computer generated weights to apply to features
+
+int get_value_of_move(char * move);
+int update_values(char * move_made, Bitboard *b_ptr);//should be called after opponent
+						     //makes move the the weights can
+						     //be updated
 
 #endif

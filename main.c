@@ -69,6 +69,8 @@ void command(Bitboard * b)
 
 				case MOVE:
 				update(b, cmd+6);
+				//TODO: will update weights
+				//update_values(last_move, b);
 				break;
 
 				case QUIT:
