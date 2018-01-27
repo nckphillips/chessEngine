@@ -51,12 +51,12 @@ int main(void){
 	int features [NUM_FEATURES];
 	
 	getFeatures(&b, features);
-	
+	/*
 	for(int i = 0; i < 4; i++)
 	{
 		printf("%d ", features[i]);
 	}
-
+	*/
 
 	//command(&b);
 	return 0;
