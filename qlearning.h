@@ -46,7 +46,9 @@ int update_values(char * move_made, Bitboard *b_ptr);//should be called after op
 						     //be updated
 						     
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);//extracts features from the 
-										//current state of the board					     
+										//current state of the board
+										
+int count(uint64_t board); //Counts the number of ones in the bitboard				     
 						     
 						     
 						     
