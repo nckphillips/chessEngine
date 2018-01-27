@@ -669,6 +669,7 @@ uint64_t same_file(Bitboard* b, unsigned int piece_type)
 	return file;
 }
 
+/*return a board containing all legal moves the black pieces can make*/
 uint64_t black_moves(Bitboard *b)
 {
 	uint64_t bm = 0;
@@ -676,6 +677,8 @@ uint64_t black_moves(Bitboard *b)
 		getLegalMoves(b, BKING) | getLegalMoves(b, BQUEEN);
 	return bm;
 }
+
+/*return a board containing all legal moves the white pieces can make*/
 uint64_t white_moves(Bitboard *b)
 {
 	uint64_t wm = 0;
@@ -684,12 +687,42 @@ uint64_t white_moves(Bitboard *b)
 	return wm;
 }
 
+/*return a board containing the legal moves all pieces can make*/
 uint64_t all_moves(Bitboard *b)
 {
 	uint64_t am = 0;
 	am = black_moves(b) | white_moves(b);
 	return am;
 }
+
+/*return an integer indicating whether the Black King is in check*/
+int black_check(Bitboard *b)
+{
+	uint64_t checkBoard = 0;
+	int check = 0;
+	checkBoard = white_moves(b) & (b->bKing);
+	if(checkBoard == 0){
+		check = 0;
+	} else {
+		check = 1;
+	}
+	return check;
+}
+
+/*return an integer indicating whether the White King is in check*/
+int white_check(Bitboard *b)
+{
+	uint64_t checkBoard = 0;
+	int check = 0;
+	checkBoard = black_moves(b) & (b->wKing);
+	if(checkBoard == 0){
+		check = 0;
+	} else {
+		check = 1;
+	}
+	return check;
+}
+
 
 /*return the requested bitboard*/
 uint64_t get_board(Bitboard *b_ptr, int piece_type)
