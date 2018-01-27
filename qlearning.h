@@ -7,6 +7,12 @@
 #define ALPHA 0.2 //learning rate
 #define GAMMA 0.8 //discount factor
 #define EPSILON 0.5 //exploration rate
+
+
+
+enum features {WHITE, BLACK, WHITEVALUE, BLACKVALUE};
+
+
 /***********************************
 LIST OF FEATURES IDEAS:
 
@@ -34,9 +40,15 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 
 int weights[NUM_FEATURES];//the computer generated weights to apply to features
 
-int get_value_of_move(char * move);
+int get_value_of_move(Bitboard *b_ptr, char * move);//Q(s, a)
 int update_values(char * move_made, Bitboard *b_ptr);//should be called after opponent
 						     //makes move the the weights can
 						     //be updated
+						     
+void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);//extracts features from the 
+										//current state of the board					     
+						     
+						     
+						     
 
 #endif
