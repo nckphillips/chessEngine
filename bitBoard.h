@@ -22,6 +22,8 @@ enum square_index {a1,b1,c1,d1,e1,f1,g1,h1,
 
 uint64_t squares[64];//array of masks. example: e5 is squares[36] which corresponds to 0x0000001000000000
 
+
+
 typedef struct Bitboard{
 
 	uint64_t wPawns;

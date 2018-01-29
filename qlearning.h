@@ -40,17 +40,17 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 
 int weights[NUM_FEATURES];//the computer generated weights to apply to features
 
-int get_value_of_move(Bitboard *b_ptr, char * move);//Q(s, a)
+int get_state_value(Bitboard *b_ptr);//Q(s, a)
 int update_values(char * move_made, Bitboard *b_ptr);//should be called after opponent
 						     //makes move the the weights can
 						     //be updated
-						     
-void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);//extracts features from the 
+
+void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);//extracts features from the
 										//current state of the board
-										
-int count(uint64_t board); //Counts the number of ones in the bitboard				     
-						     
-						     
-						     
+
+int count(uint64_t board); //Counts the number of ones in the bitboard
+
+
+
 
 #endif
