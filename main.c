@@ -15,18 +15,18 @@ int main(void){
 
 
 	uint64_t temp = 1;
-	
+
 	/*the following loop initializes an array of 64 boards with just the square that
 	*it refers to set. this allows you to use the array to manipulate a single square
 	*on the board.*/
-	
+
   	for (int i = 0; i < 64; i++) {
 		squares[i] = temp;
 		temp <<= 1;
 	}
-  
+
    /* Testing the commads for the xboard */
-    
+
   /*
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);
@@ -42,14 +42,14 @@ int main(void){
 	setbuf(stdout, NULL);//disable buffered output for xboard
 	setbuf(stdin, NULL);
    */
-   
-   
+
+
 	Bitboard  b;
 	init(&b);
-	
+
 	/* Testing getFeatures function */
 	int features [NUM_FEATURES];
-	
+
 	getFeatures(&b, features);
 	/*
 	for(int i = 0; i < 4; i++)
@@ -103,14 +103,6 @@ void command(Bitboard * b)
 			fflush(stdout);
 		}
 		free(cmd);
+		return;
 
-}
-
-int makeMove(char * cmd, Bitboard * b)
-{
-	uint64_t legal_moves = 0;
-	legal_moves = getLegalMoves(b, BQUEEN);
-	printChessboard(b);
-	bitBoard_print(legal_moves,0);
-	return 0;
 }
