@@ -27,8 +27,24 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 	/*TODO: this function needs to, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
 	for(int piece_type = 0; piece_type < 12; piece_type++) {
+		uint64_t pb = get_board(piece_type);
 		for(int i = 0; i < 64; i ++) {
-
+			if (squares[i] & pb) {
+				int val = 0;
+				uint64_t lm = getLegalMoves(i, piece_type);
+				for(int j = 0; j < 64; j++) {
+					if(squares[j] & lm) {
+						square_move(&temp,squares[i],squares[dest]);
+						val = get_state_value(&temp);
+						if (val > piece_max) {
+							piece_max = val;
+							source_square[piece_type] = i;
+							dest_square[piece_type] = j;
+						}
+						copy_board(*b_ptr,&temp);
+					}
+				}
+			}
 		}
 	}
 
