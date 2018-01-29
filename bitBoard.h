@@ -60,6 +60,8 @@ void loop(uint64_t b, char board[8][8], unsigned int piece_type);
 /*get all the legal moves on the board for a piece type*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_square);
 
+uint64_t get_board(Bitboard *b_ptr, int piece_type);
+
 /*receive a text move and update internal board representation*/
 void update(Bitboard * b_ptr, char * move);
 
