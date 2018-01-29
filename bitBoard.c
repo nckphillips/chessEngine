@@ -163,14 +163,16 @@ void loop(uint64_t b, char board[8][8], unsigned int piece_type){
 uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_type)
 {
 	uint64_t moves = 0;
+	uint64_t b = 0;//this was added to simplify square specificity
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
 		//as long as the second square is not being blocked be a white
 		//piece residing on the first square.
-		moves = board->bPawns >> 8 | (board->bPawns >> 16 & ~allPieces(board)>>8);
+		b = board->bPawns & squares[piece_square];
+		moves =  b >> 8 | (b >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
-		moves = moves - (find_moved_black_pawns(board->bPawns) >> 16);
+		moves = moves - (find_moved_black_pawns(b) >> 16);
 		//now check for collisions with other pieces
 		moves = moves & ~allPieces(board);
 		//now calculate attacks and add them to moves.
@@ -180,16 +182,18 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 		case WPAWN:
 		//philosphy here is same as black pawn but for the opposite side
 		//of the board.
-		moves = board->wPawns << 8 | (board->wPawns << 16 & ~allPieces(board)<<8);
-		moves = moves - (find_moved_white_pawns(board->wPawns) << 16);
+		b = board->wPawns & squares[piece_square];
+		moves = b << 8 | (b << 16 & ~allPieces(board)<<8);
+		moves = moves - (find_moved_white_pawns(b) << 16);
 		moves = moves & ~allPieces(board);
 		moves += white_pawn_attacks(board);
 		break;
 
 		case BROOK:
+		b = board->bRooks & squares[piece_square];
 		//fire a ray from each rook in every direction
 		for(int i = 0; i < 64; i++) {
-			if(squares[i] & board->bRooks) {
+			if(squares[i] & b) {
 				//set moves to the right
 				rookMove = bRookMoves(board, BROOK,HFILE, i);
 				moves |= rookMove;
@@ -208,14 +212,15 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 			}
 			/*subtract the rook positions from the moves*/
 			if (moves) {
-				moves &= ~board->bRooks;
+				moves &= ~b;
 			}
 		}
 		break;
 
 		case WROOK:
+		b = board->wRooks & squares[piece_square];
 		for(int i = 0; i < 64; i++) {
-			if(squares[i] & board->wRooks) {
+			if(squares[i] & b) {
 				//set moves to the right
 				rookMove = wRookMoves(board, WROOK, HFILE, i);
 				moves |= rookMove;
@@ -234,48 +239,51 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 			}
 			/*subtract the rook positions from the moves*/
 			if (moves) {
-				moves &= ~board->wRooks;
+				moves &= ~b;
 			}
 		}
 		break;
 
 		case BBISHOP:
-		moves = bishop_moves(board,BBISHOP);
+		moves = bishop_moves(board,BBISHOP,piece_square);
 
 		break;
 
 		case WBISHOP:
-		moves = bishop_moves(board,WBISHOP);
+		moves = bishop_moves(board,WBISHOP,piece_square);
 		break;
 
 		case BKNIGHT:
+			b = board->bKnights & squares[piece_square];
 			//Moves for the Black Knight
-			moves = (((board->wKnights & ~(0xff03030303030303)) << 6) & ~allBlack(board)) |
-			(((board->wKnights & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allBlack(board)) |
-			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allBlack(board)) |
-			(((board->wKnights & ~(0x3030303030303ff)) >> 10) & ~allBlack(board)) |
-			(((board->wKnights & ~(0xffff010101010101)) << 15 ) & ~allBlack(board)) |
-			(((board->wKnights & ~(0xffff808080808080)) << 17) & ~allBlack(board)) |
-			(((board->wKnights & ~(0x808080808080ffff)) >> 15) & ~allBlack(board)) |
-			(((board->wKnights & ~(0x10101010101ffff)) >> 17) & ~allBlack(board));
+			moves = (((b & ~(0xff03030303030303)) << 6) & ~allBlack(board)) |
+			(((b & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allBlack(board)) |
+			(((b & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allBlack(board)) |
+			(((b & ~(0x3030303030303ff)) >> 10) & ~allBlack(board)) |
+			(((b & ~(0xffff010101010101)) << 15 ) & ~allBlack(board)) |
+			(((b & ~(0xffff808080808080)) << 17) & ~allBlack(board)) |
+			(((b & ~(0x808080808080ffff)) >> 15) & ~allBlack(board)) |
+			(((b & ~(0x10101010101ffff)) >> 17) & ~allBlack(board));
 		break;
 
 		case WKNIGHT:
+			b = board->wKnights & squares[piece_square];
 			//Moves for the White Knight
-			moves = (((board->wKnights & ~(0xff03030303030303)) << 6) & ~allWhite(board)) |
-			(((board->wKnights & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allWhite(board)) |
-			(((board->wKnights & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allWhite(board)) |
-			(((board->wKnights & ~(0x3030303030303ff)) >> 10) & ~allWhite(board)) |
-			(((board->wKnights & ~(0xffff010101010101)) << 15 ) & ~allWhite(board)) |
-			(((board->wKnights & ~(0xffff808080808080)) << 17) & ~allWhite(board)) |
-			(((board->wKnights & ~(0x808080808080ffff)) >> 15) & ~allWhite(board)) |
-			(((board->wKnights & ~(0x10101010101ffff)) >> 17) & ~allWhite(board));
+			moves = (((b & ~(0xff03030303030303)) << 6) & ~allWhite(board)) |
+			(((b & ~(0xffc0c0c0c0c0c0c0)) << 10) & ~allWhite(board)) |
+			(((b & ~(0xc0c0c0c0c0c0c0ff)) >> 6) & ~allWhite(board)) |
+			(((b & ~(0x3030303030303ff)) >> 10) & ~allWhite(board)) |
+			(((b & ~(0xffff010101010101)) << 15 ) & ~allWhite(board)) |
+			(((b & ~(0xffff808080808080)) << 17) & ~allWhite(board)) |
+			(((b & ~(0x808080808080ffff)) >> 15) & ~allWhite(board)) |
+			(((b & ~(0x10101010101ffff)) >> 17) & ~allWhite(board));
 		break;
 
 		case BQUEEN:
-		moves = bishop_moves(board, BQUEEN);
+		b = board->bQueen & squares[piece_square];
+		moves = bishop_moves(board, BQUEEN, piece_square);
 		for(int i = 0; i < 64; i++) {
-			if(squares[i] & board->bQueen) {
+			if(squares[i] & b) {
 				//set moves to the right
 				rookMove = bRookMoves(board, BQUEEN,HFILE, i);
 				moves |= rookMove;
@@ -294,15 +302,16 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 			}
 			/*subtract the rook positions from the moves*/
 			if (moves) {
-				moves &= ~board->bQueen;
+				moves &= ~b;
 			}
 		}
 		break;
 
 		case WQUEEN:
-		moves = bishop_moves(board, WQUEEN);
+		b = board->wQueen & squares[piece_square];
+		moves = bishop_moves(board, WQUEEN, piece_square);
 		for(int i = 0; i < 64; i++) {
-			if(squares[i] & board->wQueen) {
+			if(squares[i] & b) {
 				//set moves to the right
 				rookMove = wRookMoves(board, WQUEEN,HFILE, i);
 				moves |= rookMove;
@@ -321,7 +330,7 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 			}
 			/*subtract the rook positions from the moves*/
 			if (moves) {
-				moves &= ~board->wQueen;
+				moves &= ~b;
 			}
 		}
 		break;
