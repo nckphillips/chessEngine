@@ -762,3 +762,20 @@ uint64_t get_board(Bitboard *b_ptr, int piece_type)
 	}
 	return piece_board;
 }
+
+void copy_board(const Bitboard source, Bitboard * dest)
+{
+	dest->wPawns = source.wPawns;
+	dest->wRooks = source.wRooks;
+	dest->wKnights = source.wKnights;
+	dest->wBishops = source.wBishops;
+	dest->wQueen = source.wQueen;
+	dest->wKing = source.wKing;
+
+	dest->bPawns = source.bPawns;
+	dest->bRooks = source.bRooks;
+	dest->bKnights = source.bKnights;
+	dest->bBishops = source.bBishops;
+	dest->bQueen = source.bQueen;
+	dest->bKing = source.bKing;
+}

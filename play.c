@@ -7,6 +7,8 @@
 #include "bitBoard.h"
 #include "qlearning.h"
 
+
+
 /*returns the text string of the best move in the board's current arrangement.*/
 void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 {
@@ -17,11 +19,17 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 	int source_square_best[12] = {0};
 	int dest_square_best[12] = {0};
 
+	Bitboard temp;
+
+	copy_board(*b_ptr, &temp);//copy board to temp
+
 	/*for each piece type, find the best move*/
 	/*TODO: this function needs to, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
 	for(int piece_type = 0; piece_type < 12; piece_type++) {
+		for(int i = 0; i < 64; i ++) {
 
+		}
 	}
 
 	int index_of_max = 0;
@@ -36,22 +44,22 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 	uint64_t file = 0x101010101010101;
 	uint64_t rank = 0x110000000000000;
 	for(int i = 0;i < 8; i++) {
-		if(source_square & file) {
+		if(source_square_best[index_of_max] & file) {
 			best_move[0] = (char)(i + 97);
 		}
 	}
 	for(int i = 0; i < 8; i++) {
-		if(source_square & rank) {
+		if(source_square_best[index_of_max] & rank) {
 			best_move[1] = (char)(i + 49);
 		}
 	}
 	for(int i = 0;i < 8; i++) {
-		if(dest_square & file) {
+		if(dest_square_best[index_of_max] & file) {
 			best_move[2] = (char)(i + 97);
 		}
 	}
 	for(int i = 0; i < 8; i++) {
-		if(dest_square & rank) {
+		if(dest_square_best[index_of_max] & rank) {
 			best_move[3] = (char)(i + 49);
 		}
 	}
