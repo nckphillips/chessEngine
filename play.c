@@ -18,6 +18,8 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 	int dest_square_best[12] = {0};
 
 	/*for each piece type, find the best move*/
+	/*TODO: this function needs to, for every legal move, get the value of making that move by passing
+	a modified board to get_state_value*/
 	for(int piece_type = 0; piece_type < 12; piece_type++) {
 
 	}

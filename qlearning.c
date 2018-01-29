@@ -12,7 +12,7 @@ int getBlackValue(Bitboard* b_ptr);
 
 
 
-int get_value_of_move(Bitboard *b_ptr, char * move){
+int get_state_value(Bitboard *b_ptr){
 
 	int value = 0;
 
@@ -36,16 +36,16 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 
 
 int count(uint64_t board){
-	
+
 	int count = 0;
-	
+
 	for(int i = 0; i < 64; i++){
 			if ((board & 1) == 1){
 				count++;
 				board>>=1;
 			}
 			else
-				board>>=1; 	
+				board>>=1;
 	} //iterte 64 times
 
 	return count;
@@ -55,9 +55,9 @@ int count(uint64_t board){
 int getWhiteValue(Bitboard* b_ptr){
 
 	int value = 0;
-	
-	
-	
+
+
+
 
 
 
@@ -68,9 +68,9 @@ int getWhiteValue(Bitboard* b_ptr){
 int getBlackValue(Bitboard* b_ptr){
 
 	int value = 0;
-	
-	
-	
+
+
+
 
 
 
