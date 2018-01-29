@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+/*12 types of pieces*/
 enum pieces {BROOK, BBISHOP, BKNIGHT, BQUEEN, BKING, BPAWN,
 	     WROOK, WBISHOP, WKNIGHT, WQUEEN, WKING, WPAWN };
 
