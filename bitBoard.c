@@ -195,19 +195,19 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 		for(int i = 0; i < 64; i++) {
 			if(squares[i] & b) {
 				//set moves to the right
-				rookMove = bRookMoves(board, BROOK,HFILE, i);
+				rookMove = bRookMoves(board, BROOK,HFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves to the left
-				rookMove = bRookMoves(board, BROOK,AFILE, i);
+				rookMove = bRookMoves(board, BROOK,AFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves down
-				rookMove = bRookMoves(board, BROOK,RANK1, i);
+				rookMove = bRookMoves(board, BROOK,RANK1, i, piece_square);
 				moves |= rookMove;
 
 				//set moves up
-				rookMove = bRookMoves(board, BROOK,RANK8, i);
+				rookMove = bRookMoves(board, BROOK,RANK8, i, piece_square);
 				moves |= rookMove;
 			}
 			/*subtract the rook positions from the moves*/
@@ -222,19 +222,19 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 		for(int i = 0; i < 64; i++) {
 			if(squares[i] & b) {
 				//set moves to the right
-				rookMove = wRookMoves(board, WROOK, HFILE, i);
+				rookMove = wRookMoves(board, WROOK, HFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves to the left
-				rookMove = wRookMoves(board, WROOK, AFILE, i);
+				rookMove = wRookMoves(board, WROOK, AFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves down
-				rookMove = wRookMoves(board, WROOK,RANK1, i);
+				rookMove = wRookMoves(board, WROOK,RANK1, i, piece_square);
 				moves |= rookMove;
 
 				//set moves up
-				rookMove = wRookMoves(board, WROOK,RANK8, i);
+				rookMove = wRookMoves(board, WROOK,RANK8, i, piece_square);
 				moves |= rookMove;
 			}
 			/*subtract the rook positions from the moves*/
@@ -285,19 +285,19 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 		for(int i = 0; i < 64; i++) {
 			if(squares[i] & b) {
 				//set moves to the right
-				rookMove = bRookMoves(board, BQUEEN,HFILE, i);
+				rookMove = bRookMoves(board, BQUEEN,HFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves to the left
-				rookMove = bRookMoves(board, BQUEEN,AFILE, i);
+				rookMove = bRookMoves(board, BQUEEN,AFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves down
-				rookMove = bRookMoves(board, BQUEEN,RANK1, i);
+				rookMove = bRookMoves(board, BQUEEN,RANK1, i, piece_square);
 				moves |= rookMove;
 
 				//set moves up
-				rookMove = bRookMoves(board, BQUEEN,RANK8, i);
+				rookMove = bRookMoves(board, BQUEEN,RANK8, i, piece_square);
 				moves |= rookMove;
 			}
 			/*subtract the rook positions from the moves*/
@@ -313,19 +313,19 @@ uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_typ
 		for(int i = 0; i < 64; i++) {
 			if(squares[i] & b) {
 				//set moves to the right
-				rookMove = wRookMoves(board, WQUEEN,HFILE, i);
+				rookMove = wRookMoves(board, WQUEEN,HFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves to the left
-				rookMove = wRookMoves(board, WQUEEN,AFILE, i);
+				rookMove = wRookMoves(board, WQUEEN,AFILE, i, piece_square);
 				moves |= rookMove;
 
 				//set moves down
-				rookMove = wRookMoves(board, WQUEEN,RANK1, i);
+				rookMove = wRookMoves(board, WQUEEN,RANK1, i, piece_square);
 				moves |= rookMove;
 
 				//set moves up
-				rookMove = wRookMoves(board, WQUEEN,RANK8, i);
+				rookMove = wRookMoves(board, WQUEEN,RANK8, i, piece_square);
 				moves |= rookMove;
 			}
 			/*subtract the rook positions from the moves*/
@@ -499,10 +499,10 @@ uint64_t white_pawn_attacks(Bitboard* b)
 	return attacks;
 }
 /*return a bitboard with all squares on the same diagonals as the piece_type*/
-uint64_t bishop_moves(Bitboard* b, unsigned int piece_type)
+uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 {
 	uint64_t diag = 0;
-	uint64_t piece_board = get_board(b, piece_type);
+	uint64_t piece_board = get_board(b, piece_type) & squares[piece_square];
 	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc. for diagonals
 	//create bitboard for edge files
 	uint64_t edge_files = HFILE | AFILE;
@@ -606,10 +606,10 @@ uint64_t same_rank(Bitboard* b, unsigned int piece_type)
 	return rank;
 }
 /*return a bitboard showing all moves a black rook can make*/
-uint64_t bRookMoves(Bitboard *b, int piece_type, uint64_t direction, int i)
+uint64_t bRookMoves(Bitboard *b, int piece_type, uint64_t direction, int i, int piece_square)
 {
 	//uint64_t dir = direction;
-	uint64_t piece_board = get_board(b, piece_type);
+	uint64_t piece_board = get_board(b, piece_type) & squares[piece_square];
 	uint64_t newMove = 0;
 	int a = 0;
 	if(direction == HFILE){
@@ -639,11 +639,11 @@ uint64_t bRookMoves(Bitboard *b, int piece_type, uint64_t direction, int i)
 }
 
 /*return a bitboard showing all moves a white rook can make*/
-uint64_t wRookMoves(Bitboard *b, int piece_type,uint64_t direction, int i)
+uint64_t wRookMoves(Bitboard *b, int piece_type,uint64_t direction, int i, piece_square)
 {
 	//uint64_t dir = direction;
 
-	uint64_t piece_board = get_board(b, piece_type);
+	uint64_t piece_board = get_board(b, piece_type) & squares[piece_square];
 	uint64_t newMove = 0;
 	int a = 0;
 	if(direction == HFILE){
