@@ -360,7 +360,15 @@ void update(Bitboard * b_ptr, char * move)
 	int to_rank = (int)move[3] - 48 - 1;
 	uint64_t source_square = squares[(from_rank * 8) + from_file];
 	uint64_t dest_square = squares[(to_rank * 8) + to_file];
+	square_move(b_ptr, source_square, dest_square);
+	return;
 
+
+
+}
+
+void square_move(Bitboard *b_ptr, uint64_t source_square, uint64_t dest_square)
+{
 	if (source_square & allWhite(b_ptr)) {
 		if (source_square & b_ptr->wPawns) {
 			b_ptr->wPawns -= source_square;
@@ -402,8 +410,7 @@ void update(Bitboard * b_ptr, char * move)
 			b_ptr->bKnights += dest_square;
 		}
 	}
-
-
+	return;
 }
 
 
