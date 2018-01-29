@@ -160,7 +160,7 @@ void loop(uint64_t b, char board[8][8], unsigned int piece_type){
 
 
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
-uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type)
+uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_type)
 {
 	uint64_t moves = 0;
 	switch (piece_type){

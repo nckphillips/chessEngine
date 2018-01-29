@@ -31,7 +31,7 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {
 				int val = 0;
-				uint64_t lm = getLegalMoves(i, piece_type);
+				uint64_t lm = getLegalMoves(b_ptr, i, piece_type);
 				for(int j = 0; j < 64; j++) {
 					if(squares[j] & lm) {
 						square_move(&temp,squares[i],squares[dest]);
