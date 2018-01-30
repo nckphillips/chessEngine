@@ -689,8 +689,10 @@ uint64_t same_file(Bitboard* b, unsigned int piece_type)
 uint64_t black_moves(Bitboard *b)
 {
 	uint64_t bm = 0;
-	bm = getLegalMoves(b, BBISHOP) | getLegalMoves(b, BROOK) | getLegalMoves(b, BKNIGHT) | getLegalMoves(b, BPAWN) |
-		getLegalMoves(b, BKING) | getLegalMoves(b, BQUEEN);
+	for(int i = 0; i < 64; i++){
+		bm |= getLegalMoves(b, BBISHOP,i) | getLegalMoves(b, BROOK,i) | getLegalMoves(b, BKNIGHT,i) | getLegalMoves(b, BPAWN,i) |
+			getLegalMoves(b, BKING,i) | getLegalMoves(b, BQUEEN,i);
+	}
 	return bm;
 }
 
@@ -698,8 +700,10 @@ uint64_t black_moves(Bitboard *b)
 uint64_t white_moves(Bitboard *b)
 {
 	uint64_t wm = 0;
-	wm = getLegalMoves(b, WBISHOP) | getLegalMoves(b, WROOK) | getLegalMoves(b, WKNIGHT) | getLegalMoves(b, WPAWN) |
-		getLegalMoves(b, WKING) | getLegalMoves(b, WQUEEN);
+	for(int i = 0; i < 64; i++){
+		wm |= getLegalMoves(b, WBISHOP,i) | getLegalMoves(b, WROOK,i) | getLegalMoves(b, WKNIGHT,i) | getLegalMoves(b, WPAWN,i) |
+			getLegalMoves(b, WKING,i) | getLegalMoves(b, WQUEEN,i);
+	}
 	return wm;
 }
 
