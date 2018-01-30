@@ -20,9 +20,9 @@ uint64_t find_moved_white_pawns(uint64_t wPawns);
 uint64_t white_pawn_attacks(Bitboard* b);
 uint64_t same_file(Bitboard* b, unsigned int piece_type);
 uint64_t same_rank(Bitboard* b, unsigned int piece_type);
-uint64_t bRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i);
-uint64_t wRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i);
-uint64_t bishop_moves(Bitboard* b, unsigned int piece_type);
+uint64_t bRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i, int piece_square);
+uint64_t wRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i, int piece_square);
+uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square);
 uint64_t get_board(Bitboard *b_ptr, int piece_type);//return the piece's bitboard
 uint64_t black_moves(Bitboard *b);
 uint64_t white_moves(Bitboard *b);
@@ -160,7 +160,7 @@ void loop(uint64_t b, char board[8][8], unsigned int piece_type){
 
 
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
-uint64_t getLegalMoves(Bitboard *board, int piece_square, unsigned int piece_type)
+uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_square)
 {
 	uint64_t moves = 0;
 	uint64_t b = 0;//this was added to simplify square specificity
@@ -639,7 +639,7 @@ uint64_t bRookMoves(Bitboard *b, int piece_type, uint64_t direction, int i, int 
 }
 
 /*return a bitboard showing all moves a white rook can make*/
-uint64_t wRookMoves(Bitboard *b, int piece_type,uint64_t direction, int i, piece_square)
+uint64_t wRookMoves(Bitboard *b, int piece_type,uint64_t direction, int i, int piece_square)
 {
 	//uint64_t dir = direction;
 

@@ -10,7 +10,7 @@
 
 
 /*returns the text string of the best move in the board's current arrangement.*/
-void get_best_move(char const *best_move_string, Bitboard *b_ptr)
+void get_best_move(char *best_move_string, Bitboard *b_ptr)
 {
 
 	/*the value of the move for the array given above*/
@@ -26,20 +26,21 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 	/*for each piece type, find the best move*/
 	/*TODO: this function needs to, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
+	int piece_max = 0;
 	for(int piece_type = 0; piece_type < 12; piece_type++) {
-		uint64_t pb = get_board(piece_type);
+		uint64_t pb = get_board(b_ptr,piece_type);
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {
 				int val = 0;
-				uint64_t lm = getLegalMoves(b_ptr, i, piece_type);
+				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);
 				for(int j = 0; j < 64; j++) {
 					if(squares[j] & lm) {
-						square_move(&temp,squares[i],squares[dest]);
+						square_move(&temp,squares[i],squares[j]);
 						val = get_state_value(&temp);
 						if (val > piece_max) {
 							piece_max = val;
-							source_square[piece_type] = i;
-							dest_square[piece_type] = j;
+							source_square_best[piece_type] = i;
+							dest_square_best[piece_type] = j;
 						}
 						copy_board(*b_ptr,&temp);
 					}
@@ -61,22 +62,22 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 	uint64_t rank = 0x110000000000000;
 	for(int i = 0;i < 8; i++) {
 		if(source_square_best[index_of_max] & file) {
-			best_move[0] = (char)(i + 97);
+			best_move_string[0] = (char)(i + 97);
 		}
 	}
 	for(int i = 0; i < 8; i++) {
 		if(source_square_best[index_of_max] & rank) {
-			best_move[1] = (char)(i + 49);
+			best_move_string[1] = (char)(i + 49);
 		}
 	}
 	for(int i = 0;i < 8; i++) {
 		if(dest_square_best[index_of_max] & file) {
-			best_move[2] = (char)(i + 97);
+			best_move_string[2] = (char)(i + 97);
 		}
 	}
 	for(int i = 0; i < 8; i++) {
 		if(dest_square_best[index_of_max] & rank) {
-			best_move[3] = (char)(i + 49);
+			best_move_string[3] = (char)(i + 49);
 		}
 	}
 
@@ -87,10 +88,10 @@ void get_best_move(char const *best_move_string, Bitboard *b_ptr)
 void play(Bitboard *b_ptr)
 {
 	char *best_move = (char *)malloc(7);//5 character move, newline, eof
-	best_move[6] = eof;
+	best_move[6] = EOF;
 	best_move[5] = '\n';
 	get_best_move(best_move, b_ptr);
-	update()
+	update(b_ptr,best_move);
 	fprintf(stdout,"move %s",best_move);
 	free(best_move);
 	return;

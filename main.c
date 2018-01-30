@@ -57,7 +57,8 @@ int main(void){
 		printf("%d ", features[i]);
 	}
 	*/
-
+	uint64_t test = getLegalMoves(&b,BPAWN,8);
+	bitBoard_print(test,0);
 	//command(&b);
 	return 0;
 }
