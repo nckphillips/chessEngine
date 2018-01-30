@@ -38,7 +38,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				/*exploration*/
-				if (((float)rand() * EPSILON) > FLT_MAX * EPSILON) {
+				if (((float)rand() < FLT_MAX * EPSILON) {
 					int randsquare = rand()%64;
 					while (~squares[randsquare] & lm) {
 						randsquare = rand()%64;
