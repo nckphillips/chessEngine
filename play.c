@@ -1,5 +1,6 @@
 /*This file contains all functions regarding the engine making moves and reporting to
 	the gui.*/
+#include <float.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,9 +38,9 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				/*exploration*/
-				if (rand() % (1/EPSILON) == 0) {
+				if (((float)rand() * EPSILON) > FLT_MAX * EPSILON) {
 					int randsquare = rand()%64;
-					while (~squares[] & lm) {
+					while (~squares[randsquare] & lm) {
 						randsquare = rand()%64;
 					}
 					source_square_best[piece_type] = randsquare;
@@ -97,7 +98,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		}
 	}
 	///////////////////////////////////////
-	move[4] = '\n'; //this position will eventually be used for promotion
+	best_move_string[4] = '\n'; //this position will eventually be used for promotion
 
 	return;
 }
