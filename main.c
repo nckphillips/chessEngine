@@ -21,9 +21,9 @@ int main(void){
 	*on the board.*/
 
   	for (int i = 0; i < 64; i++) {
-		squares[i] = temp;
-		temp <<= 1;
-	}
+			squares[i] = temp;
+			temp <<= 1;
+		}
 
    /* Testing the commads for the xboard */
 
