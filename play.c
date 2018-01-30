@@ -31,9 +31,9 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	int piece_max = 0;
 	for(int piece_type = 0; piece_type < 12; piece_type++) {
 		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
+		int val = 0;
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
-				int val = 0;
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				for(int j = 0; j < 64; j++) {//loop through the moves
 					if(squares[j] & lm) {
@@ -45,11 +45,11 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							dest_square_best[piece_type] = j;
 						}
 						copy_board(*b_ptr,&temp);
-						move_value[piece_type] = piece_max;//save that piece type's max
 					}
 				}
 			}
 		}
+		move_value[piece_type] = piece_max;//save that piece type's max
 	}
 
 	int index_of_max = 0;
