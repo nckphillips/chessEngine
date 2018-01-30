@@ -43,6 +43,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							dest_square_best[piece_type] = j;
 						}
 						copy_board(*b_ptr,&temp);
+						move_value[piece_type] = piece_max;
 					}
 				}
 			}
