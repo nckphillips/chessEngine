@@ -16,24 +16,26 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	/*the value of the move for the array given above*/
 	int move_value[12] = {0};
 
+	/*arrays containing the source and destination square for each piece's
+	  best move.*/
 	int source_square_best[12] = {0};
 	int dest_square_best[12] = {0};
 
+	/*temporary bitboard to modify and pass to the value function*/
 	Bitboard temp;
-
 	copy_board(*b_ptr, &temp);//copy board to temp
 
-	/*for each piece type, find the best move*/
-	/*TODO: this function needs to, for every legal move, get the value of making that move by passing
+	/*
+	for every piece, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
 	int piece_max = 0;
 	for(int piece_type = 0; piece_type < 12; piece_type++) {
-		uint64_t pb = get_board(b_ptr,piece_type);
+		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
 		for(int i = 0; i < 64; i ++) {
-			if (squares[i] & pb) {
+			if (squares[i] & pb) {//loop through the pieces
 				int val = 0;
-				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);
-				for(int j = 0; j < 64; j++) {
+				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
+				for(int j = 0; j < 64; j++) {//loop through the moves
 					if(squares[j] & lm) {
 						square_move(&temp,squares[i],squares[j]);
 						val = get_state_value(&temp);
@@ -43,7 +45,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							dest_square_best[piece_type] = j;
 						}
 						copy_board(*b_ptr,&temp);
-						move_value[piece_type] = piece_max;
+						move_value[piece_type] = piece_max;//save that piece type's max
 					}
 				}
 			}
@@ -81,7 +83,8 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 			best_move_string[3] = (char)(i + 49);
 		}
 	}
-
+	///////////////////////////////////////
+	move[4] = '\n'; //this position will eventually be used for promotion
 
 	return;
 }
