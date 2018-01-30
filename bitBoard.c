@@ -1,4 +1,4 @@
-/*This file holds all the informationg pertaining to the bitboard representaion
+/*This file holds all the information pertaining to the bitboard representaion
  *and move calculations (legal moves, positions, etc)*/
 
 #include <stdint.h>
@@ -12,6 +12,11 @@ uint64_t AFILE;
 uint64_t RANK1;
 uint64_t RANK8;
 uint64_t rookMove;
+
+int wqCastle;
+int wkCastle;
+int bqCastle;
+int bkCastle;
 
 /*helper functions*/
 uint64_t find_moved_black_pawns(uint64_t bPawns);
@@ -29,6 +34,10 @@ uint64_t white_moves(Bitboard *b);
 uint64_t all_moves(Bitboard *b);
 int black_check(Bitboard *b);
 int white_check(Bitboard *b);
+int black_mate(Bitboard *b);
+int white_mate(Bitboard *b);
+int black_stale(Bitboard *b);
+int white_stale(Bitboard *b);
 
 void bitBoard_print(uint64_t b, int row){
 	if (row == 8) {
@@ -361,7 +370,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 void update(Bitboard * b_ptr, char * move)
 {
 	if (strlen(move) < 4) return;
-	/*commands are given: "e5e6" so the below lines convert the two part of
+	/*commands are given: "e5e6" so the below lines convert the two parts of
 	 *the command to squares.*/
 	int from_file = (int)move[0] - 97;
 	int from_rank = (int)move[1] - 48 - 1;
@@ -743,6 +752,49 @@ int white_check(Bitboard *b)
 	return check;
 }
 
+/*indicate whether the Black King is in checkmate*/
+int black_mate(Bitboard *b)
+{
+	Bitboard temp;
+	copy_board(*b, &temp);
+	if(black_check(b) == 0){
+		return 0;
+	} else{//TODO: update this
+		return 1;
+	}
+}
+
+/*indicate whether the White King is in checkmate*/
+int white_mate(Bitboard *b)
+{
+	Bitboard temp;
+	copy_board(*b, &temp);
+	if(white_check(b) == 0){
+		return 0;
+	} else{//TODO: update this
+		return 1;
+	}
+}
+
+/*indicate whether black is in stalemate*/
+int black_stale(Bitboard *b)
+{
+	if((black_moves(b) == 0) && (black_mate(b) == 0)){
+		return 1;
+	} else{
+		return 0;
+	}
+}
+
+/*indicate whether white is in stalemate*/
+int white_stale(Bitboard *b)
+{
+	if((white_moves(b) == 0) && (white_mate(b) == 0)){
+		return 1;
+	} else{
+		return 0;
+	}
+}
 
 /*return the requested bitboard*/
 uint64_t get_board(Bitboard *b_ptr, int piece_type)

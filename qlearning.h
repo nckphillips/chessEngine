@@ -41,7 +41,7 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 int weights[NUM_FEATURES];//the computer generated weights to apply to features
 
 int get_state_value(Bitboard *b_ptr);//Q(s, a)
-int update_values(char * move_made, Bitboard *b_ptr);//should be called after opponent
+void updateWeights(int weights[NUM_FEATURES], char * move_made, Bitboard *b_ptr);//should be called after opponent
 						     //makes move the the weights can
 						     //be updated
 
