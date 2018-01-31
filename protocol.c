@@ -70,7 +70,7 @@ for (int i = 0; i < MAX_CMD_LEN; i++) {
     return SETBOARD;
 } else if (!strcmp(cmd, "move") || !strcmp(cmd, "usermove") || is_move_format(cmd)) {
     return MOVE;
-} else if (!strcmp(cmd, "time")) {
+} else if (!strcmp(cmd, "time") || !strcmp(cmd, "otim")) {
 	return TIME;
 }
   //printf("tellusererror %s\n", cmd);

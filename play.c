@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include "play.h"
 #include "bitBoard.h"
 #include "qlearning.h"
@@ -14,7 +13,6 @@
 /*returns the text string of the best move in the board's current arrangement.*/
 void get_best_move(char *best_move_string, Bitboard *b_ptr)
 {
-	srand(time(0));//seed random
 	/*the value of the move for the array given above*/
 	int move_value[6] = {0};
 
@@ -31,16 +29,15 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	for every piece, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
 	int piece_max = 0;
-	for(int piece_type = 0; piece_type < 6; piece_type++) {
+	for(int piece_type = BPAWN; piece_type >= 0; piece_type--) {
 		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
 		int val = 0;
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				/*exploration*/
-				if (lm && ((float)rand() < FLT_MAX * EPSILON)) {
+				if (lm && 1) {//fix rand
 					int randsquare = rand()%64;
-
 					while (!(squares[randsquare] & lm) && randsquare >= 0) {
 						randsquare--;
 					}
@@ -49,10 +46,13 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							randsquare++;
 						}
 					}
+					
+
 					source_square_best[piece_type] = i;
 					dest_square_best[piece_type] = randsquare;
-					piece_max = 1000;
-				} else {
+					piece_max = 1000+rand();
+					break;
+				} else if (lm){
 					/*choose the best move*/
 					for(int j = 0; j < 64; j++) {//loop through the moves
 						if(squares[j] & lm) {
@@ -65,6 +65,10 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							}
 							copy_board(*b_ptr,&temp);
 						}
+					}
+				} else {
+					if (!val){
+						piece_max = -1;
 					}
 				}
 			}

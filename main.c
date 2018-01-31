@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "bitBoard.h"
 #include "protocol.h"
 #include "play.h"
@@ -34,7 +35,7 @@ int main(void){
 	}
 	fgets(s, MAX_CMD_LEN, stdin);
 	if (!strcmp(s, "protover 2\n")) {
-		printf("feature sigint=0 sigterm=0 usermove=1 done=1\n");
+		printf("feature sigint=0 sigterm=0 usermove=0 done=1\n");
 	}
 	free(s);
 
@@ -45,6 +46,7 @@ int main(void){
 
 	Bitboard  b;
 	init(&b);
+	srand(time(0));//seed random
 
 
 	command(&b);
@@ -69,18 +71,17 @@ void command(Bitboard * b)
 				case FORCE: /*do whatever force requires*/;
 				break;
 
-				case TIME:
-				case GO:
-				play(b);
-				break;
-
 				case SETBOARD:/*receive a fen string and update boards*/;
 				break;
 
+
+				//case TIME:
 				case MOVE:
-				update(b, cmd+6);
+				update(b, cmd);
 				//TODO: will update weights
 				//update_values(last_move, b);
+				case GO:
+				play(b);
 				break;
 
 				case QUIT:
