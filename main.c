@@ -9,7 +9,6 @@
 
 
 void command(Bitboard *b);//main control loop for engine
-int makeMove(char *cmd, Bitboard *b);
 
 int main(void){
 
@@ -27,7 +26,7 @@ int main(void){
 
    /* Testing the commads for the xboard */
 
-  /*
+
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);
 	if (!strcmp(s, "xboard\n")) {
@@ -35,37 +34,25 @@ int main(void){
 	}
 	fgets(s, MAX_CMD_LEN, stdin);
 	if (!strcmp(s, "protover 2\n")) {
-		printf("feature done=1\n");
+		printf("feature sigint=0 sigterm=0 usermove=1 done=1\n");
 	}
 	free(s);
 
 	setbuf(stdout, NULL);//disable buffered output for xboard
 	setbuf(stdin, NULL);
-   */
+
 
 
 	Bitboard  b;
 	init(&b);
 
-	/* Testing getFeatures function */
-	int features [NUM_FEATURES];
 
-	getFeatures(&b, features);
-	/*
-	for(int i = 0; i < 4; i++)
-	{
-		printf("%d ", features[i]);
-	}
-	*/
-	uint64_t test = getLegalMoves(&b,WPAWN,8);
-	bitBoard_print(test,0);
-	//command(&b);
+	command(&b);
 	return 0;
 }
 
 void command(Bitboard * b)
 {
-
 		char * cmd = (char*)malloc(sizeof(char)*MAX_CMD_LEN);//allocate space for
 																												// command
 		unsigned int action = 0;
