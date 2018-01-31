@@ -385,62 +385,74 @@ void update(Bitboard * b_ptr, char * move)
 
 }
 
+void take_black(Bitboard *b_ptr)
+{
+	b_ptr->bPawns &= ~allWhite(b_ptr);
+	b_ptr->bRooks &= ~allWhite(b_ptr);
+	b_ptr->bKnights &= ~allWhite(b_ptr);
+	b_ptr->bBishops &= ~allWhite(b_ptr);
+	b_ptr->bQueen &= ~allWhite(b_ptr);
+	b_ptr->bKing &= ~allWhite(b_ptr);
+}
+
+void take_white(Bitboard *b_ptr)
+{
+	b_ptr->wPawns &= ~allBlack(b_ptr);
+	b_ptr->wRooks &= ~allBlack(b_ptr);
+	b_ptr->wKnights &= ~allBlack(b_ptr);
+	b_ptr->wBishops &= ~allBlack(b_ptr);
+	b_ptr->wQueen &= ~allBlack(b_ptr);
+	b_ptr->wKing &= ~allBlack(b_ptr);
+
+}
+
 void square_move(Bitboard *b_ptr, uint64_t source_square, uint64_t dest_square)
 {
 	if (source_square & allWhite(b_ptr)) {
 		if (source_square & b_ptr->wPawns) {
 			b_ptr->wPawns &= ~source_square;
 			b_ptr->wPawns |= dest_square;
-			b_ptr->bPawns &= ~dest_square;
-
 		} else if (source_square & b_ptr->wRooks) {
 			b_ptr->wRooks &= ~source_square;
 			b_ptr->wRooks |= dest_square;
-			b_ptr->bRooks &= ~dest_square;
 		} else if (source_square & b_ptr->wBishops) {
 			b_ptr->wBishops &= ~source_square;
 			b_ptr->wBishops |= dest_square;
-			b_ptr->bBishops &= ~dest_square;
 		} else if (source_square & b_ptr->wKing) {
 			b_ptr->wKing &= ~source_square;
 			b_ptr->wKing |= dest_square;
-			b_ptr->bKing &= ~dest_square;
 		} else if (source_square & b_ptr->wQueen) {
 			b_ptr->wQueen &= ~source_square;
 			b_ptr->wQueen |= dest_square;
-			b_ptr->bQueen &= ~dest_square;
 		} else if (source_square & b_ptr->wKnights) {
 			b_ptr->wKnights &= ~source_square;
 			b_ptr->wKnights |= dest_square;
-			b_ptr->bKnights &= ~dest_square;
 		}
+		take_black(b_ptr);
 	} else {//its a black piece
 		if (source_square & b_ptr->bPawns) {
 			b_ptr->bPawns &= ~source_square;
 			b_ptr->bPawns |= dest_square;
-			b_ptr->wPawns &= ~dest_square;
 		} else if (source_square & b_ptr->bRooks) {
 			b_ptr->bRooks &= ~source_square;
 			b_ptr->bRooks |= dest_square;
-			b_ptr->wRooks &= ~dest_square;
 		} else if (source_square & b_ptr->bBishops) {
 			b_ptr->bBishops &= ~source_square;
 			b_ptr->bBishops |= dest_square;
-			b_ptr->wBishops &= ~dest_square;
 		} else if (source_square & b_ptr->bKing) {
 			b_ptr->bKing &= ~source_square;
 			b_ptr->bKing |= dest_square;
-			b_ptr->wKing &= ~dest_square;
 		} else if (source_square & b_ptr->bQueen) {
 			b_ptr->bQueen &= ~source_square;
 			b_ptr->bQueen |= dest_square;
-			b_ptr->wKing &= ~dest_square;
 		} else if (source_square & b_ptr->bKnights) {
 			b_ptr->bKnights &= ~source_square;
 			b_ptr->bKnights |= dest_square;
-			b_ptr->wKnights &= ~dest_square;
 		}
+		take_white(b_ptr);
 	}
+	printf("board\n");
+	printChessboard(b_ptr);
 	return;
 }
 
