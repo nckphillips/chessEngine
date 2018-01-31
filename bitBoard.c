@@ -13,10 +13,11 @@ uint64_t RANK1;
 uint64_t RANK8;
 uint64_t rookMove;
 
-int wqCastle;
-int wkCastle;
-int bqCastle;
-int bkCastle;
+/*castling rights*/
+int wqCastle = 1;
+int wkCastle = 1;
+int bqCastle = 1;
+int bkCastle = 1;
 
 /*helper functions*/
 uint64_t find_moved_black_pawns(uint64_t bPawns);
@@ -348,15 +349,43 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		//move up, down, right, left, or diagonal by 1 square
 		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 |
 			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
+		/*can we castle??*/
+		if(bqCastle == 1){
+			if( ((board->bKing>>1) == 0) && ((board->bKing>>2) == 0) ){
+			//space between bKing and bqRook is empty: black can castle queenside
+				moves |= board->bKing>>2;
+			}
+		}
+		if(bkCastle == 1){
+			if( ((board->bKing<<1) == 0) && ((board->bKing<<2) == 0) ){
+			//space between bKing and bkRook is empty: black can castle kingside
+				moves |= board->bKing<<2;
+			}
+		}
+
 		//don't move where there's another black piece
 		moves &= ~allBlack(board);
-		//TODO: account for check and castling
+		//TODO: account for check
 		break;
 
 		case WKING:
 		//move up, down, right, left, or diagonal by 1 square
 		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 |
 			board->wKing >> 1 | board->wKing >>7 | board->wKing >>8 | board->wKing >>9;
+		/*can we castle??*/
+		if(wqCastle == 1){
+			if( ((board->wKing>>1) == 0) && ((board->wKing>>2) == 0) ){
+			//space between wKing and wqRook is empty: white can castle queenside
+				moves |= board->wKing>>2;
+			}
+		}
+		if(wkCastle == 1){
+			if( ((board->wKing<<1) == 0) && ((board->wKing<<2) == 0) ){
+			//space between wKing and wkRook is empty: white can castle kingside
+				moves |= board->wKing<<2;
+			}
+		}
+
 		//don't move where there's another white piece
 		moves &= ~allWhite(board);
 		break;
@@ -370,6 +399,53 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 void update(Bitboard * b_ptr, char * move)
 {
 	if (strlen(move) < 4) return;
+
+	/*update castling rights*/
+	if (move[0] == 'e'){
+		//white king has moved
+		if(move[1] == '1'){
+			wqCastle = 0;
+			wkCastle = 0;
+		//black king has moved
+		} else if(move[1] == '8'){
+			bqCastle = 0;
+			bkCastle = 0;
+		}
+	} else if(move[0] == 'a'){
+		//white queenside rook has moved
+		if(move[1] == '1'){
+			wqCastle = 0;
+		//black queenside rook has moved
+		} else if(move[1] == '8'){
+			bqCastle = 0;
+		}
+	} else if(move[0] == 'h'){
+		if(move[1] == '1'){
+		//white kingside rook has moved
+			wkCastle = 0;
+		} else if(move[1] == '8'){
+		//black kingside rook has moved
+			bkCastle = 0;
+		}
+	}
+	if(move[2] == 'a'){
+		if(move[3] == '1'){
+		//white queenside rook has been taken, or already moved
+			wqCastle = 0;
+		} else if(move[3] == '8'){
+		//black queenside rook has been taken, or already moved
+			bqCastle = 0;
+		}
+	} else if(move[2] == 'h'){
+		if(move[3] == '1'){
+		//white kingside rook has been taken, or already moved
+			wkCastle = 0;
+		} else if(move[3] == '8'){
+		//black kingside rook has been taken, or already moved
+			bkCastle = 0;
+		}
+	}
+
 	/*commands are given: "e5e6" so the below lines convert the two parts of
 	 *the command to squares.*/
 	int from_file = (int)move[0] - 97;
