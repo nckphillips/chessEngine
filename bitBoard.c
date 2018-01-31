@@ -180,13 +180,13 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		//as long as the second square is not being blocked be a white
 		//piece residing on the first square.
 		b = board->bPawns & squares[piece_square];
-		moves =  b >> 8 | (b >> 16 & ~allPieces(board)>>8);
+		moves =  (b >> 8 & ~allPieces(board)) | (b >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
 		moves = moves - (find_moved_black_pawns(b) >> 16);
 		//now check for collisions with other pieces
-		moves = moves & ~allPieces(board);
+		moves &= ~allPieces(board);
 		//now calculate attacks and add them to moves.
-		moves += black_pawn_attacks(board);
+		moves |= black_pawn_attacks(board);
 		break;
 
 		case WPAWN:
