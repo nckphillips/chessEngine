@@ -75,5 +75,6 @@ uint64_t allWhite(Bitboard *b);//returns bitboard of all white pieces
 uint64_t allBlack(Bitboard *b);//returns bitboard of all black pieces
 uint64_t allPieces(Bitboard *b);//returns bitboard of all pieces
 void copy_board(const Bitboard source, Bitboard * dest);//copy board struct from source to dest
+void copy_board2(const Bitboard *source, Bitboard *dest);//Same as above, but takes 2 pointers
 
 #endif

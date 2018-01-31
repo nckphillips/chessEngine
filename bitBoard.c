@@ -527,8 +527,8 @@ void square_move(Bitboard *b_ptr, uint64_t source_square, uint64_t dest_square)
 		}
 		take_white(b_ptr);
 	}
-	printf("board\n");
-	printChessboard(b_ptr);
+	//printf("board\n");
+	//printChessboard(b_ptr);
 	return;
 }
 
@@ -958,3 +958,23 @@ void copy_board(const Bitboard source, Bitboard * dest)
 	dest->bQueen = source.bQueen;
 	dest->bKing = source.bKing;
 }
+
+
+
+void copy_board2(const Bitboard *source, Bitboard *dest)
+{
+	dest->wPawns = source->wPawns;
+	dest->wRooks = source->wRooks;
+	dest->wKnights = source->wKnights;
+	dest->wBishops = source->wBishops;
+	dest->wQueen = source->wQueen;
+	dest->wKing = source->wKing;
+
+	dest->bPawns = source->bPawns;
+	dest->bRooks = source->bRooks;
+	dest->bKnights = source->bKnights;
+	dest->bBishops = source->bBishops;
+	dest->bQueen = source->bQueen;
+	dest->bKing = source->bKing;
+}//Same function as copy_board, but takes 2 pointers
+

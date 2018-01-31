@@ -6,6 +6,9 @@
 #include "qlearning.h"
 
 
+static int weights[NUM_FEATURES] = {1, 1, 1, 1};//the computer generated weights to apply to features
+
+
 int getValue(uint64_t board, unsigned int piece_type);
 
 
@@ -17,38 +20,73 @@ int get_state_value(Bitboard *b_ptr){
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 	
-	for(int i = 0; i < 4; i++){
+	for(int i = 0; i < NUM_FEATURES; i++){
 		value += weights[i] * features[i]; // Q = w[i] * f[i]
 	}
-
+	
 	return value;
 
 }//Q(s, a)
 
 
-void updateWeights(int weights[NUM_FEATURES], char * move_made, Bitboard *b_ptr){
+void update_values(int weights[NUM_FEATURES], char * move_made, Bitboard *b_ptr){
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 	
-	//diff = (reward + discount*maxAction(b_ptr) ) - get_state_value(b_ptr);
-
+	int diff = 0;
+	
+	//reward = state.getScore() - self.lastState.getScore();
+	
+	//reward = getReward(b_ptr);
+	
+	diff = (DISCOUNT * maxAction(b_ptr) ) - get_state_value(b_ptr);
+	
+	for(int i = 0; i < NUM_FEATURES; i++){
+		weights[i] = ALPHA * diff * features[i]; // W[i] = ALPHA * diff * F[i]
+	}
 
 }//Update weights based on the move made
 
-/*
-int maxAction(Bitbiard *b_ptr){
 
-	int maxAction = 0;
+int maxAction(Bitboard *b_ptr){
 
 
+	Bitboard temp;
+	copy_board2(b_ptr, &temp);
+	int piece_max = 0;
+	
+	for(int piece_type = WPAWN; piece_type >= 0; piece_type--) {
+		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
+		int val = 0;
+		for(int i = 0; i < 64; i ++) {
+			if (squares[i] & pb){//loop through the pieces
+				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);
+				
+				for(int j = 0; j < 64; j++) {//loop through the moves
+					if(squares[j] & lm) {
+						square_move(&temp,squares[i],squares[j]); //square[i] holds current pos
+						val = get_state_value(&temp);
+						printf("%d ", val);
+						if (val >= piece_max) {
+							piece_max = val;
+							//source_square_best[piece_type] = i;
+							//dest_square_best[piece_type] = j;
+						}
+						copy_board2(b_ptr,&temp); //reverse temp to initial state
+					}
+				}								
+			}	
+				
+		} //iterate through all pieces
+		
+	} //interate through all piece types
 
 
 
-
+	return piece_max;
 
 } //Return the maximum value of Q(s, a)
 
-*/
 
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	int wValue = 0;
@@ -76,6 +114,19 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 
 } //Gets features for the board
 
+/*
+int getReward(Bitboard* b_ptr){
+
+	int reward = 0;
+
+
+
+
+
+
+
+}
+*/
 
 
 int count(uint64_t board){
@@ -164,11 +215,18 @@ int getValue(uint64_t board, unsigned int piece_type){
 	return value;
 } //get total value for given Pieces
 
-
-
-
-
-
-
-
-
+void writeFile()
+{
+   FILE * fp;
+   int i;
+   /* open the file for writing*/
+   fp = fopen ("weights.txt","w");
+ 
+   /* write 10 lines of text into the file stream*/
+   for(i = 0; i < NUM_FEATURES; i++){
+       fprintf (fp, "%d\n", weights[i]);
+   }
+ 
+   /* close the file*/  
+   fclose (fp);
+}//write to a weights.txt

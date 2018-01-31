@@ -26,7 +26,7 @@ int main(void){
 		}
 
    /* Testing the commads for the xboard */
-
+/*
 
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);
@@ -42,14 +42,14 @@ int main(void){
 	setbuf(stdout, NULL);//disable buffered output for xboard
 	setbuf(stdin, NULL);
 
-
-
+*/	
 	Bitboard  b;
 	init(&b);
 	srand(time(0));//seed random
-
-
-	command(&b);
+	
+	maxAction(&b);
+	
+	//command(&b);
 	return 0;
 }
 
