@@ -351,13 +351,13 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
 		/*can we castle??*/
 		if(bqCastle == 1){
-			if( ((board->bKing>>1) == 0) && ((board->bKing>>2) == 0) ){
+			if( (((board->bKing>>1) & allPieces(board))== 0) && (((board->bKing>>2) & allPieces(board)) == 0) && (((board->bKing>>3) & allPieces(board)) == 0) ){
 			//space between bKing and bqRook is empty: black can castle queenside
 				moves |= board->bKing>>2;
 			}
 		}
 		if(bkCastle == 1){
-			if( ((board->bKing<<1) == 0) && ((board->bKing<<2) == 0) ){
+			if( (( (board->bKing<<1) & allPieces(board) )== 0) && (((board->bKing<<2) & allPieces(board))== 0) ){
 			//space between bKing and bkRook is empty: black can castle kingside
 				moves |= board->bKing<<2;
 			}
@@ -373,14 +373,14 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 |
 			board->wKing >> 1 | board->wKing >>7 | board->wKing >>8 | board->wKing >>9;
 		/*can we castle??*/
-		if(wqCastle == 1){
-			if( ((board->wKing>>1) == 0) && ((board->wKing>>2) == 0) ){
+		if( (wqCastle == 1) & (white_check(board)==0)){
+			if( (((board->wKing>>1) & allPieces(board)) || ((board->wKing>>1) & black_moves(board))== 0) && (((board->wKing>>2) & allPieces(board)) == 0) && (((board->wKing>>3) & allPieces(board)) == 0) ){
 			//space between wKing and wqRook is empty: white can castle queenside
 				moves |= board->wKing>>2;
 			}
 		}
-		if(wkCastle == 1){
-			if( ((board->wKing<<1) == 0) && ((board->wKing<<2) == 0) ){
+		if( (wkCastle == 1) & (white_check(board)==0)){
+			if( (((board->wKing<<1) & allPieces(board)) == 0) && (((board->wKing<<2) & allPieces(board)) == 0) ){
 			//space between wKing and wkRook is empty: white can castle kingside
 				moves |= board->wKing<<2;
 			}
