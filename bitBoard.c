@@ -13,6 +13,10 @@ uint64_t RANK1;
 uint64_t RANK8;
 uint64_t rookMove;
 
+uint64_t checkBoard;
+int black_check;
+int white_check;
+
 /*castling rights*/
 int wqCastle = 1;
 int wkCastle = 1;
@@ -33,8 +37,8 @@ uint64_t get_board(Bitboard *b_ptr, int piece_type);//return the piece's bitboar
 uint64_t black_moves(Bitboard *b);
 uint64_t white_moves(Bitboard *b);
 uint64_t all_moves(Bitboard *b);
-int black_check(Bitboard *b);
-int white_check(Bitboard *b);
+//int black_check(Bitboard *b);
+//int white_check(Bitboard *b);
 int black_mate(Bitboard *b);
 int white_mate(Bitboard *b);
 int black_stale(Bitboard *b);
@@ -346,50 +350,66 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		break;
 
 		case BKING:
+
 		//move up, down, right, left, or diagonal by 1 square
 		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 |
 			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
 		/*can we castle??*/
-		if(bqCastle == 1){
-			if( (((board->bKing>>1) & allPieces(board))== 0) && (((board->bKing>>2) & allPieces(board)) == 0) && (((board->bKing>>3) & allPieces(board)) == 0) ){
-			//space between bKing and bqRook is empty: black can castle queenside
-				moves |= board->bKing>>2;
+		if(black_check == 0){
+			if(bqCastle == 1){
+				if( (((board->bKing>>1) & allPieces(board))== 0) && (((board->bKing>>2) & allPieces(board)) == 0) && (((board->bKing>>3) & allPieces(board)) == 0) ){
+				//space between bKing and bqRook is empty
+					if( (((board->bKing>>1) & white_moves(board))== 0) && (((board->bKing>>2) & white_moves(board)) == 0) && (((board->bKing>>3) & white_moves(board)) == 0) ){
+						//space between bKing and bqRook is not in check: Black can castle Queenside
+						moves |= board->bKing>>2;
+					}
+				}
 			}
-		}
-		if(bkCastle == 1){
-			if( (( (board->bKing<<1) & allPieces(board) )== 0) && (((board->bKing<<2) & allPieces(board))== 0) ){
-			//space between bKing and bkRook is empty: black can castle kingside
-				moves |= board->bKing<<2;
-			}
-		}
 
+			if(bkCastle == 1){
+				if( (( (board->bKing<<1) & allPieces(board) )== 0) && (((board->bKing<<2) & allPieces(board))== 0) ){
+				//space between bKing and bkRook is empty
+					if( (( (board->bKing<<1) & white_moves(board) )== 0) && (((board->bKing<<2) & white_moves(board))== 0) ){
+						//space between bKing and bkRook is not in check: Black can castle Kingside
+						moves |= board->bKing<<2;
+					}
+				}
+			}
+		}
 		//don't move where there's another black piece
 		moves &= ~allBlack(board);
 		//TODO: account for check
-		break;
 
+		break;
 		case WKING:
 		//move up, down, right, left, or diagonal by 1 square
 		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 |
 			board->wKing >> 1 | board->wKing >>7 | board->wKing >>8 | board->wKing >>9;
 		/*can we castle??*/
-		if( (wqCastle == 1) & (white_check(board)==0)){
-			if( (((board->wKing>>1) & allPieces(board)) || ((board->wKing>>1) & black_moves(board))== 0) && (((board->wKing>>2) & allPieces(board)) == 0) && (((board->wKing>>3) & allPieces(board)) == 0) ){
-			//space between wKing and wqRook is empty: white can castle queenside
-				moves |= board->wKing>>2;
+		if(white_check == 0){
+			if(wqCastle == 1){
+				if( (((board->wKing>>1) & allPieces(board)) == 0) && (((board->wKing>>2) & allPieces(board)) == 0) && (((board->wKing>>3) & allPieces(board)) == 0) ){
+				//space between wKing and wqRook is empty
+					if( (((board->wKing>>1) & black_moves(board)) == 0) && (((board->wKing>>2) & black_moves(board)) == 0) && (((board->wKing>>3) & black_moves(board)) == 0) ){
+						//space between wKing and wqRook is not in check: White can castle Queenside
+						moves |= board->wKing>>2;
+					}
+				}
+			}
+			if(wkCastle == 1){
+				if( (((board->wKing<<1) & allPieces(board)) == 0) && (((board->wKing<<2) & allPieces(board)) == 0) ){
+				//space between wKing and wkRook is empty
+					if( (((board->wKing<<1) & black_moves(board)) == 0) && (((board->wKing<<2) & black_moves(board)) == 0) ){
+						//space between wKing and wkRook is not in check: White can castle Kingside
+						moves |= board->wKing<<2;
+					}
+				}
 			}
 		}
-		if( (wkCastle == 1) & (white_check(board)==0)){
-			if( (((board->wKing<<1) & allPieces(board)) == 0) && (((board->wKing<<2) & allPieces(board)) == 0) ){
-			//space between wKing and wkRook is empty: white can castle kingside
-				moves |= board->wKing<<2;
-			}
-		}
-
 		//don't move where there's another white piece
 		moves &= ~allWhite(board);
-		break;
 
+		break;
 		default: return -1;
 	}
 	return moves;
@@ -399,7 +419,19 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 void update(Bitboard * b_ptr, char * move)
 {
 	if (strlen(move) < 4) return;
-
+	checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
+	if(checkBoard == 0){
+		black_check = 0;
+	} else{
+		black_check = 1;
+	}
+	checkBoard = black_moves(b_ptr) & (b_ptr->wKing);
+	if(checkBoard == 0){
+		white_check = 0;
+	} else{
+		white_check = 1;
+	}
+	
 	/*update castling rights*/
 	if (move[0] == 'e'){
 		//white king has moved
@@ -825,40 +857,40 @@ uint64_t all_moves(Bitboard *b)
 	return am;
 }
 
-/*return an integer indicating whether the Black King is in check*/
+/*return an integer indicating whether the Black King is in check
 int black_check(Bitboard *b)
 {
 	uint64_t checkBoard = 0;
-	int check = 0;
+	//int check = 0;
 	checkBoard = white_moves(b) & (b->bKing);
 	if(checkBoard == 0){
-		check = 0;
+		return 0;
 	} else {
-		check = 1;
+		return 1;
 	}
-	return check;
+	//return check;
 }
 
-/*return an integer indicating whether the White King is in check*/
+return an integer indicating whether the White King is in check
 int white_check(Bitboard *b)
 {
 	uint64_t checkBoard = 0;
-	int check = 0;
+	//int check = 0;
 	checkBoard = black_moves(b) & (b->wKing);
 	if(checkBoard == 0){
-		check = 0;
+		return 0;
 	} else {
-		check = 1;
+		return 1;
 	}
-	return check;
+	//return check;
 }
-
+*/
 /*indicate whether the Black King is in checkmate*/
 int black_mate(Bitboard *b)
 {
 	Bitboard temp;
 	copy_board(*b, &temp);
-	if(black_check(b) == 0){
+	if(black_check == 0){
 		return 0;
 	} else{//TODO: update this
 		return 1;
@@ -870,7 +902,7 @@ int white_mate(Bitboard *b)
 {
 	Bitboard temp;
 	copy_board(*b, &temp);
-	if(white_check(b) == 0){
+	if(white_check == 0){
 		return 0;
 	} else{//TODO: update this
 		return 1;
