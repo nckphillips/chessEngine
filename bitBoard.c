@@ -419,6 +419,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 void update(Bitboard * b_ptr, char * move)
 {
 	if (strlen(move) < 4) return;
+	/*update check for both sides*/
 	checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
 	if(checkBoard == 0){
 		black_check = 0;
