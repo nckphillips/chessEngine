@@ -351,9 +351,9 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 
 		case BKING:
 
-		//move up, down, right, left, or diagonal by 1 square
-		moves = board->bKing << 1 | board->bKing <<7 | board->bKing << 8 | board->bKing << 9 |
-			board->bKing >> 1 | board->bKing >>7 | board->bKing >>8 | board->bKing >>9;
+		//move up, down, right, left, or diagonal by 1 square, but not beyond the edges
+		moves = (board->bKing & ~HFILE) << 1 | (board->bKing & ~AFILE) <<7 | board->bKing << 8 | (board->bKing & ~HFILE) << 9 |
+			(board->bKing & ~AFILE) >> 1 | (board->bKing & ~HFILE) >>7 | board->bKing >>8 | (board->bKing & ~AFILE) >>9;
 		/*can we castle??*/
 		if(black_check == 0){
 			if(bqCastle == 1){
@@ -382,9 +382,9 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 
 		break;
 		case WKING:
-		//move up, down, right, left, or diagonal by 1 square
-		moves = board->wKing << 1 | board->wKing <<7 | board->wKing << 8 | board->wKing << 9 |
-			board->wKing >> 1 | board->wKing >>7 | board->wKing >>8 | board->wKing >>9;
+		//move up, down, right, left, or diagonal by 1 square, but not beyond the edges
+		moves = (board->wKing & ~HFILE) << 1 | (board->wKing & ~AFILE) <<7 | board->wKing << 8 | (board->wKing & ~HFILE) << 9 |
+			(board->wKing & ~AFILE) >> 1 | (board->wKing & ~HFILE) >>7 | board->wKing >>8 | (board->wKing & ~AFILE) >>9;
 		/*can we castle??*/
 		if(white_check == 0){
 			if(wqCastle == 1){
@@ -418,7 +418,75 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 /*updates the bitboard upon move*/
 void update(Bitboard * b_ptr, char * move)
 {
+	int from_file;
+	int from_rank;
+	int to_file;
+	int to_rank;
+	uint64_t source_square;
+	uint64_t dest_square;
+	char * rookMove;
+
 	if (strlen(move) < 4) return;
+
+	/*if castling, move the rook first*/
+	if(wqCastle == 1){
+		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'c') && (move[3] == '1') ){
+			rookMove = "a1d1";
+			from_file = (int)rookMove[0] - 97;
+			from_rank = (int)rookMove[1] - 49;
+			to_file = (int)rookMove[2] - 97;
+			to_rank = (int)rookMove[3] - 49;
+			source_square = squares[(from_rank * 8) + from_file];
+			dest_square = squares[(to_rank * 8) + to_file];
+			square_move(b_ptr, source_square, dest_square);
+		}
+	}
+	if(wkCastle == 1){
+		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'g') && (move[3] == '1') ){
+			rookMove = "h1f1";
+			from_file = (int)rookMove[0] - 97;
+			from_rank = (int)rookMove[1] - 49;
+			to_file = (int)rookMove[2] - 97;
+			to_rank = (int)rookMove[3] - 49;
+			source_square = squares[(from_rank * 8) + from_file];
+			dest_square = squares[(to_rank * 8) + to_file];
+			square_move(b_ptr, source_square, dest_square);
+		}
+	}
+	if(bqCastle == 1){
+		if( (move[0] == 'e') && (move[1] == '8') && (move[2] == 'c') && (move[3] == '8') ){
+			rookMove = "a8d8";
+			from_file = (int)rookMove[0] - 97;
+			from_rank = (int)rookMove[1] - 49;
+			to_file = (int)rookMove[2] - 97;
+			to_rank = (int)rookMove[3] - 49;
+			source_square = squares[(from_rank * 8) + from_file];
+			dest_square = squares[(to_rank * 8) + to_file];
+			square_move(b_ptr, source_square, dest_square);
+		}
+	}
+	if(bkCastle == 1){
+		if( (move[0] == 'e') && (move[1] == '8') && (move[2] == 'g') && (move[3] == '8') ){
+			rookMove = "h8f8";
+			from_file = (int)rookMove[0] - 97;
+			from_rank = (int)rookMove[1] - 49;
+			to_file = (int)rookMove[2] - 97;
+			to_rank = (int)rookMove[3] - 49;
+			source_square = squares[(from_rank * 8) + from_file];
+			dest_square = squares[(to_rank * 8) + to_file];
+			square_move(b_ptr, source_square, dest_square);
+		}
+	}
+	/*commands are given: "e5e6" so the below lines convert the two parts of
+	 *the command to squares.*/
+	from_file = (int)move[0] - 97;
+	from_rank = (int)move[1] - 49;
+	to_file = (int)move[2] - 97;
+	to_rank = (int)move[3] - 49;
+	source_square = squares[(from_rank * 8) + from_file];
+	dest_square = squares[(to_rank * 8) + to_file];
+	square_move(b_ptr, source_square, dest_square);
+
 	/*update check for both sides*/
 	checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
 	if(checkBoard == 0){
@@ -478,16 +546,6 @@ void update(Bitboard * b_ptr, char * move)
 			bkCastle = 0;
 		}
 	}
-
-	/*commands are given: "e5e6" so the below lines convert the two parts of
-	 *the command to squares.*/
-	int from_file = (int)move[0] - 97;
-	int from_rank = (int)move[1] - 49;
-	int to_file = (int)move[2] - 97;
-	int to_rank = (int)move[3] - 49;
-	uint64_t source_square = squares[(from_rank * 8) + from_file];
-	uint64_t dest_square = squares[(to_rank * 8) + to_file];
-	square_move(b_ptr, source_square, dest_square);
 	return;
 
 
@@ -669,10 +727,10 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 				 case BBISHOP:
 				 case BQUEEN:
 				 if(r7 & allWhite(b)) {
-					 r7 = 0;//it can take the white piece but cant move further
+					 r7 = 0;//it can take the white piece but can't move further
 				 } else if (r7 & allBlack(b)) {
 					 diag -= r7;//it can move only to the square before the black piece
-					 r7 = 0;//move no furth
+					 r7 = 0;//move no further
 				 }
 				 if(r9 & allWhite(b)) {
 					 r9 = 0;
