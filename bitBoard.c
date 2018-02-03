@@ -16,6 +16,8 @@ uint64_t rookMove;
 uint64_t checkBoard;
 int black_check;
 int white_check;
+int black_stale;
+int white_stale;
 
 /*castling rights*/
 int wqCastle = 1;
@@ -41,8 +43,8 @@ uint64_t all_moves(Bitboard *b);
 //int white_check(Bitboard *b);
 int black_mate(Bitboard *b);
 int white_mate(Bitboard *b);
-int black_stale(Bitboard *b);
-int white_stale(Bitboard *b);
+//int black_stale(Bitboard *b);
+//int white_stale(Bitboard *b);
 
 void bitBoard_print(uint64_t b, int row){
 	if (row == 8) {
@@ -547,6 +549,20 @@ void update(Bitboard * b_ptr, char * move)
 			bkCastle = 0;
 		}
 	}
+
+	/*stalemate?*/
+	if((black_moves(b_ptr) == 0) && (black_check == 0)){
+		black_stale = 1;
+	} else{
+		black_stale = 0;
+	}
+	if((white_moves(b_ptr) == 0) && (white_check == 0)){
+		white_stale = 1;
+	} else{
+		white_stale = 0;
+	}
+	//TODO: figure out what to return if it's your turn, but stale is true for your color
+
 	return;
 
 
@@ -969,17 +985,17 @@ int white_mate(Bitboard *b)
 	}
 }
 
-/*indicate whether black is in stalemate*/
+/*indicate whether black is in stalemate
 int black_stale(Bitboard *b)
 {
-	if((black_moves(b) == 0) && (black_mate(b) == 0)){
+	if((black_moves(b) == 0) && (black_check == 0)){
 		return 1;
 	} else{
 		return 0;
 	}
 }
 
-/*indicate whether white is in stalemate*/
+indicate whether white is in stalemate
 int white_stale(Bitboard *b)
 {
 	if((white_moves(b) == 0) && (white_mate(b) == 0)){
@@ -988,7 +1004,7 @@ int white_stale(Bitboard *b)
 		return 0;
 	}
 }
-
+*/
 /*return the requested bitboard*/
 uint64_t get_board(Bitboard *b_ptr, int piece_type)
 {
