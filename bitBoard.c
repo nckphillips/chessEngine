@@ -823,8 +823,8 @@ uint64_t bRookMoves(Bitboard *b, int piece_type, uint64_t direction, int i, int 
 	} else if (direction == RANK8){
 		a = 8;
 	}
-	int j;
-	for (j = i; (squares[j] & ~direction); j+=a) {
+	int j=i;
+	for (; (squares[j] & ~direction); j+=a) {
 		if (squares[j] & allWhite(b)) {
 			newMove |= squares[j];
 			break;
@@ -857,8 +857,8 @@ uint64_t wRookMoves(Bitboard *b, int piece_type,uint64_t direction, int i, int p
 	} else if (direction == RANK8){
 		a = 8;
 	}
-	int j;
-	for (j = i; (squares[j] & ~direction); j+=a) {
+	int j = i;
+	for (; (squares[j] & ~direction); j+=a) {
 		if (squares[j] & allBlack(b)) {
 			newMove |= squares[j];
 			break;
