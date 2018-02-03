@@ -187,7 +187,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		b = board->bPawns & squares[piece_square];
 		moves =  (b >> 8 & ~allPieces(board)) | (b >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
-		moves = moves - (find_moved_black_pawns(b) >> 16);
+		moves &= ~(find_moved_black_pawns(b) >> 16);
 		//now check for collisions with other pieces
 		moves &= ~allPieces(board);
 		//now calculate attacks and add them to moves.
@@ -198,10 +198,10 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		//philosphy here is same as black pawn but for the opposite side
 		//of the board.
 		b = board->wPawns & squares[piece_square];
-		moves = b << 8 | (b << 16 & ~allPieces(board)<<8);
-		moves = moves - (find_moved_white_pawns(b) << 16);
-		moves = moves & ~allPieces(board);
-		moves += white_pawn_attacks(board);
+		moves = (b << 8 & ~allPieces(board)) | (b << 16 & ~allPieces(board)<<8);
+		moves &= ~(find_moved_white_pawns(b) << 16);
+		moves &= ~allPieces(board);
+		moves |= white_pawn_attacks(board);
 		break;
 
 		case BROOK:
