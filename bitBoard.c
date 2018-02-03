@@ -195,15 +195,14 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		//now check for collisions with other pieces
 		moves &= ~allPieces(board);
 		//now calculate attacks and add them to moves.
-<<<<<<< HEAD
-		moves |= black_pawn_attacks(board);
+
+		//moves |= black_pawn_attacks(board);
 
 		//en passant:
 		
 		
-=======
+
 		moves |= black_pawn_attacks(board,piece_square);
->>>>>>> e6d537d6c855fc0518a88608487b68471413e56a
 		break;
 
 		case WPAWN:
@@ -749,13 +748,11 @@ uint64_t find_moved_black_pawns(uint64_t bPawns)
 uint64_t black_pawn_attacks(Bitboard* b, int piece_square)
 {
 	uint64_t attacks = 0;
-<<<<<<< HEAD
-	uint64_t diag = (((b->bPawns & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & ~AFILE) >> 9) & ~allBlack(b));
-	attacks = (diag & allWhite(b)) | (diag & wepBoard);
-=======
+
+
 	uint64_t diag = (((b->bPawns & squares[piece_square] & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & squares[piece_square] & ~AFILE) >> 9) & ~allBlack(b));
-	attacks = diag & allWhite(b);
->>>>>>> e6d537d6c855fc0518a88608487b68471413e56a
+	attacks = (diag & allWhite(b)) | (diag & wepBoard);
+
 
 	return attacks;
 }
@@ -770,13 +767,9 @@ uint64_t white_pawn_attacks(Bitboard* b, int piece_square)
 	uint64_t attacks = 0;
 	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
 
-<<<<<<< HEAD
-	uint64_t diag = (((b->wPawns & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & ~HFILE))<< 9) & ~allWhite(b));
-	attacks = (diag & allBlack(b)) | (diag & bepBoard);
-=======
 	uint64_t diag = (((b->wPawns & squares[piece_square] & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & squares[piece_square] & ~HFILE))<< 9) & ~allWhite(b));
-	attacks = diag & allBlack(b);
->>>>>>> e6d537d6c855fc0518a88608487b68471413e56a
+	attacks = (diag & allBlack(b)) | (diag & bepBoard);
+
 	return attacks;
 }
 /*return a bitboard with all squares on the same diagonals as the piece_type*/
