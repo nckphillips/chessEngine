@@ -12,6 +12,8 @@ uint64_t AFILE;
 uint64_t RANK1;
 uint64_t RANK8;
 uint64_t rookMove;
+uint64_t bepBoard = 0; //enPassant board
+uint64_t wepBoard = 0;
 
 uint64_t checkBoard;
 int black_check;
@@ -194,6 +196,10 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		moves &= ~allPieces(board);
 		//now calculate attacks and add them to moves.
 		moves |= black_pawn_attacks(board);
+
+		//en passant:
+		
+		
 		break;
 
 		case WPAWN:
@@ -480,6 +486,7 @@ void update(Bitboard * b_ptr, char * move)
 			square_move(b_ptr, source_square, dest_square);
 		}
 	}
+	
 	/*commands are given: "e5e6" so the below lines convert the two parts of
 	 *the command to squares.*/
 	from_file = (int)move[0] - 97;
@@ -490,6 +497,22 @@ void update(Bitboard * b_ptr, char * move)
 	dest_square = squares[(to_rank * 8) + to_file];
 	square_move(b_ptr, source_square, dest_square);
 
+	/*see if en passant applies*/
+	if( (move[1] == '7') && (move[3] == '5') && ( (dest_square & b_ptr->bPawns) != 0) ){
+	//dest_square contains a black pawn which moved forward 2 spaces
+		//enPassant board contains the spot behind that pawn
+		bepBoard = dest_square<<8;
+		wepBoard = 0;
+	} else if( (move[1] == '2') && (move[3] == '4') && ( (dest_square & b_ptr->wPawns) != 0) ){
+	//dest_square contains a black pawn which moved forward 2 spaces
+		//en Passant board contains the spot behind that pawn
+		bepBoard = 0;
+		wepBoard = dest_square>>8;
+	} else{
+		bepBoard = 0;
+		wepBoard = 0;
+	}
+	
 	/*update check for both sides*/
 	checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
 	if(checkBoard == 0){
@@ -697,7 +720,7 @@ uint64_t black_pawn_attacks(Bitboard* b)
 {
 	uint64_t attacks = 0;
 	uint64_t diag = (((b->bPawns & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & ~AFILE) >> 9) & ~allBlack(b));
-	attacks = diag & allWhite(b);
+	attacks = (diag & allWhite(b)) | (diag & wepBoard);
 
 	return attacks;
 }
@@ -713,7 +736,7 @@ uint64_t white_pawn_attacks(Bitboard* b)
 	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
 
 	uint64_t diag = (((b->wPawns & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & ~HFILE))<< 9) & ~allWhite(b));
-	attacks = diag & allBlack(b);
+	attacks = (diag & allBlack(b)) | (diag & bepBoard);
 	return attacks;
 }
 /*return a bitboard with all squares on the same diagonals as the piece_type*/
