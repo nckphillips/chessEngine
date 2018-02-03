@@ -29,9 +29,9 @@ int bkCastle = 1;
 
 /*helper functions*/
 uint64_t find_moved_black_pawns(uint64_t bPawns);
-uint64_t black_pawn_attacks(Bitboard* b);
+uint64_t black_pawn_attacks(Bitboard* b, int piece_square);
 uint64_t find_moved_white_pawns(uint64_t wPawns);
-uint64_t white_pawn_attacks(Bitboard* b);
+uint64_t white_pawn_attacks(Bitboard* b, int piece_square);
 uint64_t same_file(Bitboard* b, unsigned int piece_type);
 uint64_t same_rank(Bitboard* b, unsigned int piece_type);
 uint64_t bRookMoves(Bitboard *b,int piece_type, uint64_t direction, int i, int piece_square);
@@ -191,25 +191,29 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		b = board->bPawns & squares[piece_square];
 		moves =  (b >> 8 & ~allPieces(board)) | (b >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
-		moves = moves - (find_moved_black_pawns(b) >> 16);
+		moves &= ~(find_moved_black_pawns(b) >> 16);
 		//now check for collisions with other pieces
 		moves &= ~allPieces(board);
 		//now calculate attacks and add them to moves.
+<<<<<<< HEAD
 		moves |= black_pawn_attacks(board);
 
 		//en passant:
 		
 		
+=======
+		moves |= black_pawn_attacks(board,piece_square);
+>>>>>>> e6d537d6c855fc0518a88608487b68471413e56a
 		break;
 
 		case WPAWN:
 		//philosphy here is same as black pawn but for the opposite side
 		//of the board.
 		b = board->wPawns & squares[piece_square];
-		moves = b << 8 | (b << 16 & ~allPieces(board)<<8);
-		moves = moves - (find_moved_white_pawns(b) << 16);
-		moves = moves & ~allPieces(board);
-		moves += white_pawn_attacks(board);
+		moves = (b << 8 & ~allPieces(board)) | (b << 16 & ~allPieces(board)<<8);
+		moves &= ~(find_moved_white_pawns(b) << 16);
+		moves &= ~allPieces(board);
+		moves |= white_pawn_attacks(board,piece_square);
 		break;
 
 		case BROOK:
@@ -421,6 +425,27 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		break;
 		default: return -1;
 	}
+	/*if the computer is in check make sure to remove legal moves that leave it in check.*/
+	if ((piece_type == BPAWN) || (piece_type == BROOK) || (piece_type == BQUEEN) ||\
+	    (piece_type == BKING) || (piece_type == BBISHOP) || (piece_type == BKNIGHT)) {
+		    if (board->bKing & white_moves(board)) {
+			    black_check = 1;
+			    Bitboard temp;
+			    for (int i = 0; i < 64; i++) {
+				    if (squares[i] & moves) {
+
+					    copy_board(*board,&temp);
+					    square_move(&temp, squares[piece_square], squares[i]);
+					    if (temp.bKing & white_moves(&temp)) {
+						    moves &= ~squares[i];
+
+						    printf("here\n");
+					    }
+				    }
+			    }
+		    }
+	    }
+
 	return moves;
 }
 
@@ -519,12 +544,14 @@ void update(Bitboard * b_ptr, char * move)
 		black_check = 0;
 	} else{
 		black_check = 1;
+	//	is_checkmate(b_ptr, 0);
 	}
 	checkBoard = black_moves(b_ptr) & (b_ptr->wKing);
 	if(checkBoard == 0){
 		white_check = 0;
 	} else{
 		white_check = 1;
+		//is_checkmate(b_ptr, 1);
 	}
 
 	/*update castling rights*/
@@ -691,6 +718,9 @@ void init(struct Bitboard* b){
 		     squares[e1] | squares[f1] | squares[g1] | squares[h1];
 	RANK8 =      squares[a8] | squares[b8] | squares[c8] | squares[d8] |\
 		     squares[e8] | squares[f8] | squares[g8] | squares[h8];
+
+	white_check = 0;
+	black_check = 0;
 } //Initialize bitboard
 
 /*Returns a bitboard of all white pieces*/
@@ -716,11 +746,16 @@ uint64_t find_moved_black_pawns(uint64_t bPawns)
 }
 
 
-uint64_t black_pawn_attacks(Bitboard* b)
+uint64_t black_pawn_attacks(Bitboard* b, int piece_square)
 {
 	uint64_t attacks = 0;
+<<<<<<< HEAD
 	uint64_t diag = (((b->bPawns & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & ~AFILE) >> 9) & ~allBlack(b));
 	attacks = (diag & allWhite(b)) | (diag & wepBoard);
+=======
+	uint64_t diag = (((b->bPawns & squares[piece_square] & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & squares[piece_square] & ~AFILE) >> 9) & ~allBlack(b));
+	attacks = diag & allWhite(b);
+>>>>>>> e6d537d6c855fc0518a88608487b68471413e56a
 
 	return attacks;
 }
@@ -730,13 +765,18 @@ uint64_t find_moved_white_pawns(uint64_t wPawns)
 	return wPawns & ~(squares[8] | squares[9] | squares[10] | squares[11] | squares[12] | \
 		          squares[13] | squares[14] | squares[15]);
 }
-uint64_t white_pawn_attacks(Bitboard* b)
+uint64_t white_pawn_attacks(Bitboard* b, int piece_square)
 {
 	uint64_t attacks = 0;
 	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
 
+<<<<<<< HEAD
 	uint64_t diag = (((b->wPawns & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & ~HFILE))<< 9) & ~allWhite(b));
 	attacks = (diag & allBlack(b)) | (diag & bepBoard);
+=======
+	uint64_t diag = (((b->wPawns & squares[piece_square] & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & squares[piece_square] & ~HFILE))<< 9) & ~allWhite(b));
+	attacks = diag & allBlack(b);
+>>>>>>> e6d537d6c855fc0518a88608487b68471413e56a
 	return attacks;
 }
 /*return a bitboard with all squares on the same diagonals as the piece_type*/
@@ -862,8 +902,8 @@ uint64_t bRookMoves(Bitboard *b, int piece_type, uint64_t direction, int i, int 
 	} else if (direction == RANK8){
 		a = 8;
 	}
-	int j;
-	for (j = i; (squares[j] & ~direction); j+=a) {
+	int j=i;
+	for (; (squares[j] & ~direction); j+=a) {
 		if (squares[j] & allWhite(b)) {
 			newMove |= squares[j];
 			break;
@@ -896,8 +936,8 @@ uint64_t wRookMoves(Bitboard *b, int piece_type,uint64_t direction, int i, int p
 	} else if (direction == RANK8){
 		a = 8;
 	}
-	int j;
-	for (j = i; (squares[j] & ~direction); j+=a) {
+	int j = i;
+	for (; (squares[j] & ~direction); j+=a) {
 		if (squares[j] & allBlack(b)) {
 			newMove |= squares[j];
 			break;
