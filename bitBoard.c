@@ -178,6 +178,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 {
 	uint64_t moves = 0;
 	uint64_t b = 0;//this was added to simplify square specificity
+	////////////////////TODO: if the checkmate flag is set, tell xboard to end the game
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
@@ -425,7 +426,7 @@ void update(Bitboard * b_ptr, char * move)
 	uint64_t source_square;
 	uint64_t dest_square;
 	char * rookMove;
-
+//////////////////////TODO: ADD check for checkmate at the end of the function and update flag
 	if (strlen(move) < 4) return;
 
 	/*if castling, move the rook first*/
@@ -500,7 +501,7 @@ void update(Bitboard * b_ptr, char * move)
 	} else{
 		white_check = 1;
 	}
-	
+
 	/*update castling rights*/
 	if (move[0] == 'e'){
 		//white king has moved
@@ -1068,4 +1069,3 @@ void copy_board2(const Bitboard *source, Bitboard *dest)
 	dest->bQueen = source->bQueen;
 	dest->bKing = source->bKing;
 }//Same function as copy_board, but takes 2 pointers
-
