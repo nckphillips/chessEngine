@@ -5,5 +5,6 @@
 #include "bitBoard.h"
 
 void play(Bitboard *b_ptr);
+void to_text(int source_square, int dest_square, char *move);
 
 #endif

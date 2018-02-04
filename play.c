@@ -4,11 +4,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "check.h"
 #include "play.h"
 #include "bitBoard.h"
 #include "qlearning.h"
 
+void to_text(int source_square, int dest_square, char *move)
+{
+	/*convert the source and destination squares to a text move*/
+	uint64_t file = 0x101010101010101;
+	uint64_t rank = 0x0000000000000ff;
+	for(int i = 0;i < 8; i++) {
+		if(squares[source_square] & file) {
+			move[0] = (char)(i + 97);
+		}
+		file <<=1;
 
+	}
+	for(int i = 0; i < 8; i++) {
+		if(squares[source_square] & rank) {
+			move[1] = (char)(i + 49);
+		}
+		rank <<= 8;
+
+	}
+	file = 0x101010101010101;
+	rank = 0x0000000000000ff;
+	for(int i = 0;i < 8; i++) {
+		if(squares[dest_square] & file) {
+			move[2] = (char)(i + 97);
+		}
+		file <<=1;
+
+	}
+	for(int i = 0; i < 8; i++) {
+		if(squares[dest_square] & rank) {
+			move[3] = (char)(i + 49);
+		}
+		rank <<= 8;
+
+
+	}
+}
 
 /*returns the text string of the best move in the board's current arrangement.*/
 void get_best_move(char *best_move_string, Bitboard *b_ptr)
@@ -35,6 +72,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
+				getCheck(b_ptr,&lm,squares[i]);
 				/*exploration*/
 				if (lm && 1) {//TODO:fix rand
 					int randsquare = rand()%64;
@@ -89,40 +127,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		}
 	}
 
-	/*convert the source and destination squares to a text move*/
-	uint64_t file = 0x101010101010101;
-	uint64_t rank = 0x0000000000000ff;
-	for(int i = 0;i < 8; i++) {
-		if(squares[source_square_best[index_of_max]] & file) {
-			best_move_string[0] = (char)(i + 97);
-		}
-		file <<=1;
-
-	}
-	for(int i = 0; i < 8; i++) {
-		if(squares[source_square_best[index_of_max]] & rank) {
-			best_move_string[1] = (char)(i + 49);
-		}
-		rank <<= 8;
-
-	}
-	file = 0x101010101010101;
-	rank = 0x0000000000000ff;
-	for(int i = 0;i < 8; i++) {
-		if(squares[dest_square_best[index_of_max]] & file) {
-			best_move_string[2] = (char)(i + 97);
-		}
-		file <<=1;
-
-	}
-	for(int i = 0; i < 8; i++) {
-		if(squares[dest_square_best[index_of_max]] & rank) {
-			best_move_string[3] = (char)(i + 49);
-		}
-		rank <<= 8;
-
-
-	}
+	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
 	///////////////////////////////////////
 	best_move_string[4] = '\n'; //this position will eventually be used for promotion
 	best_move_string[5] = EOF;
