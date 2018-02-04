@@ -521,14 +521,25 @@ void update(Bitboard * b_ptr, char * move)
 	dest_square = squares[(to_rank * 8) + to_file];
 	square_move(b_ptr, source_square, dest_square);
 
-	/*see if en passant applies*/
+	//if a pawn was taken en passant: get rid of it
+	if((source_square & b_ptr->wPawns) != 0){
+		if(dest_square == bepBoard){
+			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
+		}	
+	} else if((source_square & b_ptr->bPawns) != 0){
+		if(dest_square == wepBoard){
+			//TODO
+		}
+	}
+
+	/*see if en passant should apply on the next move*/
 	if( (move[1] == '7') && (move[3] == '5') && ( (dest_square & b_ptr->bPawns) != 0) ){
 	//dest_square contains a black pawn which moved forward 2 spaces
 		//enPassant board contains the spot behind that pawn
 		bepBoard = dest_square<<8;
 		wepBoard = 0;
 	} else if( (move[1] == '2') && (move[3] == '4') && ( (dest_square & b_ptr->wPawns) != 0) ){
-	//dest_square contains a black pawn which moved forward 2 spaces
+	//dest_square contains a white pawn which moved forward 2 spaces
 		//en Passant board contains the spot behind that pawn
 		bepBoard = 0;
 		wepBoard = dest_square>>8;
