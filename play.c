@@ -72,7 +72,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
-				getCheck(b_ptr,&lm,squares[i]);
+				getCheck(b_ptr,&lm,i);
 				/*exploration*/
 				if (lm && 1) {//TODO:fix rand
 					int randsquare = rand()%64;

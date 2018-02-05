@@ -439,9 +439,9 @@ void update(Bitboard * b_ptr, char * move)
 	uint64_t source_square;
 	uint64_t dest_square;
 	char * rookMove;
-//////////////////////TODO: ADD check for checkmate at the end of the function and update flag
-	if (strlen(move) < 4) return;
-
+	printf("board to update with move: %c \n", move[0]);
+	printChessboard(b_ptr);
+	printf("\n" );
 	/*if castling, move the rook first*/
 	if(wqCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'c') && (move[3] == '1') ){
