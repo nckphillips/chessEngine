@@ -1,7 +1,7 @@
 CC := gcc
 CFLAGS := -Wall -Werror
 DEBUG := -g
-OBJS := main.o play.o bitBoard.o protocol.o qlearning.o
+OBJS := main.o play.o bitBoard.o protocol.o qlearning.o check.o
 main: $(OBJS)
 	$(CC) $(DEBUG) $(CFLAGS)  $(OBJS) -o main.out
 	rm *.o

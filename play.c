@@ -109,7 +109,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 					}
 				} else {
 					if (!val){
-						piece_max = -1;
+						piece_max = -100;
 					}
 				}
 			} else if (!pb) {//if there aren't pieces of this type left
@@ -125,6 +125,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		if (move_value[i] > move_value[index_of_max]) {
 			index_of_max = i;
 		}
+		printf("max value for piece: %d\n", move_value[index_of_max]);
 	}
 
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);

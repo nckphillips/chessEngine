@@ -199,8 +199,8 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		//moves |= black_pawn_attacks(board);
 
 		//en passant:
-		
-		
+
+
 
 		moves |= black_pawn_attacks(board,piece_square);
 		break;
@@ -424,26 +424,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		break;
 		default: return -1;
 	}
-	/*if the computer is in check make sure to remove legal moves that leave it in check.*/
-	if ((piece_type == BPAWN) || (piece_type == BROOK) || (piece_type == BQUEEN) ||\
-	    (piece_type == BKING) || (piece_type == BBISHOP) || (piece_type == BKNIGHT)) {
-		    if (board->bKing & white_moves(board)) {
-			    black_check = 1;
-			    Bitboard temp;
-			    for (int i = 0; i < 64; i++) {
-				    if (squares[i] & moves) {
 
-					    copy_board(*board,&temp);
-					    square_move(&temp, squares[piece_square], squares[i]);
-					    if (temp.bKing & white_moves(&temp)) {
-						    moves &= ~squares[i];
-
-						    printf("here\n");
-					    }
-				    }
-			    }
-		    }
-	    }
 
 	return moves;
 }
@@ -510,7 +491,7 @@ void update(Bitboard * b_ptr, char * move)
 			square_move(b_ptr, source_square, dest_square);
 		}
 	}
-	
+
 	/*commands are given: "e5e6" so the below lines convert the two parts of
 	 *the command to squares.*/
 	from_file = (int)move[0] - 97;
@@ -525,7 +506,7 @@ void update(Bitboard * b_ptr, char * move)
 	if((source_square & b_ptr->wPawns) != 0){
 		if(dest_square == bepBoard){
 			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
-		}	
+		}
 	} else if((source_square & b_ptr->bPawns) != 0){
 		if(dest_square == wepBoard){
 			//TODO
@@ -547,9 +528,9 @@ void update(Bitboard * b_ptr, char * move)
 		bepBoard = 0;
 		wepBoard = 0;
 	}
-	
+
 	/*update check for both sides*/
-	checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
+	/*checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
 	if(checkBoard == 0){
 		black_check = 0;
 	} else{
@@ -562,7 +543,7 @@ void update(Bitboard * b_ptr, char * move)
 	} else{
 		white_check = 1;
 		//is_checkmate(b_ptr, 1);
-	}
+	}*/
 
 	/*update castling rights*/
 	if (move[0] == 'e'){
@@ -984,11 +965,13 @@ uint64_t black_moves(Bitboard *b)
 /*return a board containing all legal moves the white pieces can make*/
 uint64_t white_moves(Bitboard *b)
 {
+	printf("calling white moves:\n");
 	uint64_t wm = 0;
 	for(int i = 0; i < 64; i++){
 		wm |= getLegalMoves(b, WBISHOP,i) | getLegalMoves(b, WROOK,i) | getLegalMoves(b, WKNIGHT,i) | getLegalMoves(b, WPAWN,i) |
 			getLegalMoves(b, WKING,i) | getLegalMoves(b, WQUEEN,i);
 	}
+	printf("ending white moves\n");
 	return wm;
 }
 
