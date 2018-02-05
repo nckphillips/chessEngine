@@ -529,21 +529,6 @@ void update(Bitboard * b_ptr, char * move)
 		wepBoard = 0;
 	}
 
-	/*update check for both sides*/
-	/*checkBoard = white_moves(b_ptr) & (b_ptr->bKing);
-	if(checkBoard == 0){
-		black_check = 0;
-	} else{
-		black_check = 1;
-	//	is_checkmate(b_ptr, 0);
-	}
-	checkBoard = black_moves(b_ptr) & (b_ptr->wKing);
-	if(checkBoard == 0){
-		white_check = 0;
-	} else{
-		white_check = 1;
-		//is_checkmate(b_ptr, 1);
-	}*/
 
 	/*update castling rights*/
 	if (move[0] == 'e'){
