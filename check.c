@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 #include "bitBoard.h"
 #include "check.h"
 #include "play.h"
@@ -19,7 +20,8 @@ void getCheck(Bitboard *b_ptr, uint64_t *legal_moves, int piece_square)
                 if (*legal_moves & squares[i]) {
                         to_text(piece_square,i,move);
                         update(&temp, move);
-                        if (white_moves(&temp) & b_ptr->bKing) {
+                        
+                        if (white_moves(&temp) & temp.bKing) {
                                 *legal_moves &= ~squares[i];//remove this move
                         }
                         copy_board(*b_ptr,&temp);

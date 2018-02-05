@@ -950,13 +950,11 @@ uint64_t black_moves(Bitboard *b)
 /*return a board containing all legal moves the white pieces can make*/
 uint64_t white_moves(Bitboard *b)
 {
-	printf("calling white moves:\n");
 	uint64_t wm = 0;
 	for(int i = 0; i < 64; i++){
 		wm |= getLegalMoves(b, WBISHOP,i) | getLegalMoves(b, WROOK,i) | getLegalMoves(b, WKNIGHT,i) | getLegalMoves(b, WPAWN,i) |
 			getLegalMoves(b, WKING,i) | getLegalMoves(b, WQUEEN,i);
 	}
-	printf("ending white moves\n");
 	return wm;
 }
 
