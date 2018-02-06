@@ -501,7 +501,7 @@ void update(Bitboard * b_ptr, char * move)
 
 	//if a pawn was taken en passant: get rid of it
 	if(dest_square & b_ptr->wPawns){
-		printf("white pawn is moving\n");
+		//printf("white pawn is moving\n");
 		if(dest_square & bepBoard){
 			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
 			//b_ptr->wPawns &= ~source_square
@@ -510,7 +510,7 @@ void update(Bitboard * b_ptr, char * move)
 			b_ptr->bPawns &= ~(bepBoard>>8);
 		}
 	} else if(dest_square & b_ptr->bPawns){
-		printf("black pawn is moving\n");
+		//printf("black pawn is moving\n");
 		if(dest_square & wepBoard){
 			//TODO
 			//a black pawn is taking a white pawn en passant
