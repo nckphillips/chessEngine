@@ -759,10 +759,20 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 	uint64_t edge_files = HFILE | AFILE;
 	for (int j = 0; j < 64; j++) {
 		if (piece_board & squares[j]) {
-		r7 = squares[j];
-		r9 = squares[j];
-		l7 = squares[j];
-		l9 = squares[j];
+			if (squares[piece_square] & HFILE) {
+				l9 = 0;
+				r7 = 0;
+			} else {
+				l9 = squares[j];
+				r7 = squares[j];
+			}
+			if (squares[piece_square] & AFILE) {
+				l7 = 0;
+				r9 = 0;
+			} else {
+				r9 = squares[j];
+				l7 = squares[j];
+			}
 		//generate diagonals
 
 		for(int i = 0; i < 8; i++) {
@@ -771,8 +781,7 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 			l7 <<= 7;
 			l9 <<= 9;
 
-			diag |= r7 | r9|\
-			 l7  | l9 ;
+			diag |= r7 | r9 | l7  | l9 ;
 			 switch (piece_type) {
 				 case BBISHOP:
 				 case BQUEEN:
@@ -966,34 +975,7 @@ uint64_t all_moves(Bitboard *b)
 	return am;
 }
 
-/*return an integer indicating whether the Black King is in check
-int black_check(Bitboard *b)
-{
-	uint64_t checkBoard = 0;
-	//int check = 0;
-	checkBoard = white_moves(b) & (b->bKing);
-	if(checkBoard == 0){
-		return 0;
-	} else {
-		return 1;
-	}
-	//return check;
-}
 
-return an integer indicating whether the White King is in check
-int white_check(Bitboard *b)
-{
-	uint64_t checkBoard = 0;
-	//int check = 0;
-	checkBoard = black_moves(b) & (b->wKing);
-	if(checkBoard == 0){
-		return 0;
-	} else {
-		return 1;
-	}
-	//return check;
-}
-*/
 /*indicate whether the Black King is in checkmate*/
 int black_mate(Bitboard *b)
 {
