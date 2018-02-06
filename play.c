@@ -69,7 +69,6 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	for(int piece_type = BPAWN; piece_type >= 0; piece_type--) {
 		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
 		int val = 0;
-		printf("isking?: %d\n", piece_type & BKING);
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
@@ -85,14 +84,20 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							randsquare++;
 						}
 					}
-					printf("source square: %d\n", i);
-					printf("moves: \n");
-					bitBoard_print(lm,0);
-					printf(" \n");
 
 					source_square_best[piece_type] = i;
 					dest_square_best[piece_type] = randsquare;
-					piece_max = 1000+rand();
+
+					/*see if random move puts you in check*/
+					copy_board(*b_ptr, &temp);
+					char tempmove[6];
+					to_text(i,randsquare,tempmove);
+					update(&temp,tempmove);
+					if (temp.bKing & white_moves(&temp)) {
+						piece_max = -100;
+					} else {
+						piece_max = 1000+rand();
+					}
 					break;
 				} else if (lm){
 					/*choose the best move*/
@@ -126,13 +131,19 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		if (move_value[i] > move_value[index_of_max]) {
 			index_of_max = i;
 		}
-		printf("max value for piece: %d\n", move_value[index_of_max]);
 	}
 
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
 	///////////////////////////////////////
 	best_move_string[4] = '\n'; //this position will eventually be used for promotion
-	best_move_string[5] = EOF;
+	best_move_string[5] = EOF;/*checking to see if the computer is in checkmate*/
+	copy_board(*b_ptr, &temp);
+	char tempmove[6];
+	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],tempmove);
+	update(&temp,tempmove);
+	if (temp.bKing & white_moves(&temp)) {
+		printf("telluser Congrats\n");
+	}
 	return;
 }
 

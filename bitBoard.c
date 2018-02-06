@@ -439,9 +439,6 @@ void update(Bitboard * b_ptr, char * move)
 	uint64_t source_square;
 	uint64_t dest_square;
 	char * rookMove;
-	printf("board to update with move: %c \n", move[0]);
-	printChessboard(b_ptr);
-	printf("\n" );
 	/*if castling, move the rook first*/
 	if(wqCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'c') && (move[3] == '1') ){
@@ -509,7 +506,7 @@ void update(Bitboard * b_ptr, char * move)
 			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
 			//b_ptr->wPawns &= ~source_square
 			//a white pawn is taking a black pawn en passant
-			printf("b en passant\n");
+			//printf("b en passant\n");
 			b_ptr->bPawns &= ~(bepBoard>>8);
 		}
 	} else if(dest_square & b_ptr->bPawns){
@@ -517,7 +514,7 @@ void update(Bitboard * b_ptr, char * move)
 		if(dest_square & wepBoard){
 			//TODO
 			//a black pawn is taking a white pawn en passant
-			printf("w en passant\n");
+			//printf("w en passant\n");
 			b_ptr->wPawns &= ~(wepBoard<<8);
 		}
 	}
@@ -526,13 +523,13 @@ void update(Bitboard * b_ptr, char * move)
 	if( (move[1] == '7') && (move[3] == '5') && ( dest_square & b_ptr->bPawns) ){
 	//dest_square contains a black pawn which moved forward 2 spaces
 		//enPassant board contains the spot behind that pawn
-		printf("black2\n");
+		//printf("black2\n");
 		bepBoard = dest_square<<8;
 		wepBoard = 0;
 	} else if( (move[1] == '2') && (move[3] == '4') && (dest_square & b_ptr->wPawns) ){
 	//dest_square contains a white pawn which moved forward 2 spaces
 		//en Passant board contains the spot behind that pawn
-		printf("white2\n");
+		//printf("white2\n");
 		bepBoard = 0;
 		wepBoard = dest_square>>8;
 	} else{
@@ -770,10 +767,20 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 	uint64_t edge_files = HFILE | AFILE;
 	for (int j = 0; j < 64; j++) {
 		if (piece_board & squares[j]) {
-		r7 = squares[j];
-		r9 = squares[j];
-		l7 = squares[j];
-		l9 = squares[j];
+			if (squares[piece_square] & HFILE) {
+				l9 = 0;
+				r7 = 0;
+			} else {
+				l9 = squares[j];
+				r7 = squares[j];
+			}
+			if (squares[piece_square] & AFILE) {
+				l7 = 0;
+				r9 = 0;
+			} else {
+				r9 = squares[j];
+				l7 = squares[j];
+			}
 		//generate diagonals
 
 		for(int i = 0; i < 8; i++) {
@@ -782,8 +789,7 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 			l7 <<= 7;
 			l9 <<= 9;
 
-			diag |= r7 | r9|\
-			 l7  | l9 ;
+			diag |= r7 | r9 | l7  | l9 ;
 			 switch (piece_type) {
 				 case BBISHOP:
 				 case BQUEEN:
@@ -977,34 +983,7 @@ uint64_t all_moves(Bitboard *b)
 	return am;
 }
 
-/*return an integer indicating whether the Black King is in check
-int black_check(Bitboard *b)
-{
-	uint64_t checkBoard = 0;
-	//int check = 0;
-	checkBoard = white_moves(b) & (b->bKing);
-	if(checkBoard == 0){
-		return 0;
-	} else {
-		return 1;
-	}
-	//return check;
-}
 
-return an integer indicating whether the White King is in check
-int white_check(Bitboard *b)
-{
-	uint64_t checkBoard = 0;
-	//int check = 0;
-	checkBoard = black_moves(b) & (b->wKing);
-	if(checkBoard == 0){
-		return 0;
-	} else {
-		return 1;
-	}
-	//return check;
-}
-*/
 /*indicate whether the Black King is in checkmate*/
 int black_mate(Bitboard *b)
 {
