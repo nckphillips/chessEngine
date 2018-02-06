@@ -503,25 +503,36 @@ void update(Bitboard * b_ptr, char * move)
 	square_move(b_ptr, source_square, dest_square);
 
 	//if a pawn was taken en passant: get rid of it
-	if((source_square & b_ptr->wPawns) != 0){
-		if(dest_square == bepBoard){
+	if(dest_square & b_ptr->wPawns){
+		printf("white pawn is moving\n");
+		if(dest_square & bepBoard){
 			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
+			//b_ptr->wPawns &= ~source_square
+			//a white pawn is taking a black pawn en passant
+			printf("b en passant\n");
+			b_ptr->bPawns &= ~(bepBoard>>8);
 		}
-	} else if((source_square & b_ptr->bPawns) != 0){
-		if(dest_square == wepBoard){
+	} else if(dest_square & b_ptr->bPawns){
+		printf("black pawn is moving\n");
+		if(dest_square & wepBoard){
 			//TODO
+			//a black pawn is taking a white pawn en passant
+			printf("w en passant\n");
+			b_ptr->wPawns &= ~(wepBoard<<8);
 		}
 	}
 
 	/*see if en passant should apply on the next move*/
-	if( (move[1] == '7') && (move[3] == '5') && ( (dest_square & b_ptr->bPawns) != 0) ){
+	if( (move[1] == '7') && (move[3] == '5') && ( dest_square & b_ptr->bPawns) ){
 	//dest_square contains a black pawn which moved forward 2 spaces
 		//enPassant board contains the spot behind that pawn
+		printf("black2\n");
 		bepBoard = dest_square<<8;
 		wepBoard = 0;
-	} else if( (move[1] == '2') && (move[3] == '4') && ( (dest_square & b_ptr->wPawns) != 0) ){
+	} else if( (move[1] == '2') && (move[3] == '4') && (dest_square & b_ptr->wPawns) ){
 	//dest_square contains a white pawn which moved forward 2 spaces
 		//en Passant board contains the spot behind that pawn
+		printf("white2\n");
 		bepBoard = 0;
 		wepBoard = dest_square>>8;
 	} else{
@@ -639,7 +650,7 @@ void square_move(Bitboard *b_ptr, uint64_t source_square, uint64_t dest_square)
 			b_ptr->wKnights |= dest_square;
 		}
 		take_black(b_ptr);
-	} else {//its a black piece
+	} else {//it's a black piece
 		if (source_square & b_ptr->bPawns) {
 			b_ptr->bPawns &= ~source_square;
 			b_ptr->bPawns |= dest_square;
