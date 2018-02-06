@@ -3,7 +3,7 @@
 
 #debug output
 *.debug
-
+*.txt
 # Object files
 *.o
 *.ko
