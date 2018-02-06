@@ -131,13 +131,19 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 		if (move_value[i] > move_value[index_of_max]) {
 			index_of_max = i;
 		}
-		printf("max value for piece: %d\n", move_value[index_of_max]);
 	}
 
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
 	///////////////////////////////////////
 	best_move_string[4] = '\n'; //this position will eventually be used for promotion
-	best_move_string[5] = EOF;
+	best_move_string[5] = EOF;/*checking to see if the computer is in checkmate*/
+	copy_board(*b_ptr, &temp);
+	char tempmove[6];
+	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],tempmove);
+	update(&temp,tempmove);
+	if (temp.bKing & white_moves(&temp)) {
+		printf("telluser Congrats\n");
+	}
 	return;
 }
 

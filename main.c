@@ -7,7 +7,7 @@
 #include "play.h"
 #include "qlearning.h"
 
-
+static Bitboard previous_state;
 
 void command(Bitboard *b);//main control loop for engine
 
@@ -45,6 +45,7 @@ int main(void){
 
 	Bitboard  b;
 	init(&b);
+	init(&previous_state);
 	srand(time(0));//seed random
 
 	maxAction(&b);
@@ -79,8 +80,9 @@ void command(Bitboard * b)
 				case MOVE:
 				update(b, cmd);
 				//TODO: will update weights
-				//update_values(last_move, b);
+				update_values(b,&previous_state);
 				case GO:
+				copy_board(*b,&previous_state);
 				play(b);
 				break;
 

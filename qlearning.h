@@ -7,7 +7,7 @@
 #define ALPHA 0.2 //learning rate
 #define GAMMA 0.8 //discount factor
 #define EPSILON 0.5 //exploration rate
-#define DISCOUNT 0.5
+#define DISCOUNT .5
 
 
 
@@ -42,10 +42,10 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 //static int weights[NUM_FEATURES] = {1, 1, 1, 1};//the computer generated weights to apply to features
 
 int get_state_value(Bitboard *b_ptr);//Q(s, a)
-void update_values(int weights[NUM_FEATURES], char * move_made, Bitboard *b_ptr);//should be called after opponent
+void update_values(Bitboard *b_ptr, Bitboard *previous_state);//should be called after opponent
 						     //makes move the the weights can
 						     //be updated
-						     
+
 int maxAction(Bitboard *b_ptr); //Return a q value of a best move
 
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);//extracts features from the
