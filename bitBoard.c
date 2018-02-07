@@ -498,6 +498,21 @@ void update(Bitboard * b_ptr, char * move)
 	source_square = squares[(from_rank * 8) + from_file];
 	dest_square = squares[(to_rank * 8) + to_file];
 	square_move(b_ptr, source_square, dest_square);
+	
+	//if a pawn moves to the last row: promote it
+	if( (move[1] == '2') && (move[3] == '1') ){
+		if(dest_square & b_ptr->bPawns){
+		//a black pawn made it to white's first row; make it a queen
+			b_ptr->bPawns &= ~(dest_square);
+			b_ptr->bQueen |= (dest_square);
+		}
+	} else if( (move[1] == '7') && (move[3] == '8') ){
+		if(dest_square & b_ptr->wPawns){
+		//a white pawn made it to black's first row; make it a queen
+			b_ptr->wPawns &= ~(dest_square);
+			b_ptr->wQueen |= (dest_square);
+		}
+	}
 
 	//if a pawn was taken en passant: get rid of it
 	if(dest_square & b_ptr->wPawns){
