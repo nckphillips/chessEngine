@@ -6,7 +6,7 @@
 #include "qlearning.h"
 
 
-int weights[NUM_FEATURES] = {1, 1, 1, 1};//the computer generated weights to apply to features
+int weights[NUM_FEATURES] = {0};//the computer generated weights to apply to features
 
 
 int getValue(uint64_t board, unsigned int piece_type);
@@ -21,6 +21,7 @@ int get_state_value(Bitboard *b_ptr){
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 
 	for(int i = 0; i < NUM_FEATURES; i++){
+		printf("weight %d: %d\n", i,weights[i]);
 		value += weights[i] * features[i]; // Q = w[i] * f[i]
 	}
 	printf("board was:\n");
@@ -31,24 +32,67 @@ int get_state_value(Bitboard *b_ptr){
 
 }//Q(s, a)
 
+int getReward(Bitboard *b_ptr, Bitboard *previous) {
+	int wValue = 0;
+	int bValue = 0;
+	int total_curr = 0;
+	int total_prev = 0;
+	wValue  = getValue(b_ptr->wPawns, WPAWN); //get the total value of white pawns
+	wValue += getValue(b_ptr->wKnights, WKNIGHT); //get the total value of white knigts
+	wValue += getValue(b_ptr->wBishops, WBISHOP); //get the total value of white bishops
+	wValue += getValue(b_ptr->wRooks, WROOK); //get the total value of white rooks
+
+	bValue  = getValue(b_ptr->bPawns, BPAWN); //get the total value of black pawns
+	bValue += getValue(b_ptr->bKnights, BKNIGHT); //get the total value of black knigts
+	bValue += getValue(b_ptr->bBishops, BBISHOP); //get the total value of black bishops
+	bValue += getValue(b_ptr->bRooks, BROOK); //get the total value of black rooks
+	total_curr = wValue + bValue;
+	wValue  = getValue(previous->wPawns, WPAWN); //get the total value of white pawns
+	wValue += getValue(previous->wKnights, WKNIGHT); //get the total value of white knigts
+	wValue += getValue(previous->wBishops, WBISHOP); //get the total value of white bishops
+	wValue += getValue(previous->wRooks, WROOK); //get the total value of white rooks
+
+	bValue  = getValue(previous->bPawns, BPAWN); //get the total value of black pawns
+	bValue += getValue(previous->bKnights, BKNIGHT); //get the total value of black knigts
+	bValue += getValue(previous->bBishops, BBISHOP); //get the total value of black bishops
+	bValue += getValue(previous->bRooks, BROOK); //get the total value of black rooks
+	total_prev = wValue + bValue;
+	return total_curr-total_prev;
+}
+
 void update_values(Bitboard *b_ptr, Bitboard *previous_state){
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 
 	int diff = 0;
 
-	//reward = state.getScore() - self.lastState.getScore();
-printf("max act: %d\n", maxAction(b_ptr));
-	//reward = getReward(b_ptr);
-	diff = (DISCOUNT * maxAction(b_ptr) ) - get_state_value(previous_state);
+	diff = (getReward(b_ptr,previous_state)+DISCOUNT * maxAction(b_ptr) ) - get_state_value(previous_state);
 	for(int i = 0; i < NUM_FEATURES; i++){
-		weights[i] = ALPHA * diff * features[i]; // W[i] = ALPHA * diff * F[i]
+		weights[i] += ALPHA * diff * features[i]; // W[i] = ALPHA * diff * F[i]
 	}
 	writeFile();
 
 }//Update weights based on the move made
+/**
+def computeValueFromQValues(self, state):
+	"""
+	  Returns max_action Q(state,action)
+	  where the max is over legal actions.  Note that if
+	  there are no legal actions, which is the case at the
+	  terminal state, you should return a value of 0.0.
+	"""
+	"*** YOUR CODE HERE ***"
+	actions = self.getLegalActions(state)
 
-
+	qprev = 0.0
+	if actions == None: return 0.0
+	elif len(actions) == 1: return self.getQValue(state,actions[0])
+	else:
+		for act in actions:
+			q = self.getQValue(state,act)
+			if q > qprev: qprev = q
+	return qprev
+*/
 int maxAction(Bitboard *b_ptr){
 
 
@@ -69,8 +113,6 @@ int maxAction(Bitboard *b_ptr){
 						val = get_state_value(&temp);
 						if (val >= piece_max) {
 							piece_max = val;
-							//source_square_best[piece_type] = i;
-							//dest_square_best[piece_type] = j;
 						}
 						copy_board2(b_ptr,&temp); //reverse temp to initial state
 					}
@@ -99,7 +141,7 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	wValue += getValue(b_ptr->wBishops, WBISHOP); //get the total value of white bishops
 	wValue += getValue(b_ptr->wRooks, WROOK); //get the total value of white rooks
 	features[WHITEVALUE] = wValue + getValue(b_ptr->wQueen, WQUEEN); //get the total value of white queen +
-																		  //previous pieces, excluding King
+	features[WHITEVALUE] *= -1;																  //previous pieces, excluding King
 
 	int bValue = 0;
 
