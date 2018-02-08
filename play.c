@@ -5,9 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "check.h"
+#include "evaluate.h"
 #include "play.h"
 #include "bitBoard.h"
-#include "qlearning.h"
+
+#define RANDOM 1
 
 void to_text(int source_square, int dest_square, char *move)
 {
@@ -65,7 +67,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	/*
 	for every piece, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
-	int piece_max = 0;
+	int piece_max = 0xffffffff;
 	for(int piece_type = BPAWN; piece_type >= 0; piece_type--) {
 		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
 		int val = 0;
@@ -74,7 +76,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				getCheck(b_ptr,&lm,i);
 				/*exploration*/
-				if (lm && 1) {//TODO:fix rand
+				if (lm && RANDOM) {//TODO:fix rand
 					int randsquare = rand()%64;
 					while (!(squares[randsquare] & lm) && randsquare >= 0) {
 						randsquare--;
@@ -94,32 +96,39 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 					to_text(i,randsquare,tempmove);
 					update(&temp,tempmove);
 					if (temp.bKing & white_moves(&temp)) {
-						piece_max = -100;
+						piece_max |= 0xffffffff;
 					} else {
 						piece_max = 1000+rand();
 					}
 					break;
 				} else if (lm){
+					//int curr_val = eval_state(b_ptr);
 					/*choose the best move*/
 					for(int j = 0; j < 64; j++) {//loop through the moves
 						if(squares[j] & lm) {
-							square_move(&temp,squares[i],squares[j]);
-							val = get_state_value(&temp);
-							if (val >= piece_max) {
-								piece_max = val;
-								source_square_best[piece_type] = i;
-								dest_square_best[piece_type] = j;
+							char tempmove[6];
+							to_text(i,j,tempmove);
+							update(&temp,tempmove);
+							if (temp.bKing & white_moves(&temp)) {
+								val |= 0xffffffff;
+							} else {
+								val = eval_state(&temp);
+								if (val >= piece_max) {
+									piece_max = val;
+									source_square_best[piece_type] = i;
+									dest_square_best[piece_type] = j;
+								}
 							}
 							copy_board(*b_ptr,&temp);
 						}
 					}
 				} else {
 					if (!val){
-						piece_max = -100;
+						piece_max |= 0xffffffff;
 					}
 				}
 			} else if (!pb) {//if there aren't pieces of this type left
-				piece_max = -100;
+				piece_max |= 0xffffffff;
 			}
 		}
 		move_value[piece_type] = piece_max;//save that piece type's max

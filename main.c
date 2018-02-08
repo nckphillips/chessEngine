@@ -5,7 +5,6 @@
 #include "bitBoard.h"
 #include "protocol.h"
 #include "play.h"
-#include "qlearning.h"
 
 static Bitboard previous_state;
 
@@ -46,10 +45,6 @@ int main(void){
 	Bitboard  b;
 	init(&b);
 	init(&previous_state);
-	srand(time(0));//seed random
-
-	maxAction(&b);
-
 	command(&b);
 	return 0;
 }
@@ -79,10 +74,6 @@ void command(Bitboard * b)
 				//case TIME:
 				case MOVE:
 				update(b, cmd);
-				//TODO: will update weights
-				update_values(b,&previous_state);
-				case GO:
-				copy_board(*b,&previous_state);
 				play(b);
 				break;
 
