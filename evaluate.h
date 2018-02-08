@@ -14,5 +14,6 @@ int eval_state(Bitboard * b_ptr);
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);
 int count(uint64_t board);
 int getValue(uint64_t board, unsigned int piece_type);
+int evaluate_pawn_structure(int features[NUM_FEATURES]);
 
 #endif

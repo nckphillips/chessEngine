@@ -5,13 +5,19 @@ int eval_state(Bitboard *b_ptr)
 {
 
 	int value = 0;
+	int black_value_Advantage = 0; //Can be negative
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 
+	black_value_Advantage = features[BLACKVALUE] - features[WHITEVALUE];
+
+	value = black_value_Advantage;
+
+/*
 	for(int i = 0; i < NUM_FEATURES; i++){
 		value += features[i]; // Q = w[i] * f[i]
-	}//Assuming the overall value of the state 
-
+	}//Assuming the overall value of the state adds up
+*/
 	return value;
 
 
@@ -47,8 +53,22 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 																		  //previous pieces, excluding King
 
 
+
+
 } //Gets features for the board
 
+
+int evaluate_pawn_structure(int features[NUM_FEATURES]){
+
+	int value = 0;
+
+
+
+
+
+	return value;
+
+} //
 
 
 int count(uint64_t board){
