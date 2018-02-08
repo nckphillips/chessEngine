@@ -86,7 +86,6 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							randsquare++;
 						}
 					}
-
 					source_square_best[piece_type] = i;
 					dest_square_best[piece_type] = randsquare;
 
@@ -164,7 +163,12 @@ void play(Bitboard *b_ptr)
 
 	get_best_move(best_move, b_ptr);
 	update(b_ptr,best_move);
-	fprintf(stdout,"move %s\n", best_move);
+	if(!strcmp(best_move,"a1a1")) {
+		printf("resign\n");
+	} else {
+		fprintf(stdout,"move %s\n", best_move);
+	}
+
 	fflush(stdout);
 	fflush(stdin);
 	free(best_move);
