@@ -51,40 +51,40 @@ int main(void){
 
 void command(Bitboard * b)
 {
-		char * cmd = (char*)malloc(sizeof(char)*MAX_CMD_LEN);//allocate space for
-																												// command
-		unsigned int action = 0;
-		cmd[0] = '\n';
-		while(action != QUIT) {
-			fgets(cmd, MAX_CMD_LEN, stdin);
-			proto_clean(cmd);//clean the command
-			action = proto_exec(cmd);//the the action value
-			switch (action) {
-				case NEW:
-				init(b);
-				break;
+	char * cmd = (char*)malloc(sizeof(char)*MAX_CMD_LEN);//allocate space for
+																											// command
+	unsigned int action = 0;
+	cmd[0] = '\n';
+	while(action != QUIT) {
+		fgets(cmd, MAX_CMD_LEN, stdin);
+		proto_clean(cmd);//clean the command
+		action = proto_exec(cmd);//the the action value
+		switch (action) {
+			case NEW:
+			init(b);
+			break;
 
-				case FORCE: /*do whatever force requires*/;
-				break;
+			case FORCE: /*do whatever force requires*/;
+			break;
 
-				case SETBOARD:/*receive a fen string and update boards*/;
-				break;
+			case SETBOARD:/*receive a fen string and update boards*/;
+			break;
 
 
-				//case TIME:
-				case MOVE:
-				update(b, cmd);
-				play(b);
-				break;
+			//case TIME:
+			case MOVE:
+			update(b, cmd);
+			play(b);
+			break;
 
-				case QUIT:
-				default:
-				break;
-			}
-			fflush(stdin);
-			fflush(stdout);
+			case QUIT:
+			default:
+			break;
 		}
-		free(cmd);
-		return;
+		fflush(stdin);
+		fflush(stdout);
+	}
+	free(cmd);
+	return;
 
 }
