@@ -140,7 +140,9 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 
 	value = getFeatures(b_ptr, features);//Getting Features of the current Bitboard
         if (depth > 0 && value > -999) {//TODO: the idea here is to stop when the branch is very negative
-                
+                /*PSEUDOCODE: for every white legal move, try the move and get the Features
+                save the move that gives you the most negative feautres. outside of the loop make t
+                the move and undo when minimax returns*/
                 value += minimax(b_ptr, depth-1, new_color);
         }
 	return value;
