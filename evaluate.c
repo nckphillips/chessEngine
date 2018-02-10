@@ -2,13 +2,13 @@
 #include "evaluate.h"
 
  int pawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
-	50, 50, 50, 50, 50, 50, 50, 50,
-	10, 10, 20, 30, 30, 20, 10, 10,
-	 5,  5, 10, 25, 25, 10,  5,  5,
-	 0,  0,  0, 20, 20,  0,  0,  0,
-	 5, -5,-10,  0,  0,-10, -5,  5,
-	 5, 10, 10,-20,-20, 10, 10,  5,
-	 0,  0,  0,  0,  0,  0,  0,  0 };
+                	50, 50, 50, 50, 50, 50, 50, 50,
+                	10, 10, 20, 30, 30, 20, 10, 10,
+                	 5,  5, 10, 25, 25, 10,  5,  5,
+                	 0,  0,  0, 20, 20,  0,  0,  0,
+                	 5, -5,-10,  0,  0,-10, -5,  5,
+                	 5, 10, 10,-20,-20, 10, 10,  5,
+                	 0,  0,  0,  0,  0,  0,  0,  0 };
 
 
 
@@ -64,12 +64,12 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	bValue += getValue(b_ptr->bRooks, BROOK); //get the total value of black rooks
 	features[BLACKVALUE] = bValue + getValue(b_ptr->bQueen, BQUEEN); //get the total value of black queen +
 																		  //previous pieces, excluding King
-																		  
-	
+
+
 	features[PAWNPOSITION] = getPositionValue(b_ptr->bPawns, 	BPAWN); //Get position value for pawns
-																		  
-																		  
-																		  
+
+
+
 
 
 
@@ -205,11 +205,3 @@ int getValue(uint64_t board, unsigned int piece_type){
 	}
 	return value;
 } //get total value for given Pieces excluding Kings
-
-
-
-
-
-
-
-
