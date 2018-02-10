@@ -111,7 +111,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							if (temp.bKing & white_moves(&temp)) {
 								val |= 0xffffffff;
 							} else {
-								val = eval_state(&temp);
+								val = minimax(&temp);
 								if (val >= piece_max) {
 									piece_max = val;
 									source_square_best[piece_type] = i;

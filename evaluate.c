@@ -1,20 +1,20 @@
 #include "bitBoard.h"
 #include "evaluate.h"
 
- int pawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
-                	50, 50, 50, 50, 50, 50, 50, 50,
-                	10, 10, 20, 30, 30, 20, 10, 10,
-                	 5,  5, 10, 25, 25, 10,  5,  5,
-                	 0,  0,  0, 20, 20,  0,  0,  0,
-                	 5, -5,-10,  0,  0,-10, -5,  5,
-                	 5, 10, 10,-20,-20, 10, 10,  5,
-                	 0,  0,  0,  0,  0,  0,  0,  0 };
+static const int pawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
+                        	50, 50, 50, 50, 50, 50, 50, 50,
+                        	10, 10, 20, 30, 30, 20, 10, 10,
+                        	 5,  5, 10, 25, 25, 10,  5,  5,
+                        	 0,  0,  0, 20, 20,  0,  0,  0,
+                        	 5, -5,-10,  0,  0,-10, -5,  5,
+                        	 5, 10, 10,-20,-20, 10, 10,  5,
+                        	 0,  0,  0,  0,  0,  0,  0,  0 };
 
 
 
 
 
-int eval_state(Bitboard *b_ptr)
+int minimax(const Bitboard * const b_ptr, unsigned const int depth, const int color)
 {
 
 	int value = 0;
@@ -22,21 +22,9 @@ int eval_state(Bitboard *b_ptr)
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 
-	black_value_Advantage = features[BLACKVALUE] - features[WHITEVALUE];
+	value = minimax();
 
-	value = black_value_Advantage;
-
-/*
-	for(int i = 0; i < NUM_FEATURES; i++){
-		value += features[i]; // Q = w[i] * f[i]
-	}//Assuming the overall value of the state adds up
-*/
 	return value;
-
-
-
-
-        return 0;
 }
 
 
