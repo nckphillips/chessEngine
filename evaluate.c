@@ -1,6 +1,19 @@
 #include "bitBoard.h"
 #include "evaluate.h"
 
+ int pawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
+	50, 50, 50, 50, 50, 50, 50, 50,
+	10, 10, 20, 30, 30, 20, 10, 10,
+	 5,  5, 10, 25, 25, 10,  5,  5,
+	 0,  0,  0, 20, 20,  0,  0,  0,
+	 5, -5,-10,  0,  0,-10, -5,  5,
+	 5, 10, 10,-20,-20, 10, 10,  5,
+	 0,  0,  0,  0,  0,  0,  0,  0 };
+
+
+
+
+
 int eval_state(Bitboard *b_ptr)
 {
 
@@ -51,11 +64,47 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	bValue += getValue(b_ptr->bRooks, BROOK); //get the total value of black rooks
 	features[BLACKVALUE] = bValue + getValue(b_ptr->bQueen, BQUEEN); //get the total value of black queen +
 																		  //previous pieces, excluding King
+																		  
+	
+	features[PAWNPOSITION] = getPositionValue(b_ptr->bPawns, 	BPAWN); //Get position value for pawns
+																		  
+																		  
+																		  
 
 
 
 
 } //Gets features for the board
+
+
+
+int getPositionValue(uint64_t board, unsigned int piece_type){
+
+//NEEDS SWITCH STATEMENT FOR A PIECE TYPE
+
+int value = 0;
+
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((board & 1) == 1){
+				value += pawnValues[col]; //INCORRECT, NEEDS SOME SORT OF CALCULATION
+				board>>=1;
+			}
+			else
+				board>>=1;
+		}
+	}
+
+
+
+return value;
+
+} //NEEDS WORK
+
+
+
+
+
 
 
 int evaluate_pawn_structure(int features[NUM_FEATURES]){
@@ -68,7 +117,7 @@ int evaluate_pawn_structure(int features[NUM_FEATURES]){
 
 	return value;
 
-} //
+} //Function for evaluating connected pawns
 
 
 int count(uint64_t board){
