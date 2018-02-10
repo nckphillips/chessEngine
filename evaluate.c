@@ -1,14 +1,14 @@
 #include "bitBoard.h"
 #include "evaluate.h"
 
- int pawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
-	50, 50, 50, 50, 50, 50, 50, 50,
-	10, 10, 20, 30, 30, 20, 10, 10,
-	 5,  5, 10, 25, 25, 10,  5,  5,
-	 0,  0,  0, 20, 20,  0,  0,  0,
-	 5, -5,-10,  0,  0,-10, -5,  5,
-	 5, 10, 10,-20,-20, 10, 10,  5,
-	 0,  0,  0,  0,  0,  0,  0,  0 };
+const int pawnValues[64] = {0,  0,  0,  0,  0,  0,  0,  0,
+							5, 10, 10,-20,-20, 10, 10,  5,
+							5, -5,-10,  0,  0,-10, -5,  5,
+							0,  0,  0, 20, 20,  0,  0,  0,
+							5,  5, 10, 25, 25, 10,  5,  5,
+							10, 10, 20, 30, 30, 20, 10, 10,
+							50, 50, 50, 50, 50, 50, 50, 50,
+							0,  0,  0,  0,  0,  0,  0,  0};
 
 
 
@@ -18,13 +18,13 @@ int eval_state(Bitboard *b_ptr)
 {
 
 	int value = 0;
-	int black_value_Advantage = 0; //Can be negative
+	//int black_value_Advantage = 0; //Can be negative
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
 
-	black_value_Advantage = features[BLACKVALUE] - features[WHITEVALUE];
+	//black_value_Advantage = features[BLACKVALUE] - features[WHITEVALUE];
 
-	value = black_value_Advantage;
+	value = features[PAWNPOSITION];
 
 /*
 	for(int i = 0; i < NUM_FEATURES; i++){
@@ -83,16 +83,15 @@ int getPositionValue(uint64_t board, unsigned int piece_type){
 //NEEDS SWITCH STATEMENT FOR A PIECE TYPE
 
 int value = 0;
-
+int it = 56;
 	for(int row = 7; row >= 0; row--){
 		for(int col = 0; col <= 7; col++){
-			if ((board & 1) == 1){
-				value += pawnValues[col]; //INCORRECT, NEEDS SOME SORT OF CALCULATION
-				board>>=1;
+			if ((board & squares[it + col]) == 1){
+				value += pawnValues[it + col];
 			}
-			else
-				board>>=1;
 		}
+		
+		it = it - 8;
 	}
 
 
@@ -145,23 +144,23 @@ int getValue(uint64_t board, unsigned int piece_type){
 
 	switch(piece_type){
 	case WPAWN:
-		piece_value = 1 ;
+		piece_value = 100 ;
 	break;
 
 	case WROOK:
-		piece_value = 5 ;
+		piece_value = 500 ;
 	break;
 
 	case WKNIGHT:
-		piece_value = 3 ;
+		piece_value = 300 ;
 	break;
 
 	case WBISHOP:
-		piece_value = 4;
+		piece_value = 325;
 	break;
 
 	case WQUEEN:
-		piece_value = 9 ;
+		piece_value = 900 ;
 	break;
 
 	case WKING:
@@ -169,23 +168,23 @@ int getValue(uint64_t board, unsigned int piece_type){
 	break;
 
 	case BPAWN:
-		piece_value = 1 ;
+		piece_value = 100 ;
 	break;
 
 	case BROOK:
-		piece_value = 5 ;
+		piece_value = 500 ;
 	break;
 
 	case BKNIGHT:
-		piece_value = 3 ;
+		piece_value = 300 ;
 	break;
 
 	case BBISHOP:
-		piece_value = 4;
+		piece_value = 350;
 	break;
 
 	case BQUEEN:
-		piece_value = 9 ;
+		piece_value = 900 ;
 	break;
 
 	case BKING:

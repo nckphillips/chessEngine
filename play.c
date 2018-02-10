@@ -76,6 +76,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				getCheck(b_ptr,&lm,i);
 				/*exploration*/
+				/*
 				if (lm && RANDOM) {//TODO:fix rand
 					int randsquare = rand()%64;
 					while (!(squares[randsquare] & lm) && randsquare >= 0) {
@@ -89,7 +90,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 					source_square_best[piece_type] = i;
 					dest_square_best[piece_type] = randsquare;
 
-					/*see if random move puts you in check*/
+					//see if random move puts you in check
 					copy_board(*b_ptr, &temp);
 					char tempmove[6];
 					to_text(i,randsquare,tempmove);
@@ -100,7 +101,10 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 						piece_max = 1000+rand();
 					}
 					break;
-				} else if (lm){
+					
+					
+					*/
+				 if (lm){
 					//int curr_val = eval_state(b_ptr);
 					/*choose the best move*/
 					for(int j = 0; j < 64; j++) {//loop through the moves
