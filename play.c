@@ -101,25 +101,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 					}
 					break;
 				} else if (lm){
-					//int curr_val = eval_state(b_ptr);
-					/*choose the best move*/
-					for(int j = 0; j < 64; j++) {//loop through the moves
-						if(squares[j] & lm) {
-							char tempmove[6];
-							to_text(i,j,tempmove);
-							update(&temp,tempmove);
-							if (temp.bKing & white_moves(&temp)) {
-								val |= 0xffffffff;
-							} else {
-								val = minimax(&temp);
-								if (val >= piece_max) {
-									piece_max = val;
-									source_square_best[piece_type] = i;
-									dest_square_best[piece_type] = j;
-								}
-							}
-							copy_board(*b_ptr,&temp);
-						}
+					minimax(b_ptr,TREE_DEPTH,0);//start with black
 					}
 				} else {
 					if (!val){

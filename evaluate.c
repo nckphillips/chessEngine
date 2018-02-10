@@ -102,16 +102,16 @@ static const int blackKingMidgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50
 
 
 
-int minimax(const Bitboard * const b_ptr, unsigned const int depth, const int color)
+int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 {
-
 	int value = 0;
-	int black_value_Advantage = 0; //Can be negative
+        int new_color = color ? 0:1;//next calculate for next color
 
-	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
-
-	value = minimax();
-
+	value = getFeatures(b_ptr, features);//Getting Features of the current Bitboard
+        if (depth > 0 && value > -999) {//TODO: the idea here is to stop when the branch is very negative
+                
+                value += minimax(b_ptr, depth-1, new_color);
+        }
 	return value;
 }
 
