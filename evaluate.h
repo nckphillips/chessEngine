@@ -2,11 +2,22 @@
 #define _EVAL_H
 #include "bitBoard.h"
 
-enum features {WHITE, BLACK, WHITEVALUE, BLACKVALUE};
+enum features {WHITE, BLACK, WHITEVALUE, BLACKVALUE, PAWNPOSITION};
 
 #define NUM_FEATURES 4
 
 int features[NUM_FEATURES];//the feature vector to which weights will be applied
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -15,5 +26,6 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);
 int count(uint64_t board);
 int getValue(uint64_t board, unsigned int piece_type);
 int evaluate_pawn_structure(int features[NUM_FEATURES]);
+int getPositionValue(uint64_t board, unsigned int piece_type); //Evaluates the value for a piece type
 
 #endif
