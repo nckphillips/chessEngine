@@ -1,6 +1,9 @@
+#include <stdlib.h>
+
 #include "bitBoard.h"
 #include "evaluate.h"
-
+#include "play.h"
+/*
 static const int whitePawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
                                 	50, 50, 50, 50, 50, 50, 50, 50,
                                 	10, 10, 20, 30, 30, 20, 10, 10,
@@ -130,26 +133,80 @@ static const int blackKingMidgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
                                              -30,-20,-10,  0,  0,-10,-20,-30,
                                              -50,-40,-30,-20,-20,-30,-40, 50};
-
+*/
 
 
 int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 {
+        static Bitboard* backup = 0;
+        if (depth == TREE_DEPTH && backup == 0) {
+                backup = (Bitboard *)malloc(sizeof(Bitboard));
+                copy_board(*b_ptr, backup);
+        }
 	int value = 0;
+        int temp_value = 0;
         int new_color = color ? 0:1;//next calculate for next color
-
-	value = getFeatures(b_ptr, features);//Getting Features of the current Bitboard
+        int src_best = 0;
+        int dst_best = 0;
+        int max = 0;
+        uint64_t lm = 0;
+        uint64_t pb = 0;
+        char tmpmove[6];
+	//TODO:value = getValue(b_ptr);//Getting Features of the current Bitboard
         if (depth > 0 && value > -999) {//TODO: the idea here is to stop when the branch is very negative
                 /*PSEUDOCODE: for every white legal move, try the move and get the Features
                 save the move that gives you the most negative feautres. outside of the loop make t
                 the move and undo when minimax returns*/
+                if (color == 0) {
+                        for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
+                                pb = get_board(b_ptr,piece_type);
+                                for (int src = 0; src < 64; src++) {
+                                        lm = getLegalMoves(b_ptr, piece_type, src);
+                                        for(int dst = 0; dst < 64; dst++) {
+                                                if(squares[dst] & lm && pb & squares[src]) {
+                                                        to_text(src,dst,tmpmove);
+                                                        update(b_ptr,tmpmove);
+                                                        temp_value = 1;//TODO:getFeatures(b_ptr);
+                                                        copy_board(*backup,b_ptr);
+                                                        if (temp_value >= max) {
+                                                                max = temp_value;
+                                                                src_best = src;
+                                                                dst_best = dst;
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                } else {
+                        for (int piece_type = WPAWN; piece_type < 12; piece_type++) {
+                                pb = get_board(b_ptr,piece_type);
+                                for (int src = 0; src < 64; src++) {
+                                lm = getLegalMoves(b_ptr, piece_type, src);
+                                        for(int dst = 0; dst < 64; dst++) {
+                                                if(squares[dst] & lm && pb & squares[src]) {
+                                                        to_text(src,dst,tmpmove);
+                                                        update(b_ptr,tmpmove);
+                                                        temp_value = 1;//TODO:getValue(b_ptr);
+                                                        copy_board(*backup,b_ptr);
+                                                        if (temp_value <= max) {
+                                                                max = temp_value;
+                                                                src_best = src;
+                                                                dst_best = dst;
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+                to_text(src_best,dst_best,tmpmove);
+                update(b_ptr,tmpmove);
                 value += minimax(b_ptr, depth-1, new_color);
         }
 	return value;
 }
 
 
-
+/*
 
 
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
@@ -212,7 +269,7 @@ return value;
 
 
 
-
+*/
 
 
 

@@ -22,7 +22,7 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 
 
 
-int eval_state(Bitboard * b_ptr);
+int minimax(Bitboard * b_ptr,unsigned int depth, int color);
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);
 int count(uint64_t board);
 int getValue(uint64_t board, unsigned int piece_type);

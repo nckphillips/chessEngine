@@ -9,7 +9,7 @@
 #include "play.h"
 #include "bitBoard.h"
 
-#define RANDOM 1
+#define RANDOM 0
 
 void to_text(int source_square, int dest_square, char *move)
 {
@@ -67,16 +67,16 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	/*
 	for every piece, for every legal move, get the value of making that move by passing
 	a modified board to get_state_value*/
-	int piece_max = 0xffffffff;
+	int piece_max = -1000000;
 	for(int piece_type = BPAWN; piece_type >= 0; piece_type--) {
 		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
-		int val = 0;
+		int val = -1000000;
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				getCheck(b_ptr,&lm,i);
 				/*exploration*/
-				if (lm && RANDOM) {//TODO:fix rand
+				if (lm && RANDOM) {
 					int randsquare = rand()%64;
 					while (!(squares[randsquare] & lm) && randsquare >= 0) {
 						randsquare--;
@@ -95,21 +95,28 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 					to_text(i,randsquare,tempmove);
 					update(&temp,tempmove);
 					if (temp.bKing & white_moves(&temp)) {
-						piece_max |= 0xffffffff;
+						piece_max = -1000000;
 					} else {
 						piece_max = 1000+rand();
 					}
 					break;
 				} else if (lm){
-					minimax(b_ptr,TREE_DEPTH,0);//start with black
-					}
-				} else {
-					if (!val){
-						piece_max |= 0xffffffff;
+					char tempmove[6];
+					for(int dst = 0; dst < 64; dst++){
+						if (squares[dst] & lm) {
+							to_text(i,dst,tempmove);
+							update(&temp,tempmove);
+							val = minimax(&temp,TREE_DEPTH,0);//start with black
+							if (val >= piece_max) {
+								piece_max = val;
+								source_square_best[piece_type] = i;
+								dest_square_best[piece_type] = dst;
+							}
+						}
 					}
 				}
 			} else if (!pb) {//if there aren't pieces of this type left
-				piece_max |= 0xffffffff;
+				piece_max = -1000000;
 			}
 		}
 		move_value[piece_type] = piece_max;//save that piece type's max
@@ -118,11 +125,12 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	int index_of_max = 0;
 	/*select the maximum move of the piece types*/
 	for (int i = 0; i < 6; i++) {
-		if (move_value[i] > move_value[index_of_max]) {
+		if (move_value[i] >= move_value[index_of_max]) {
 			index_of_max = i;
 		}
 	}
 
+	printf("%d\n", index_of_max);
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
 
 	best_move_string[4] = '\n'; //TODO:this position will eventually be used for promotion
