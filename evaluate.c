@@ -1,9 +1,10 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "bitBoard.h"
 #include "evaluate.h"
 #include "play.h"
-/*
+
 static const int whitePawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
                                 	50, 50, 50, 50, 50, 50, 50, 50,
                                 	10, 10, 20, 30, 30, 20, 10, 10,
@@ -21,7 +22,7 @@ static const int blackPawnValues[64] =      {0,  0,  0,  0,  0,  0,  0,  0,
                                 	    10, 10, 20, 30, 30, 20, 10, 10,
                                 	    50, 50, 50, 50, 50, 50, 50, 50,
                                 	     0,  0,  0,  0,  0,  0,  0,  0 };
-
+/*
 static const int whiteBishopValues[64] ={-20,-10,-10,-10,-10,-10,-10,-20,
                                          -10,  0,  0,  0,  0,  0,  0,-10,
                                          -10,  0,  5, 10, 10,  5,  0,-10,
@@ -133,8 +134,8 @@ static const int blackKingMidgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
                                              -30,-20,-10,  0,  0,-10,-20,-30,
                                              -50,-40,-30,-20,-20,-30,-40, 50};
-*/
 
+*/
 
 
 int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
@@ -147,7 +148,9 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
         }
 	int value = 0;
         int temp_value = 0;
-        int new_color = color ? 0:1;//next calculate for next color
+        int new_color = 0;
+        printf("color is: %d\n", color);
+        if (color == 0) new_color = 1;
         int src_best = 0;
         int dst_best = 0;
         int max = 0;
@@ -168,7 +171,7 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = 1;//TODO:getFeatures(b_ptr);
+                                                        temp_value = getPositionValue(b_ptr);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value >= max) {
                                                                 max = temp_value;
@@ -188,7 +191,8 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = 1;//TODO:getValue(b_ptr);
+                                                        bitBoard_print(b_ptr->wPawns,0);
+                                                        temp_value = getPositionValue(b_ptr);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value <= max) {
                                                                 max = temp_value;
@@ -200,11 +204,16 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                 }
                         }
                 }
-                to_text(src_best,dst_best,tmpmove);
-                update(b_ptr,tmpmove);
-                value += minimax(b_ptr, depth-1, new_color);
+                if (src_best != dst_best) {
+                        to_text(src_best,dst_best,tmpmove);
+                        update(b_ptr,tmpmove);
+                        printf("max evaluated at: %d for %s\n color was: %d\n",max,tmpmove, color);
+                        max += minimax(b_ptr, depth-1, new_color);
+                } else {
+                        max = -100000;
+                }
         }
-	return value;
+	return max;
 
 }
 
@@ -248,25 +257,37 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 
 
 } //Gets features for the board
+*/
 
 
+int getPositionValue(Bitboard *b_ptr){
 
-int getPositionValue(uint64_t board, unsigned int piece_type){
+//NEEDS SWITCH STATEMENT FOR A
 
-//NEEDS SWITCH STATEMENT FOR A PIECE TYPE
-
+uint64_t pb = get_board(b_ptr, BPAWN);
 int value = 0;
 int it = 56;
 
 
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
-		if ((board & 1) == 1){
-			value += pawnValues[it + col];
-			board>>=1;
+		if ((pb & 1) == 1){
+			value += blackPawnValues[it + col];
+			pb>>=1;
 		}
 		else
-			board>>=1;
+			pb>>=1;
+	}
+	it = it -8;
+}
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= whitePawnValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
 	}
 	it = it -8;
 }
@@ -277,8 +298,6 @@ return value;
 } //NEEDS WORK
 
 
-
-*/
 
 
 
