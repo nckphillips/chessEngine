@@ -106,11 +106,15 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 						if (squares[dst] & lm) {
 							to_text(i,dst,tempmove);
 							update(&temp,tempmove);
-							val = minimax(&temp,TREE_DEPTH,0);//start with black
-							if (val >= piece_max) {
-								piece_max = val;
-								source_square_best[piece_type] = i;
-								dest_square_best[piece_type] = dst;
+							if (white_moves(&temp) & temp.bKing) {
+								val = -10000;
+							} else {
+								val = minimax(&temp,TREE_DEPTH,0);//start with black
+								if (val >= piece_max) {
+									piece_max = val;
+									source_square_best[piece_type] = i;
+									dest_square_best[piece_type] = dst;
+								}
 							}
 						}
 					}
