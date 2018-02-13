@@ -89,7 +89,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 					source_square_best[piece_type] = i;
 					dest_square_best[piece_type] = randsquare;
 
-					/*see if random move puts you in check*/
+					//see if random move puts you in check
 					copy_board(*b_ptr, &temp);
 					char tempmove[6];
 					to_text(i,randsquare,tempmove);

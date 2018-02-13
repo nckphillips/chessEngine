@@ -20,7 +20,7 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 
 
 
-
+int minimax(Bitboard * b_ptr, unsigned const int depth, const int color);
 
 int minimax(Bitboard * b_ptr,unsigned int depth, int color);
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);
