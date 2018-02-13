@@ -1,6 +1,7 @@
 #include "bitBoard.h"
 #include "evaluate.h"
 
+
 const int pawnValues[64] = {0,  0,  0,  0,  0,  0,  0,  0,
 							5, 10, 10,-20,-20, 10, 10,  5,
 							5, -5,-10,  0,  0,-10, -5,  5,
@@ -14,10 +15,147 @@ const int pawnValues[64] = {0,  0,  0,  0,  0,  0,  0,  0,
 
 
 
-int eval_state(Bitboard *b_ptr)
-{
+//int eval_state(Bitboard *b_ptr);
+/*
+static const int whitePawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
+                                	50, 50, 50, 50, 50, 50, 50, 50,
+                                	10, 10, 20, 30, 30, 20, 10, 10,
+                                	 5,  5, 10, 25, 25, 10,  5,  5,
+                                	 0,  0,  0, 20, 20,  0,  0,  0,
+                                	 5, -5,-10,  0,  0,-10, -5,  5,
+                                	 5, 10, 10,-20,-20, 10, 10,  5,
+                                	 0,  0,  0,  0,  0,  0,  0,  0 };
 
+static const int blackPawnValues[64] =      {0,  0,  0,  0,  0,  0,  0,  0,
+                                	     5, 10, 10,-20,-20, 10, 10,  5,
+                                	     5, -5,-10,  0,  0,-10, -5,  5,
+                                	     0,  0,  0, 20, 20,  0,  0,  0,
+                                	     5,  5, 10, 25, 25, 10,  5,  5,
+                                	    10, 10, 20, 30, 30, 20, 10, 10,
+                                	    50, 50, 50, 50, 50, 50, 50, 50,
+                                	     0,  0,  0,  0,  0,  0,  0,  0 };
+
+static const int whiteBishopValues[64] ={-20,-10,-10,-10,-10,-10,-10,-20,
+                                         -10,  0,  0,  0,  0,  0,  0,-10,
+                                         -10,  0,  5, 10, 10,  5,  0,-10,
+                                         -10,  5,  5, 10, 10,  5,  5,-10,
+                                         -10,  0, 10, 10, 10, 10,  0,-10,
+                                         -10, 10, 10, 10, 10, 10, 10,-10,
+                                         -10,  5,  0,  0,  0,  0,  5,-10,
+                                         -20,-10,-10,-10,-10,-10,-10,-20};
+
+static const int whiteRookValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
+                                	 5, 10, 10, 10, 10, 10, 10,  5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	 0,  0,  0,  5,  5,  0,  0,  0 };
+
+static const int blackRookValues[64] =  {0,  0,  0,  5,  5,  0,  0,  0,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	-5,  0,  0,  0,  0,  0,  0, -5,
+                                	 5, 10, 10, 10, 10, 10, 10,  5,
+                                	 0,  0,  0,  0,  0,  0,  0,  0 };
+
+static const int whiteKnightValues[64] =  {-50, -40, -30, -30, -30, -30, -40, -50,
+                                	   -40, -20,   0,   0,   0,   0, -20, -40,
+                                	   -30,   0,  10,  15,  15,  10,   0, -30,
+                                      	   -30,   5,  15,  20,  20,  15,   5, -30,
+                                	   -30,   5,  15,  20,  20,  15,   5, -30,
+                                	   -30,   0,  10,  15,  15,  10,   0, -30,
+                                	   -40, -20,   0,   5,   5,   0, -20, -40,
+                                	   -50, -40, -30, -30, -30, -30, -40, -50};
+
+static const int blackKnightValues[64] =  {-50, -40, -30, -30, -30, -30, -40, -50,
+                                	   -40, -20,   0,   5,   5,   0, -20, -40,
+                                	   -30,   0,  10,  15,  15,  10,   0, -30,
+                                      	   -30,   5,  15,  20,  20,  15,   5, -30,
+                                	   -30,   5,  15,  20,  20,  15,   5, -30,
+                                	   -30,   0,  10,  15,  15,  10,   0, -30,
+                                	   -40, -20,   0,   0,   0,   0, -20, -40,
+                                	   -50, -40, -30, -30, -30, -30, -40, -50};
+
+
+
+static const int whiteQueenValues[64] ={-20,-10,-10, -5, -5,-10,-10,-20,
+                                        -10,  0,  0,  0,  0,  0,  0,-10,
+                                        -10,  0,  5,  5,  5,  5,  0,-10,
+                                         -5,  0,  5,  5,  5,  5,  0, -5,
+                                          0,  0,  5,  5,  5,  5,  0, -5,
+                                        -10,  5,  5,  5,  5,  5,  0,-10,
+                                        -10,  0,  5,  0,  0,  0,  0,-10,
+                                        -20,-10,-10, -5, -5,-10,-10,-20};
+
+static const int whiteKingMidgameValues[64]={-30,-40,-40,-50,-50,-40,-40,-30,
+                                             -30,-40,-40,-50,-50,-40,-40,-30,
+                                             -30,-40,-40,-50,-50,-40,-40,-30,
+                                             -30,-40,-40,-50,-50,-40,-40,-30,
+                                             -20,-30,-30,-40,-40,-30,-30,-20,
+                                             -10,-20,-20,-20,-20,-20,-20,-10,
+                                              20, 20,  0,  0,  0,  0, 20, 20,
+                                              20, 30, 10,  0,  0, 10, 30, 20};
+
+static const int whiteKingMidgameValues[64]={-50,-40,-30,-20,-20,-30,-40, 50,
+                                             -30,-20,-10,  0,  0,-10,-20,-30,
+                                             -30,-10, 20, 30, 30, 20,-10,-30,
+                                             -30,-10, 30, 40, 40, 30,-10,-30,
+                                             -30,-10, 30, 40, 40, 30,-10,-30,
+                                             -30,-10, 20, 30, 30, 20,-10,-30,
+                                             -30,-30,  0,  0,  0,  0,-30,-30,
+                                             -50,-30,-30,-30,-30,-30,-30,-50};
+
+
+
+static const int blackBishopValues[64] = {-20,-10,-10,-10,-10,-10,-10,-20,
+                                          -10,  5,  0,  0,  0,  0,  5,-10,
+                                          -10, 10, 10, 10, 10, 10, 10,-10,
+                                          -10,  0, 10, 10, 10, 10,  0,-10,
+                                          -10,  5,  5, 10, 10,  5,  5,-10,
+                                          -10,  0,  5, 10, 10,  5,  0,-10,
+                                          -10,  0,  0,  0,  0,  0,  0,-10,
+                                          -20,-10,-10,-10,-10,-10,-10,-20};
+
+static const int blackQueenValues[64] = {-20,-10,-10, -5, -5,-10,-10,-20,
+                                         -10,  0,  5,  0,  0,  0,  0,-10,
+                                           0,  0,  5,  5,  5,  5,  0, -5,
+                                           0,  0,  5,  5,  5,  5,  0, -5,
+                                          -5,  0,  5,  5,  5,  5,  0, -5,
+                                         -10,  0,  5,  5,  5,  5,  0,-10,
+                                         -10,  0,  5,  0,  0,  0,  0,-10,
+                                         -20,-10,-10, -5, -5,-10,-10,-20};
+
+static const int blackKingMidgameValues[64]={20, 30, 10,  0,  0, 10, 30, 20,
+                                             20, 20,  0,  0,  0,  0, 20, 20,
+                                            -10,-20,-20,-20,-20,-20,-20,-10,
+                                            -10,-20,-20,-20,-20,-20,-20,-10,
+                                            -20,-30,-30,-40,-40,-30,-30,-20,
+                                            -30,-40,-40,-50,-50,-40,-40,-30,
+                                            -30,-40,-40,-50,-50,-40,-40,-30
+                                            -30,-40,-40,-50,-50,-40,-40,-30};
+
+static const int blackKingMidgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
+                                             -30,-30,  0,  0,  0,  0,-30,-30,
+                                             -30,-10, 20, 30, 30, 20,-10,-30,
+                                             -30,-10, 30, 40, 40, 30,-10,-30,
+                                             -30,-10, 30, 40, 40, 30,-10,-30,
+                                             -30,-10, 20, 30, 30, 20,-10,-30,
+                                             -30,-20,-10,  0,  0,-10,-20,-30,
+                                             -50,-40,-30,-20,-20,-30,-40, 50};
+
+*/
+
+/*
+
+int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
+
+{
 	int value = 0;
+
 	//int black_value_Advantage = 0; //Can be negative
 
 	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
@@ -25,19 +163,48 @@ int eval_state(Bitboard *b_ptr)
 	//black_value_Advantage = features[BLACKVALUE] - features[WHITEVALUE];
 
 	value = features[PAWNPOSITION];
-
+*/
 /*
 	for(int i = 0; i < NUM_FEATURES; i++){
 		value += features[i]; // Q = w[i] * f[i]
 	}//Assuming the overall value of the state adds up
 */
+
+//        int new_color = color ? 0:1;//next calculate for next color
+
+//	value = getFeatures(b_ptr, features);//Getting Features of the current Bitboard
+  //      if (depth > 0 && value > -999) {//TODO: the idea here is to stop when the branch is very negative
+                /*PSEUDOCODE: for every white legal move, try the move and get the Features
+                save the move that gives you the most negative feautres. outside of the loop make t
+                the move and undo when minimax returns*/
+    //            value += minimax(b_ptr, depth-1, new_color);
+      //  }
+
+//	return value;
+//}
+
+
+
+
+int eval_state(Bitboard * b_ptr){
+
+	int value = 0;
+
+	//int black_value_Advantage = 0; //Can be negative
+
+	getFeatures(b_ptr, features);//Getting Features of the current Bitboard
+
+	//black_value_Advantage = features[BLACKVALUE] - features[WHITEVALUE];
+
+	value = features[PAWNPOSITION];
+	
 	return value;
-
-
-
-
-        return 0;
+	
 }
+
+
+
+
 
 
 
@@ -64,12 +231,12 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	bValue += getValue(b_ptr->bRooks, BROOK); //get the total value of black rooks
 	features[BLACKVALUE] = bValue + getValue(b_ptr->bQueen, BQUEEN); //get the total value of black queen +
 																		  //previous pieces, excluding King
-																		  
-	
+
+
 	features[PAWNPOSITION] = getPositionValue(b_ptr->bPawns, 	BPAWN); //Get position value for pawns
-																		  
-																		  
-																		  
+
+
+
 
 
 
@@ -84,16 +251,19 @@ int getPositionValue(uint64_t board, unsigned int piece_type){
 
 int value = 0;
 int it = 56;
-	for(int row = 7; row >= 0; row--){
-		for(int col = 0; col <= 7; col++){
-			if ((board & squares[it + col]) == 1){
-				value += pawnValues[it + col];
-			}
-		}
-		
-		it = it - 8;
-	}
 
+
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((board & 1) == 1){
+			value += pawnValues[it + col];
+			board>>=1;
+		}
+		else
+			board>>=1;
+	}
+	it = it -8;
+}
 
 
 return value;
@@ -204,11 +374,3 @@ int getValue(uint64_t board, unsigned int piece_type){
 	}
 	return value;
 } //get total value for given Pieces excluding Kings
-
-
-
-
-
-
-
-

@@ -5,6 +5,7 @@
 #include "bitBoard.h"
 #include "protocol.h"
 #include "play.h"
+#include "evaluate.h"
 
 static Bitboard previous_state;
 
@@ -45,6 +46,9 @@ int main(void){
 	Bitboard  b;
 	init(&b);
 	init(&previous_state);
+	
+//	int pos = getPositionValue(b.bPawns, BPAWN);
+//	printf("Black Pawns position evaluates to %d", pos);
 	command(&b);
 	return 0;
 }

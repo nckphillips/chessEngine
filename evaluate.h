@@ -5,6 +5,7 @@
 enum features {WHITE, BLACK, WHITEVALUE, BLACKVALUE, PAWNPOSITION};
 
 #define NUM_FEATURES 4
+#define TREE_DEPTH 5
 
 int features[NUM_FEATURES];//the feature vector to which weights will be applied
 
@@ -19,7 +20,7 @@ int features[NUM_FEATURES];//the feature vector to which weights will be applied
 
 
 
-
+int minimax(Bitboard * b_ptr, unsigned const int depth, const int color);
 
 int eval_state(Bitboard * b_ptr);
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);

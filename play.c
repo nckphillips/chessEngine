@@ -101,9 +101,10 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 						piece_max = 1000+rand();
 					}
 					break;
-					
-					
+
 					*/
+					
+					
 				 if (lm){
 					//int curr_val = eval_state(b_ptr);
 					/*choose the best move*/
@@ -124,7 +125,11 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							}
 							copy_board(*b_ptr,&temp);
 						}
-					}
+
+				} //else if (lm){
+					//minimax(b_ptr,TREE_DEPTH,0);//start with black
+
+					//}
 				} else {
 					if (!val){
 						piece_max |= 0xffffffff;
@@ -146,9 +151,9 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	}
 
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
-	///////////////////////////////////////
-	best_move_string[4] = '\n'; //this position will eventually be used for promotion
-	best_move_string[5] = EOF;/*checking to see if the computer is in checkmate*/
+
+	best_move_string[4] = '\n'; //TODO:this position will eventually be used for promotion
+	best_move_string[5] = EOF;
 	copy_board(*b_ptr, &temp);
 	char tempmove[6];
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],tempmove);
