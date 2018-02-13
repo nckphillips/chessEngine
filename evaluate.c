@@ -22,7 +22,7 @@ static const int blackPawnValues[64] =      {0,  0,  0,  0,  0,  0,  0,  0,
                                 	    10, 10, 20, 30, 30, 20, 10, 10,
                                 	    50, 50, 50, 50, 50, 50, 50, 50,
                                 	     0,  0,  0,  0,  0,  0,  0,  0 };
-/*
+
 static const int whiteBishopValues[64] ={-20,-10,-10,-10,-10,-10,-10,-20,
                                          -10,  0,  0,  0,  0,  0,  0,-10,
                                          -10,  0,  5, 10, 10,  5,  0,-10,
@@ -31,6 +31,15 @@ static const int whiteBishopValues[64] ={-20,-10,-10,-10,-10,-10,-10,-20,
                                          -10, 10, 10, 10, 10, 10, 10,-10,
                                          -10,  5,  0,  0,  0,  0,  5,-10,
                                          -20,-10,-10,-10,-10,-10,-10,-20};
+
+static const int blackBishopValues[64] = {-20,-10,-10,-10,-10,-10,-10,-20,
+                                          -10,  5,  0,  0,  0,  0,  5,-10,
+                                          -10, 10, 10, 10, 10, 10, 10,-10,
+                                          -10,  0, 10, 10, 10, 10,  0,-10,
+                                          -10,  5,  5, 10, 10,  5,  5,-10,
+                                          -10,  0,  5, 10, 10,  5,  0,-10,
+                                          -10,  0,  0,  0,  0,  0,  0,-10,
+                                          -20,-10,-10,-10,-10,-10,-10,-20};
 
 static const int whiteRookValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
                                 	 5, 10, 10, 10, 10, 10, 10,  5,
@@ -79,35 +88,6 @@ static const int whiteQueenValues[64] ={-20,-10,-10, -5, -5,-10,-10,-20,
                                         -10,  0,  5,  0,  0,  0,  0,-10,
                                         -20,-10,-10, -5, -5,-10,-10,-20};
 
-static const int whiteKingMidgameValues[64]={-30,-40,-40,-50,-50,-40,-40,-30,
-                                             -30,-40,-40,-50,-50,-40,-40,-30,
-                                             -30,-40,-40,-50,-50,-40,-40,-30,
-                                             -30,-40,-40,-50,-50,-40,-40,-30,
-                                             -20,-30,-30,-40,-40,-30,-30,-20,
-                                             -10,-20,-20,-20,-20,-20,-20,-10,
-                                              20, 20,  0,  0,  0,  0, 20, 20,
-                                              20, 30, 10,  0,  0, 10, 30, 20};
-
-static const int whiteKingMidgameValues[64]={-50,-40,-30,-20,-20,-30,-40, 50,
-                                             -30,-20,-10,  0,  0,-10,-20,-30,
-                                             -30,-10, 20, 30, 30, 20,-10,-30,
-                                             -30,-10, 30, 40, 40, 30,-10,-30,
-                                             -30,-10, 30, 40, 40, 30,-10,-30,
-                                             -30,-10, 20, 30, 30, 20,-10,-30,
-                                             -30,-30,  0,  0,  0,  0,-30,-30,
-                                             -50,-30,-30,-30,-30,-30,-30,-50};
-
-
-
-static const int blackBishopValues[64] = {-20,-10,-10,-10,-10,-10,-10,-20,
-                                          -10,  5,  0,  0,  0,  0,  5,-10,
-                                          -10, 10, 10, 10, 10, 10, 10,-10,
-                                          -10,  0, 10, 10, 10, 10,  0,-10,
-                                          -10,  5,  5, 10, 10,  5,  5,-10,
-                                          -10,  0,  5, 10, 10,  5,  0,-10,
-                                          -10,  0,  0,  0,  0,  0,  0,-10,
-                                          -20,-10,-10,-10,-10,-10,-10,-20};
-
 static const int blackQueenValues[64] = {-20,-10,-10, -5, -5,-10,-10,-20,
                                          -10,  0,  5,  0,  0,  0,  0,-10,
                                            0,  0,  5,  5,  5,  5,  0, -5,
@@ -117,6 +97,25 @@ static const int blackQueenValues[64] = {-20,-10,-10, -5, -5,-10,-10,-20,
                                          -10,  0,  5,  0,  0,  0,  0,-10,
                                          -20,-10,-10, -5, -5,-10,-10,-20};
 
+static const int whiteKingMidgameValues[64]={-30,-40,-40,-50,-50,-40,-40,-30,
+                                             -30,-40,-40,-50,-50,-40,-40,-30,
+                                             -30,-40,-40,-50,-50,-40,-40,-30,
+                                             -30,-40,-40,-50,-50,-40,-40,-30,
+                                             -20,-30,-30,-40,-40,-30,-30,-20,
+                                             -10,-20,-20,-20,-20,-20,-20,-10,
+                                              20, 20,  0,  0,  0,  0, 20, 20,
+                                              20, 30, 10,  0,  0, 10, 30, 20};
+/*
+static const int whiteKingEndgameValues[64]={-50,-40,-30,-20,-20,-30,-40, 50,
+                                             -30,-20,-10,  0,  0,-10,-20,-30,
+                                             -30,-10, 20, 30, 30, 20,-10,-30,
+                                             -30,-10, 30, 40, 40, 30,-10,-30,
+                                             -30,-10, 30, 40, 40, 30,-10,-30,
+                                             -30,-10, 20, 30, 30, 20,-10,-30,
+                                             -30,-30,  0,  0,  0,  0,-30,-30,
+                                             -50,-30,-30,-30,-30,-30,-30,-50};
+
+*/
 static const int blackKingMidgameValues[64]={20, 30, 10,  0,  0, 10, 30, 20,
                                              20, 20,  0,  0,  0,  0, 20, 20,
                                             -10,-20,-20,-20,-20,-20,-20,-10,
@@ -125,8 +124,8 @@ static const int blackKingMidgameValues[64]={20, 30, 10,  0,  0, 10, 30, 20,
                                             -30,-40,-40,-50,-50,-40,-40,-30,
                                             -30,-40,-40,-50,-50,-40,-40,-30
                                             -30,-40,-40,-50,-50,-40,-40,-30};
-
-static const int blackKingMidgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
+/*
+static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -30,-30,  0,  0,  0,  0,-30,-30,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
                                              -30,-10, 30, 40, 40, 30,-10,-30,
@@ -134,9 +133,7 @@ static const int blackKingMidgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
                                              -30,-20,-10,  0,  0,-10,-20,-30,
                                              -50,-40,-30,-20,-20,-30,-40, 50};
-
 */
-
 
 int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 
@@ -280,6 +277,10 @@ for(int row = 7; row >= 0; row--){
 	}
 	it = it -8;
 }
+
+pb = get_board(b_ptr, WPAWN);
+value = 0;
+it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
 		if ((pb & 1) == 1){
@@ -292,6 +293,157 @@ for(int row = 7; row >= 0; row--){
 	it = it -8;
 }
 
+pb = get_board(b_ptr, WBISHOP);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= whiteBishopValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, BBISHOP);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= blackBishopValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, WROOK);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= whiteRookValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, BROOK);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= blackRookValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, WKNIGHT);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= whiteKnightValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, BKNIGHT);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= blackKnightValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, BQUEEN);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= blackQueenValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, WQUEEN);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= whiteQueenValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+//NOTE: not yet accounting for mid/endgame scenario
+
+pb = get_board(b_ptr, BKING);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= blackKingMidgameValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
+
+pb = get_board(b_ptr, WKING);
+value = 0;
+it = 56;
+for(int row = 7; row >= 0; row--){
+	for(int col = 0; col <= 7; col++){
+		if ((pb & 1) == 1){
+			value -= whiteKingMidgameValues[it + col];
+			pb>>=1;
+		}
+		else
+			pb>>=1;
+	}
+	it = it -8;
+}
 
 return value;
 
