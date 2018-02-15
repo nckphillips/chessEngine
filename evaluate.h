@@ -27,6 +27,6 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]);
 int count(uint64_t board);
 int getValue(uint64_t board, unsigned int piece_type);
 int evaluate_pawn_structure(int features[NUM_FEATURES]);
-int getPositionValue(Bitboard *b_ptr); //Evaluates the value for a piece type
+int getPositionValue(Bitboard *b_ptr, int piece_type); //Evaluates the value for a piece type
 
 #endif
