@@ -258,17 +258,16 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 } //Gets features for the board
 */
 
-
+/*finds the value of a move for a given piecetype, based on the position value arrays*/
 int getPositionValue(Bitboard *b_ptr, int piece_type){
 
 	uint64_t pb;
 	int value = 0;
 	int it;
-//NEEDS SWITCH STATEMENT FOR A
+
 switch(piece_type){
 	case BPAWN:
 		pb = get_board(b_ptr, BPAWN);
-		//value = 0;
 		it = 56;
 
 
@@ -285,8 +284,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WPAWN:
 
+	case WPAWN:
 		pb = get_board(b_ptr, WPAWN);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -302,8 +301,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WBISHOP:
 
+	case WBISHOP:
 		pb = get_board(b_ptr, WBISHOP);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -319,8 +318,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BBISHOP:
 
+	case BBISHOP:
 		pb = get_board(b_ptr, BBISHOP);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -336,8 +335,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WROOK:
 
+	case WROOK:
 		pb = get_board(b_ptr, WROOK);
 		value = 0;
 		it = 56;
@@ -354,8 +353,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BROOK:
 
+	case BROOK:
 		pb = get_board(b_ptr, BROOK);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -371,8 +370,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WKNIGHT:
 
+	case WKNIGHT:
 		pb = get_board(b_ptr, WKNIGHT);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -388,8 +387,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BKNIGHT:
 
+	case BKNIGHT:
 		pb = get_board(b_ptr, BKNIGHT);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -405,8 +404,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BQUEEN:
 
+	case BQUEEN:
 		pb = get_board(b_ptr, BQUEEN);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -422,8 +421,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WQUEEN:
 
+	case WQUEEN:
 		pb = get_board(b_ptr, WQUEEN);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -439,9 +438,9 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BKING:
 
-		//NOTE: not yet accounting for mid/endgame scenario
+	case BKING:
+	//NOTE: not yet accounting for mid/endgame scenario
 
 		pb = get_board(b_ptr, BKING);
 		it = 56;
@@ -459,8 +458,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WKING:
 
+	case WKING:
 		pb = get_board(b_ptr, WKING);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -479,12 +478,12 @@ switch(piece_type){
 }
 return value;
 
-} //NEEDS WORK
+}
 
 
 
 
-
+/*Function for evaluating connected pawns*/
 int evaluate_pawn_structure(int features[NUM_FEATURES]){
 
 	int value = 0;
@@ -495,7 +494,7 @@ int evaluate_pawn_structure(int features[NUM_FEATURES]){
 
 	return value;
 
-} //Function for evaluating connected pawns
+}
 
 
 int count(uint64_t board){
