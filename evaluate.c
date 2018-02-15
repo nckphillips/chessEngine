@@ -5,6 +5,9 @@
 #include "evaluate.h"
 #include "play.h"
 
+
+
+
 static const int whitePawnValues[64] =  {0,  0,  0,  0,  0,  0,  0,  0,
                                 	50, 50, 50, 50, 50, 50, 50, 50,
                                 	10, 10, 20, 30, 30, 20, 10, 10,
@@ -216,11 +219,6 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 
 /*
 
-
-
-
-
-
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	int wValue = 0;
 	features[WHITE] = count(allWhite(b_ptr)); //count # of white pieces
@@ -255,17 +253,17 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 } //Gets features for the board
 */
 
-
+/*finds the value of a move for a given piecetype, based on the position value arrays*/
 int getPositionValue(Bitboard *b_ptr, int piece_type){
 
 	uint64_t pb;
 	int value = 0;
 	int it;
-//NEEDS SWITCH STATEMENT FOR A
+
+//compare with the given piece type's position value array
 switch(piece_type){
 	case BPAWN:
 		pb = get_board(b_ptr, BPAWN);
-		//value = 0;
 		it = 56;
 
 
@@ -282,8 +280,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WPAWN:
 
+	case WPAWN:
 		pb = get_board(b_ptr, WPAWN);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -299,8 +297,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WBISHOP:
 
+	case WBISHOP:
 		pb = get_board(b_ptr, WBISHOP);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -316,8 +314,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BBISHOP:
 
+	case BBISHOP:
 		pb = get_board(b_ptr, BBISHOP);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -333,8 +331,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WROOK:
 
+	case WROOK:
 		pb = get_board(b_ptr, WROOK);
 		value = 0;
 		it = 56;
@@ -351,8 +349,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BROOK:
 
+	case BROOK:
 		pb = get_board(b_ptr, BROOK);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -368,8 +366,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WKNIGHT:
 
+	case WKNIGHT:
 		pb = get_board(b_ptr, WKNIGHT);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -385,8 +383,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BKNIGHT:
 
+	case BKNIGHT:
 		pb = get_board(b_ptr, BKNIGHT);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -402,8 +400,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BQUEEN:
 
+	case BQUEEN:
 		pb = get_board(b_ptr, BQUEEN);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -419,8 +417,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WQUEEN:
 
+	case WQUEEN:
 		pb = get_board(b_ptr, WQUEEN);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -436,9 +434,9 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case BKING:
 
-		//NOTE: not yet accounting for mid/endgame scenario
+	case BKING:
+	//NOTE: not yet accounting for mid/endgame scenario
 
 		pb = get_board(b_ptr, BKING);
 		it = 56;
@@ -456,8 +454,8 @@ switch(piece_type){
 		}
 		return value;
 		break;
-	case WKING:
 
+	case WKING:
 		pb = get_board(b_ptr, WKING);
 		it = 56;
 		for(int row = 7; row >= 0; row--){
@@ -476,23 +474,97 @@ switch(piece_type){
 }
 return value;
 
-} //NEEDS WORK
+}
 
 
 
+int evaluate_pawn_structure(Bitboard *b_ptr){
+/*Function for evaluating connected pawns*/
 
 
-int evaluate_pawn_structure(int features[NUM_FEATURES]){
-
+	//This function should encourage our engine to have connected pawns
+	//Discourage to have single pawns, unprotected by the other pawns
+	//This function should discourage stacked Pawns too
 	int value = 0;
+	int same_col_penalty = 0;
 
 
+	same_col_penalty = same_col_pawns(b_ptr) * (-5);
 
+	value = same_col_penalty;
 
 
 	return value;
 
-} //Function for evaluating connected pawns
+}
+
+
+int same_col_pawns(Bitboard *b_ptr){
+
+	/*Penalizing stacked pawns by (-5)*/
+	
+	int value = 0;
+
+	uint64_t	AFILE = 0x0101010101010101;
+
+	uint64_t	BFILE =      squares[b8] | squares[b7] | squares[b6] | squares[b5] |\
+				 squares[b4] | squares[b3] | squares[b2] | squares[b1];
+				 
+	uint64_t	CFILE =      squares[c1] | squares[c2] | squares[c3] | squares[c4] |\
+			         squares[c5] | squares[c6] | squares[c7] | squares[c8];
+
+	uint64_t	DFILE =      squares[d1] | squares[d2] | squares[d3] | squares[d4] |\
+			         squares[d5] | squares[d6] | squares[d7] | squares[d8];
+
+	uint64_t	EFILE =      squares[e1] | squares[e2] | squares[e3] | squares[e4] |\
+			         squares[e5] | squares[e6] | squares[e7] | squares[e8];
+			         
+	uint64_t	FFILE =      squares[f8] | squares[f7] | squares[f6] | squares[f5] |\
+				 squares[f4] | squares[f3] | squares[f2] | squares[f1];
+				 
+	uint64_t	GFILE =      squares[g1] | squares[g2] | squares[g3] | squares[g4] |\
+			         squares[g5] | squares[g6] | squares[g7] | squares[g8];
+			         
+	uint64_t	HFILE =      squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
+				 squares[h4] | squares[h3] | squares[h2] | squares[h1];
+
+	int temp = count(b_ptr->bPawns & AFILE);
+	if (temp > 1)
+		value += temp;
+		
+	temp = count(b_ptr->bPawns & BFILE);
+	if (temp > 1)
+		value += temp;
+
+	temp = count(b_ptr->bPawns & CFILE);
+	if (temp > 1)
+		value += temp;
+		
+	temp = count(b_ptr->bPawns & DFILE);
+	if (temp > 1)
+		value += temp;
+		
+	temp = count(b_ptr->bPawns & EFILE);
+	if (temp > 1)
+		value += temp;
+		
+	temp = count(b_ptr->bPawns & FFILE);
+	if (temp > 1)
+		value += temp;
+		
+	temp = count(b_ptr->bPawns & GFILE);
+	if (temp > 1)
+		value += temp;
+		
+	temp = count(b_ptr->bPawns & HFILE);
+	if (temp > 1)
+		value += temp;
+
+	return value;
+}
+
+
+
 
 
 int count(uint64_t board){
@@ -506,12 +578,12 @@ int count(uint64_t board){
 			}
 			else
 				board>>=1;
-	} //iterte 64 times
+	} //iterate 64 times
 
 	return count;
 }
 
-
+/*get total value for given Pieces excluding Kings*/
 int getValue(uint64_t board, unsigned int piece_type){
 
 	int value = 0;
@@ -579,4 +651,4 @@ int getValue(uint64_t board, unsigned int piece_type){
 		}
 	}
 	return value;
-} //get total value for given Pieces excluding Kings
+} 
