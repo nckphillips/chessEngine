@@ -148,7 +148,6 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 	int value = 0;
         int temp_value = 0;
         int new_color = 0;
-        printf("color is: %d\n", color);
         if (color == 0) new_color = 1;
         int src_best = 0;
         int dst_best = 0;
@@ -190,7 +189,6 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        bitBoard_print(b_ptr->wPawns,0);
                                                         temp_value = getPositionValue(b_ptr, piece_type);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value <= max) {
@@ -206,7 +204,6 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                 if (src_best != dst_best) {
                         to_text(src_best,dst_best,tmpmove);
                         update(b_ptr,tmpmove);
-                        printf("max evaluated at: %d for %s\n color was: %d\n",max,tmpmove, color);
                         max += minimax(b_ptr, depth-1, new_color);
                 } else {
                         max = -100000;
