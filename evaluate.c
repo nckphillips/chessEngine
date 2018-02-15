@@ -219,11 +219,6 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 
 /*
 
-
-
-
-
-
 void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 	int wValue = 0;
 	features[WHITE] = count(allWhite(b_ptr)); //count # of white pieces
@@ -265,6 +260,7 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
 	int value = 0;
 	int it;
 
+//compare with the given piece type's position value array
 switch(piece_type){
 	case BPAWN:
 		pb = get_board(b_ptr, BPAWN);
@@ -481,8 +477,6 @@ return value;
 }
 
 
-
-
 /*Function for evaluating connected pawns*/
 int evaluate_pawn_structure(int features[NUM_FEATURES]){
 
@@ -508,12 +502,12 @@ int count(uint64_t board){
 			}
 			else
 				board>>=1;
-	} //iterte 64 times
+	} //iterate 64 times
 
 	return count;
 }
 
-
+/*get total value for given Pieces excluding Kings*/
 int getValue(uint64_t board, unsigned int piece_type){
 
 	int value = 0;
@@ -581,4 +575,4 @@ int getValue(uint64_t board, unsigned int piece_type){
 		}
 	}
 	return value;
-} //get total value for given Pieces excluding Kings
+} 
