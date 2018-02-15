@@ -62,7 +62,6 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 
 	/*temporary bitboard to modify and pass to the value function*/
 	Bitboard temp;
-	copy_board(*b_ptr, &temp);//copy board to temp
 
 	/*
 	for every piece, for every legal move, get the value of making that move by passing
@@ -75,51 +74,33 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece
 				getCheck(b_ptr,&lm,i);
-				/*exploration*/
-				if (lm && RANDOM) {
-					int randsquare = rand()%64;
-					while (!(squares[randsquare] & lm) && randsquare >= 0) {
-						randsquare--;
-					}
-					if (!(squares[randsquare] & lm)) {
-						while (!(squares[randsquare] & lm) && randsquare < 64) {
-							randsquare++;
-						}
-					}
-					source_square_best[piece_type] = i;
-					dest_square_best[piece_type] = randsquare;
-
-					//see if random move puts you in check
-					copy_board(*b_ptr, &temp);
-					char tempmove[6];
-					to_text(i,randsquare,tempmove);
-					update(&temp,tempmove);
-					if (temp.bKing & white_moves(&temp)) {
-						piece_max = -1000000;
-					} else {
-						piece_max = 1000+rand();
-					}
-					break;
-				} else if (lm){
+				if (lm){
 					char tempmove[6];
 					for(int dst = 0; dst < 64; dst++){
 						if (squares[dst] & lm) {
+							copy_board(*b_ptr, &temp);//copy board to temp
 							to_text(i,dst,tempmove);
 							update(&temp,tempmove);
 							if (white_moves(&temp) & temp.bKing) {
-								val = -10000;
+								val = -1000000;
+								printf("here...\n");
 							} else {
 								val = minimax(&temp,TREE_DEPTH,0);//start with black
-								if (val >= piece_max) {
+								if (val >= piece_max || source_square_best[piece_type] == dest_square_best[piece_type]) {
 									piece_max = val;
 									source_square_best[piece_type] = i;
 									dest_square_best[piece_type] = dst;
+									if (white_moves(&temp) & temp.bKing) {
+										piece_max = -1000000;
+										source_square_best[piece_type] = 0;
+										dest_square_best[piece_type] = 0;
+									}
 								}
 							}
 						}
 					}
 				}
-			} else if (!pb) {//if there aren't pieces of this type left
+			} else {//if there aren't pieces of this type left
 				piece_max = -1000000;
 			}
 		}
@@ -129,12 +110,14 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	int index_of_max = 0;
 	/*select the maximum move of the piece types*/
 	for (int i = 0; i < 6; i++) {
-		if (move_value[i] >= move_value[index_of_max]) {
+		if (source_square_best[i] != dest_square_best[i] && move_value[i] >= move_value[index_of_max] && move_value[i] >= -1000000) {
 			index_of_max = i;
 		}
 	}
 
-	printf("%d\n", index_of_max);
+	printf("index_of_max:%d\n", index_of_max);
+	printf("source: %d\n", source_square_best[index_of_max]);
+	printf("dest: %d\n", dest_square_best[index_of_max]);
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
 
 	best_move_string[4] = '\n'; //TODO:this position will eventually be used for promotion
@@ -143,9 +126,9 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	char tempmove[6];
 	to_text(source_square_best[index_of_max],dest_square_best[index_of_max],tempmove);
 	update(&temp,tempmove);
-	if (temp.bKing & white_moves(&temp)) {
-		printf("telluser Congrats\n");
-	}
+	/*if (temp.bKing & white_moves(&temp)) {
+		printf("resign\n");
+	}*/
 	return;
 }
 
@@ -157,7 +140,7 @@ void play(Bitboard *b_ptr)
 
 	get_best_move(best_move, b_ptr);
 	update(b_ptr,best_move);
-	if(!strcmp(best_move,"a1a1")) {
+	if(!strcmp(best_move,"a1a1\n")) {
 		printf("resign\n");
 	} else {
 		fprintf(stdout,"move %s\n", best_move);
