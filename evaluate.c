@@ -279,7 +279,6 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, WPAWN);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
@@ -294,7 +293,6 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, WBISHOP);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
@@ -309,12 +307,11 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, BBISHOP);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
 		if ((pb & 1) == 1){
-			value -= blackBishopValues[it + col];
+			value += blackBishopValues[it + col];
 			pb>>=1;
 		}
 		else
@@ -339,12 +336,11 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, BROOK);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
 		if ((pb & 1) == 1){
-			value -= blackRookValues[it + col];
+			value += blackRookValues[it + col];
 			pb>>=1;
 		}
 		else
@@ -354,7 +350,6 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, WKNIGHT);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
@@ -369,12 +364,11 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, BKNIGHT);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
 		if ((pb & 1) == 1){
-			value -= blackKnightValues[it + col];
+			value += blackKnightValues[it + col];
 			pb>>=1;
 		}
 		else
@@ -384,12 +378,11 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, BQUEEN);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
 		if ((pb & 1) == 1){
-			value -= blackQueenValues[it + col];
+			value += blackQueenValues[it + col];
 			pb>>=1;
 		}
 		else
@@ -399,7 +392,6 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, WQUEEN);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
@@ -416,12 +408,12 @@ for(int row = 7; row >= 0; row--){
 //NOTE: not yet accounting for mid/endgame scenario
 
 pb = get_board(b_ptr, BKING);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
 		if ((pb & 1) == 1){
-			value -= blackKingMidgameValues[it + col];
+			value += blackKingMidgameValues[it + col];//TODO: switch which values we use
+                                                                  //depending on where we are in the game
 			pb>>=1;
 		}
 		else
@@ -431,7 +423,6 @@ for(int row = 7; row >= 0; row--){
 }
 
 pb = get_board(b_ptr, WKING);
-value = 0;
 it = 56;
 for(int row = 7; row >= 0; row--){
 	for(int col = 0; col <= 7; col++){
