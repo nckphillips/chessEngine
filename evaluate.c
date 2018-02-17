@@ -492,7 +492,8 @@ switch(piece_type){
 		return value;
 		break;
 }
-return value + getTotalMaterial(b_ptr);
+value += getTotalMaterial(b_ptr);
+return value;
 
 }
 
