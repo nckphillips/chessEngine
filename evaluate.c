@@ -253,22 +253,22 @@ void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
 } //Gets features for the board
 */
 
-int getTotalMaterial(b_ptr)
+int getTotalMaterial(Bitboard *b_ptr)
 {
         int value = 0;
-	wValue  = -1 * getValue(b_ptr->wPawns, WPAWN) * count(b_ptr->wPawns); //get the total value of white pawns
-	wValue -= getValue(b_ptr->wKnights, WKNIGHT) * count(b_ptr->wKnights); //get the total value of white knigts
-	wValue -= getValue(b_ptr->wBishops, WBISHOP) * count(b_ptr->wBishops); //get the total value of white bishops
-	wValue -= getValue(b_ptr->wRooks, WROOK) * count(b_ptr->wRooks); //get the total value of white rooks
-	wvalue -= getValue(b_ptr->wQueen, WQUEEN) * count(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
-        wvalue -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
+	value  = -1 * getValue(b_ptr->wPawns, WPAWN) * count(b_ptr->wPawns); //get the total value of white pawns
+	value -= getValue(b_ptr->wKnights, WKNIGHT) * count(b_ptr->wKnights); //get the total value of white knigts
+	value -= getValue(b_ptr->wBishops, WBISHOP) * count(b_ptr->wBishops); //get the total value of white bishops
+	value -= getValue(b_ptr->wRooks, WROOK) * count(b_ptr->wRooks); //get the total value of white rooks
+	value -= getValue(b_ptr->wQueen, WQUEEN) * count(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
+        value -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
 
 
-	Value  = getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
-	Value += getValue(b_ptr->bKnights, BKNIGHT) * count(b_ptr->bKnights); //get the total value of black knigts
-	Value += getValue(b_ptr->bBishops, BBISHOP) * count(b_ptr->bBishops); //get the total value of black bishops
-	Value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
-	Value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
+	value  = getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
+	value += getValue(b_ptr->bKnights, BKNIGHT) * count(b_ptr->bKnights); //get the total value of black knigts
+	value += getValue(b_ptr->bBishops, BBISHOP) * count(b_ptr->bBishops); //get the total value of black bishops
+	value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
+	value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
 	value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
         return value;
 }
