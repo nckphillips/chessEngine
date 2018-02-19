@@ -439,6 +439,7 @@ void update(Bitboard * b_ptr, char * move)
 	uint64_t source_square;
 	uint64_t dest_square;
 	char * rookMove;
+	move[4] = '\0';
 	/*if castling, move the rook first*/
 	if(wqCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'c') && (move[3] == '1') ){
@@ -498,7 +499,7 @@ void update(Bitboard * b_ptr, char * move)
 	source_square = squares[(from_rank * 8) + from_file];
 	dest_square = squares[(to_rank * 8) + to_file];
 	square_move(b_ptr, source_square, dest_square);
-	
+
 	//if a pawn moves to the last row: promote it
 	if( (move[1] == '2') && (move[3] == '1') ){
 		if(dest_square & b_ptr->bPawns){
