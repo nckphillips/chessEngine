@@ -216,43 +216,6 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
 
 }
 
-
-/*
-
-void getFeatures(Bitboard *b_ptr, int features[NUM_FEATURES]){
-	int wValue = 0;
-	features[WHITE] = count(allWhite(b_ptr)); //count # of white pieces
-	features[BLACK] = count(allBlack(b_ptr)); //count # of black pieces
-
-
-	wValue  = getValue(b_ptr->wPawns, WPAWN); //get the total value of white pawns
-	wValue += getValue(b_ptr->wKnights, WKNIGHT); //get the total value of white knigts
-	wValue += getValue(b_ptr->wBishops, WBISHOP); //get the total value of white bishops
-	wValue += getValue(b_ptr->wRooks, WROOK); //get the total value of white rooks
-	features[WHITEVALUE] = wValue + getValue(b_ptr->wQueen, WQUEEN); //get the total value of white queen +
-	features[WHITEVALUE] *= -1;																  //previous pieces, excluding King
-
-	int bValue = 0;
-
-	bValue  = getValue(b_ptr->bPawns, BPAWN); //get the total value of black pawns
-	bValue += getValue(b_ptr->bKnights, BKNIGHT); //get the total value of black knigts
-	bValue += getValue(b_ptr->bBishops, BBISHOP); //get the total value of black bishops
-	bValue += getValue(b_ptr->bRooks, BROOK); //get the total value of black rooks
-	features[BLACKVALUE] = bValue + getValue(b_ptr->bQueen, BQUEEN); //get the total value of black queen +
-																		  //previous pieces, excluding King
-
-
-	features[PAWNPOSITION] = getPositionValue(b_ptr->bPawns, 	BPAWN); //Get position value for pawns
-
-
-
-
-
-
-
-} //Gets features for the board
-*/
-
 int getTotalMaterial(Bitboard *b_ptr)
 {
         int value = 0;
@@ -264,239 +227,239 @@ int getTotalMaterial(Bitboard *b_ptr)
         value -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
 
 
-	value  = getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
+	value += getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
 	value += getValue(b_ptr->bKnights, BKNIGHT) * count(b_ptr->bKnights); //get the total value of black knigts
 	value += getValue(b_ptr->bBishops, BBISHOP) * count(b_ptr->bBishops); //get the total value of black bishops
 	value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
 	value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
 	value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
+        printf("total material value is: %d\n", value);
         return value;
 }
 
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
 int getPositionValue(Bitboard *b_ptr, int piece_type){
 
-uint64_t pb;
-int value = 0;
-int it;
+        uint64_t pb;
+        int value = 0;
+        int it;
 
-//compare with the given piece type's position value array
-switch(piece_type){
-	case BPAWN:
-		pb = get_board(b_ptr, BPAWN);
-		it = 56;
+        //compare with the given piece type's position value array
+        switch(piece_type){
+        	case BPAWN:
+        		pb = get_board(b_ptr, BPAWN);
+        		it = 56;
 
 
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value += blackPawnValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value += blackPawnValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
+                        value += evaluate_pawn_structure(b_ptr);
+        		break;
 
-		break;
+        	case WPAWN:
+        		pb = get_board(b_ptr, WPAWN);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value -= whitePawnValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case WPAWN:
-		pb = get_board(b_ptr, WPAWN);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value -= whitePawnValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case WBISHOP:
+        		pb = get_board(b_ptr, WBISHOP);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value -= whiteBishopValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case WBISHOP:
-		pb = get_board(b_ptr, WBISHOP);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value -= whiteBishopValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case BBISHOP:
+        		pb = get_board(b_ptr, BBISHOP);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value += blackBishopValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case BBISHOP:
-		pb = get_board(b_ptr, BBISHOP);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value += blackBishopValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case WROOK:
+        		pb = get_board(b_ptr, WROOK);
+        		value = 0;
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value -= whiteRookValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case WROOK:
-		pb = get_board(b_ptr, WROOK);
-		value = 0;
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value -= whiteRookValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case BROOK:
+        		pb = get_board(b_ptr, BROOK);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value += blackRookValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case BROOK:
-		pb = get_board(b_ptr, BROOK);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value += blackRookValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case WKNIGHT:
+        		pb = get_board(b_ptr, WKNIGHT);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value -= whiteKnightValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case WKNIGHT:
-		pb = get_board(b_ptr, WKNIGHT);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value -= whiteKnightValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case BKNIGHT:
+        		pb = get_board(b_ptr, BKNIGHT);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value += blackKnightValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case BKNIGHT:
-		pb = get_board(b_ptr, BKNIGHT);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value += blackKnightValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case BQUEEN:
+        		pb = get_board(b_ptr, BQUEEN);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value += blackQueenValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case BQUEEN:
-		pb = get_board(b_ptr, BQUEEN);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value += blackQueenValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case WQUEEN:
+        		pb = get_board(b_ptr, WQUEEN);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value -= whiteQueenValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case WQUEEN:
-		pb = get_board(b_ptr, WQUEEN);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value -= whiteQueenValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        		break;
 
-		break;
+        	case BKING:
+        	//NOTE: not yet accounting for mid/endgame scenario
+        		pb = get_board(b_ptr, BKING);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value += blackKingMidgameValues[it + col];//TODO: switch which values we use
+        				                                                  //depending on where we are in the game
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-	case BKING:
-	//NOTE: not yet accounting for mid/endgame scenario
+        		break;
 
-		pb = get_board(b_ptr, BKING);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value += blackKingMidgameValues[it + col];//TODO: switch which values we use
-				                                                  //depending on where we are in the game
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
+        	case WKING:
+        		pb = get_board(b_ptr, WKING);
+        		it = 56;
+        		for(int row = 7; row >= 0; row--){
+        			for(int col = 0; col <= 7; col++){
+        				if ((pb & 1) == 1){
+        					value -= whiteKingMidgameValues[it + col];
+        					pb>>=1;
+        				}
+        				else
+        					pb>>=1;
+        			}
+        			it = it -8;
+        		}
 
-		break;
-
-	case WKING:
-		pb = get_board(b_ptr, WKING);
-		it = 56;
-		for(int row = 7; row >= 0; row--){
-			for(int col = 0; col <= 7; col++){
-				if ((pb & 1) == 1){
-					value -= whiteKingMidgameValues[it + col];
-					pb>>=1;
-				}
-				else
-					pb>>=1;
-			}
-			it = it -8;
-		}
-
-		break;
-}
-value += getTotalMaterial(b_ptr);
-printf("total val of board: \n");
-printChessboard(b_ptr);
-printf("\n%d\n", value);
-return value;
+        		break;
+        }
+        value += getTotalMaterial(b_ptr);
+        printf("total val of board: \n");
+        printChessboard(b_ptr);
+        printf("\n%d\n", value);
+        return value;
 
 }
 
@@ -610,7 +573,6 @@ int count(uint64_t board){
 /*get total value for given Pieces excluding Kings*/
 int getValue(uint64_t board, unsigned int piece_type){
 
-	int value = 0;
 	int piece_value = 0;
 
 
@@ -652,7 +614,7 @@ int getValue(uint64_t board, unsigned int piece_type){
 	break;
 
 	case BBISHOP:
-		piece_value = 350;
+		piece_value = 325;
 	break;
 
 	case BQUEEN:
@@ -663,16 +625,5 @@ int getValue(uint64_t board, unsigned int piece_type){
 		piece_value = 99999;
 	break;
 	}
-
-	for(int row = 7; row >= 0; row--){
-		for(int col = 0; col <= 7; col++){
-			if ((board & 1) == 1){
-				value += piece_value;
-				board>>=1;
-			}
-			else
-				board>>=1;
-		}
-	}
-	return value;
+return piece_value;
 }
