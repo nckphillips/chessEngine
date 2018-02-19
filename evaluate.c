@@ -276,9 +276,9 @@ int getTotalMaterial(Bitboard *b_ptr)
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
 int getPositionValue(Bitboard *b_ptr, int piece_type){
 
-	uint64_t pb;
-	int value = 0;
-	int it;
+uint64_t pb;
+int value = 0;
+int it;
 
 //compare with the given piece type's position value array
 switch(piece_type){
@@ -298,7 +298,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case WPAWN:
@@ -315,7 +315,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case WBISHOP:
@@ -332,7 +332,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case BBISHOP:
@@ -349,7 +349,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case WROOK:
@@ -367,7 +367,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case BROOK:
@@ -384,7 +384,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case WKNIGHT:
@@ -401,7 +401,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case BKNIGHT:
@@ -418,7 +418,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case BQUEEN:
@@ -435,7 +435,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case WQUEEN:
@@ -452,7 +452,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case BKING:
@@ -472,7 +472,7 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 
 	case WKING:
@@ -489,10 +489,13 @@ switch(piece_type){
 			}
 			it = it -8;
 		}
-		return value;
+
 		break;
 }
 value += getTotalMaterial(b_ptr);
+printf("total val of board: \n");
+printChessboard(b_ptr);
+printf("\n%d\n", value);
 return value;
 
 }
