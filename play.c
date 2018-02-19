@@ -80,12 +80,13 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 						if (squares[dst] & lm) {
 							copy_board(*b_ptr, &temp);//copy board to temp
 							to_text(i,dst,tempmove);
+							tempmove[4] = '\0';
 							update(&temp,tempmove);
 							if (white_moves(&temp) & temp.bKing) {
 								val = -1000000;
 								printf("here...\n");
 							} else {
-								val = minimax(&temp,TREE_DEPTH,0);//start with black
+								val = minimax(&temp,TREE_DEPTH,1);//start with white response to this move
 								if (val >= piece_max || source_square_best[piece_type] == dest_square_best[piece_type]) {
 									piece_max = val;
 									source_square_best[piece_type] = i;
