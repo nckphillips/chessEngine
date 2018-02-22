@@ -172,7 +172,7 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = getTotalMaterial(b_ptr);
+                                                        temp_value = getPositionValue(b_ptr, piece_type);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value >= max) {
                                                                 max = temp_value;
@@ -192,7 +192,7 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = getTotalMaterial(b_ptr); //getPositionValue(b_ptr, piece_type);
+                                                        temp_value = getPositionValue(b_ptr, piece_type);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value <= max) {
                                                                 max = temp_value;
@@ -208,6 +208,7 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                         to_text(src_best,dst_best,tmpmove);
                         update(b_ptr,tmpmove);
                         max += minimax(b_ptr, depth-1, new_color);
+                        copy_board(*b_ptr, backup);
                 } else {
                         max = -100000;
                 }
@@ -233,7 +234,6 @@ int getTotalMaterial(Bitboard *b_ptr)
 	value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
 	value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
 	//value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
-        printf("total material value is: %d\n", value);
         return value;
 }
 
@@ -426,7 +426,85 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         		for(int row = 7; row >= 0; row--){
         			for(int col = 0; col <= 7; col++){
         				if ((pb & 1) == 1){
-        					value += blackKingMidgameValues[it + col];//TODO: switch which values we use
+        					value +=shuffleOpenings = 0
+Version: xboard 4.9.1 + fairymax ()
+Reset(1, 0) from gameMode 0
+recognized 'normal' (-1) as variant normal
+GameEnds(0, (null), 2)
+shuffleOpenings = 0
+StartChildProcess (dir=".") fairymax
+211 >first : xboard
+protover 2
+288 <first : tellics say     Fairy-Max 5.0b
+288 <first : tellics say     by H.G. Muller
+288 <first : feature myname="Fairy-Max 5.0b"
+288 >first : accepted myname
+288 <first : feature memory=1 exclude=1
+288 >first : accepted memory
+288 >first : accepted exclude
+288 <first : feature setboard=0 xedit=1 ping=1 done=0
+288 >first : accepted setboard
+288 >first : accepted xedit
+288 >first : accepted ping
+288 >first : accepted done
+288 <first : feature variants="normal,nocastle,shatranj,asean,makruk,cambodian,ai-wok,courier,knightmate,capablanca,gothic,janus,falcon,cylinder,berolina,super,seirawan,spartan,great,light-brigade,king-of-the-hill,bifurcator,team-mate,los-alamos,ciccolini,mexican,grande-acedrex,roman,almost-wildebeest,fairy"
+288 >first : accepted variants
+288 <first : feature option="Resign -check 0"
+288 >first : accepted option
+288 <first : feature option="Resign Threshold -spin 800 200 1200"
+288 >first : accepted option
+288 <first : feature option="Claim draw after -spin 50 0 200"
+288 >first : accepted option
+289 <first : feature option="Ini File -file /usr/share/games/fairymax/fmax.ini"
+289 >first : accepted option
+289 <first : feature option="Multi-PV Margin -spin 0 0 1000"
+289 >first : accepted option
+289 <first : feature option="Variant fairy selects -combo FIDE-Clobberers /// Clobberers-FIDE /// FIDE-Nutters /// Nutters-FIDE /// Clobberers-Nutters /// Nutters-Clobberers /// FIDE-Rookies /// Rookies-FIDE /// Clobberers-Rookies /// Rookies-Clobberers /// Nutters-Rookies /// Rookies-Nutters"
+289 >first : accepted option
+289 <first : feature option="Makruk rules -combo makruk /// Cambodian /// Ai-wok"
+289 >first : accepted option
+289 <first : feature option="Dummy Slider Example -slider 20 0 100"
+289 >first : accepted option
+289 <first : feature option="Dummy String Example -string happy birthday!"
+289 >first : accepted option
+289 <first : feature option="Dummy Path Example -path ."
+289 >first : accepted option
+289 <first : feature option="Automatic persistent-hash dialog -check 0"
+289 >first : accepted option
+289 <first : feature option="Info -button"
+289 >first : accepted option
+289 <first : feature option="Save in hash file -button"
+289 >first : accepted option
+289 <first : feature option="Clear Hash -button"
+289 >first : accepted option
+289 <first : feature done=1
+289 >first : accepted done
+290 >first : memory 68
+290 >first : new
+random
+290 >first : level 40 5 0
+290 >first : post
+290 >first : hard
+290 >first : ping 1
+333 <first : pong 1
+2663 >first : quit
+Unload first
+StartChildProcess (dir="/home/nicholas/chessEngine") /home/nicholas/chessEngine/main.out
+2671 >first : xboard
+protover 2
+2673 <first :
+2673 <first : feature sigint=0 sigterm=0 usermove=0 done=1
+2673 >first : accepted sigint
+2673 >first : accepted sigterm
+2673 >first : accepted usermove
+2673 >first : accepted done
+recognized 'normal' (-1) as variant normal
+2674 >first : new
+random
+2674 >first : level 40 5 0
+2674 >first : post
+2674 >first : hard
+ blackKingMidgameValues[it + col];//TODO: switch which values we use
         				                                                  //depending on where we are in the game
         					pb>>=1;
         				}
@@ -456,9 +534,6 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         		break;
         }
         value += getTotalMaterial(b_ptr);
-        printf("total val of board: \n");
-        printChessboard(b_ptr);
-        printf("\n%d\n", value);
         return value;
 
 }
@@ -471,13 +546,13 @@ int evaluate_pawn_structure(Bitboard *b_ptr){
 
 	//This function should encourage our engine to have connected pawns
 		//NOT IMPLEMNTED
-	
+
 	//Discourage to have single pawns, unprotected by the other pawns
 		//NOT IMPLEMENTED
-	
+
 	//This function should discourage stacked Pawns too
 		//IMPLEMENTED
-		
+
 	int value = 0;
 	int same_col_penalty = 0;
 
