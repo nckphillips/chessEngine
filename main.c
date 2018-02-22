@@ -43,10 +43,10 @@ int main(void){
 	setbuf(stdin, NULL);
 
 
-	Bitboard  b;
+	Bitboard b;
 	init(&b);
 	init(&previous_state);
-	
+
 //	int pos = getPositionValue(b.bPawns, BPAWN);
 //	printf("Black Pawns position evaluates to %d", pos);
 	command(&b);
