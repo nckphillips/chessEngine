@@ -86,7 +86,9 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 								val = -1000000;
 								printf("here...\n");
 							} else {
-								val = minimax(&temp,TREE_DEPTH,1);//start with white response to this move
+								val = getTotalMaterial(&temp); //minimax(&temp,TREE_DEPTH,1);//start with white response to this move
+								printf("Value is: %d\n", val);
+								printf("Piece max is: %d\n", piece_max);
 								if (val >= piece_max || source_square_best[piece_type] == dest_square_best[piece_type]) {
 									piece_max = val;
 									source_square_best[piece_type] = i;
@@ -101,9 +103,9 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 						}
 					}
 				}
-			} else {//if there aren't pieces of this type left
-				piece_max = -1000000;
-			}
+			} //else {//if there aren't pieces of this type left
+				//piece_max = -1000000;
+			//}
 		}
 		move_value[piece_type] = piece_max;//save that piece type's max
 	}
