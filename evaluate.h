@@ -30,6 +30,7 @@ int getValue(uint64_t board, unsigned int piece_type);
 int evaluate_pawn_structure(Bitboard *b_ptr);
 int same_col_pawns(Bitboard *b_ptr);
 int getPositionValue(Bitboard *b_ptr, int piece_type); //Evaluates the value for a piece type
+int getTotalMaterial(Bitboard *b_ptr);
 
 
 #endif

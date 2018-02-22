@@ -172,7 +172,7 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = getPositionValue(b_ptr, piece_type);
+                                                        temp_value = getTotalMaterial(b_ptr);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value >= max) {
                                                                 max = temp_value;
@@ -192,7 +192,7 @@ int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = getPositionValue(b_ptr, piece_type);
+                                                        temp_value = getTotalMaterial(b_ptr); //getPositionValue(b_ptr, piece_type);
                                                         copy_board(*backup,b_ptr);
                                                         if (temp_value <= max) {
                                                                 max = temp_value;
@@ -224,7 +224,7 @@ int getTotalMaterial(Bitboard *b_ptr)
 	value -= getValue(b_ptr->wBishops, WBISHOP) * count(b_ptr->wBishops); //get the total value of white bishops
 	value -= getValue(b_ptr->wRooks, WROOK) * count(b_ptr->wRooks); //get the total value of white rooks
 	value -= getValue(b_ptr->wQueen, WQUEEN) * count(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
-        value -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
+        //value -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
 
 
 	value += getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
@@ -232,7 +232,7 @@ int getTotalMaterial(Bitboard *b_ptr)
 	value += getValue(b_ptr->bBishops, BBISHOP) * count(b_ptr->bBishops); //get the total value of black bishops
 	value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
 	value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
-	value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
+	//value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
         printf("total material value is: %d\n", value);
         return value;
 }
@@ -470,8 +470,14 @@ int evaluate_pawn_structure(Bitboard *b_ptr){
 
 
 	//This function should encourage our engine to have connected pawns
+		//NOT IMPLEMNTED
+	
 	//Discourage to have single pawns, unprotected by the other pawns
+		//NOT IMPLEMENTED
+	
 	//This function should discourage stacked Pawns too
+		//IMPLEMENTED
+		
 	int value = 0;
 	int same_col_penalty = 0;
 
