@@ -240,7 +240,7 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
 
         uint64_t pb;
         int value = 0;
-int it;
+        int it;
 	pb = get_board(b_ptr, BPAWN);
 	it = 56;
 
