@@ -240,220 +240,172 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
 
         uint64_t pb;
         int value = 0;
-        int it;
-
-        //compare with the given piece type's position value array
-        //switch(piece_type){
-        	//case BPAWN:
-        		pb = get_board(b_ptr, BPAWN);
-        		it = 56;
+int it;
+	pb = get_board(b_ptr, BPAWN);
+	it = 56;
 
 
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value += blackPawnValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-                        //value += evaluate_pawn_structure(b_ptr);
-        		//break;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value += blackPawnValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+        value += evaluate_pawn_structure(b_ptr);//eval black's pawn structure
 
-        	//case WPAWN:
-        		pb = get_board(b_ptr, WPAWN);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value -= whitePawnValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
+	pb = get_board(b_ptr, WPAWN);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value -= whitePawnValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, WBISHOP);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value -= whiteBishopValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, BBISHOP);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value += blackBishopValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, WROOK);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value -= whiteRookValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, BROOK);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value += blackRookValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, WKNIGHT);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value -= whiteKnightValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, BKNIGHT);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value += blackKnightValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+	pb = get_board(b_ptr, BQUEEN);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value += blackQueenValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
 
-        		//break;
+	pb = get_board(b_ptr, WQUEEN);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value -= whiteQueenValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
 
-        	//case WBISHOP:
-        		pb = get_board(b_ptr, WBISHOP);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value -= whiteBishopValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
+	pb = get_board(b_ptr, BKING);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value += blackKingMidgameValues[it + col];//TODO: switch which values we use
+			                                                  //depending on where we are in the game
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
 
-        		//break;
-
-        	//case BBISHOP:
-        		pb = get_board(b_ptr, BBISHOP);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value += blackBishopValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-                                                printf("Value for a pawn pos: %d\n", value);
-        		//break;
-
-        	//case WROOK:
-        		pb = get_board(b_ptr, WROOK);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value -= whiteRookValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case BROOK:
-        		pb = get_board(b_ptr, BROOK);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value += blackRookValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case WKNIGHT:
-        		pb = get_board(b_ptr, WKNIGHT);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value -= whiteKnightValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case BKNIGHT:
-        		pb = get_board(b_ptr, BKNIGHT);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value += blackKnightValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case BQUEEN:
-        		pb = get_board(b_ptr, BQUEEN);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value += blackQueenValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case WQUEEN:
-        		pb = get_board(b_ptr, WQUEEN);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value -= whiteQueenValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case BKING:
-        	//NOTE: not yet accounting for mid/endgame scenario
-        		pb = get_board(b_ptr, BKING);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value += blackKingMidgameValues[it + col];//TODO: switch which values we use
-        				                                                  //depending on where we are in the game
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-
-        	//case WKING:
-        		pb = get_board(b_ptr, WKING);
-        		it = 56;
-        		for(int row = 7; row >= 0; row--){
-        			for(int col = 0; col <= 7; col++){
-        				if ((pb & 1) == 1){
-        					value -= whiteKingMidgameValues[it + col];
-        					pb>>=1;
-        				}
-        				else
-        					pb>>=1;
-        			}
-        			it = it -8;
-        		}
-
-        		//break;
-        //}
-        //value += getTotalMaterial(b_ptr);
+	pb = get_board(b_ptr, WKING);
+	it = 56;
+	for(int row = 7; row >= 0; row--){
+		for(int col = 0; col <= 7; col++){
+			if ((pb & 1) == 1){
+				value -= whiteKingMidgameValues[it + col];
+				pb>>=1;
+			}
+			else
+				pb>>=1;
+		}
+		it = it -8;
+	}
+        value += getTotalMaterial(b_ptr);
         return value;
 
 }
