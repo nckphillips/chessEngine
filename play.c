@@ -70,6 +70,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	for(int piece_type = BPAWN; piece_type >= 0; piece_type--) {
 		uint64_t pb = get_board(b_ptr,piece_type);//piece type board
 		int val = -1000000;
+		piece_max = -1000000;
 		for(int i = 0; i < 64; i ++) {
 			if (squares[i] & pb) {//loop through the pieces
 				uint64_t lm = getLegalMoves(b_ptr, piece_type, i);//board containing legal moves for a piece

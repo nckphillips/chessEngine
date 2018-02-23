@@ -260,7 +260,7 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			}
         			it = it -8;
         		}
-                        value += evaluate_pawn_structure(b_ptr);
+                        //value += evaluate_pawn_structure(b_ptr);
         		//break;
 
         	//case WPAWN:
@@ -312,11 +312,11 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
+                                                printf("Value for a pawn pos: %d\n", value);
         		//break;
 
         	//case WROOK:
         		pb = get_board(b_ptr, WROOK);
-        		value = 0;
         		it = 56;
         		for(int row = 7; row >= 0; row--){
         			for(int col = 0; col <= 7; col++){
