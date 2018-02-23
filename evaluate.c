@@ -243,8 +243,8 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         int it;
 
         //compare with the given piece type's position value array
-        switch(piece_type){
-        	case BPAWN:
+        //switch(piece_type){
+        	//case BPAWN:
         		pb = get_board(b_ptr, BPAWN);
         		it = 56;
 
@@ -261,9 +261,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
                         value += evaluate_pawn_structure(b_ptr);
-        		break;
+        		//break;
 
-        	case WPAWN:
+        	//case WPAWN:
         		pb = get_board(b_ptr, WPAWN);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -278,9 +278,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case WBISHOP:
+        	//case WBISHOP:
         		pb = get_board(b_ptr, WBISHOP);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -295,9 +295,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case BBISHOP:
+        	//case BBISHOP:
         		pb = get_board(b_ptr, BBISHOP);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -312,9 +312,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case WROOK:
+        	//case WROOK:
         		pb = get_board(b_ptr, WROOK);
         		value = 0;
         		it = 56;
@@ -330,9 +330,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case BROOK:
+        	//case BROOK:
         		pb = get_board(b_ptr, BROOK);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -347,9 +347,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case WKNIGHT:
+        	//case WKNIGHT:
         		pb = get_board(b_ptr, WKNIGHT);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -364,9 +364,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case BKNIGHT:
+        	//case BKNIGHT:
         		pb = get_board(b_ptr, BKNIGHT);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -381,9 +381,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case BQUEEN:
+        	//case BQUEEN:
         		pb = get_board(b_ptr, BQUEEN);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -398,9 +398,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case WQUEEN:
+        	//case WQUEEN:
         		pb = get_board(b_ptr, WQUEEN);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -415,9 +415,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case BKING:
+        	//case BKING:
         	//NOTE: not yet accounting for mid/endgame scenario
         		pb = get_board(b_ptr, BKING);
         		it = 56;
@@ -434,9 +434,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
+        		//break;
 
-        	case WKING:
+        	//case WKING:
         		pb = get_board(b_ptr, WKING);
         		it = 56;
         		for(int row = 7; row >= 0; row--){
@@ -451,9 +451,9 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
         			it = it -8;
         		}
 
-        		break;
-        }
-        value += getTotalMaterial(b_ptr);
+        		//break;
+        //}
+        //value += getTotalMaterial(b_ptr);
         return value;
 
 }
@@ -490,7 +490,6 @@ int evaluate_pawn_structure(Bitboard *b_ptr){
 int same_col_pawns(Bitboard *b_ptr){
 
 	/*Penalizing stacked pawns by (-5)*/
-
 	int value = 0;
 
 	uint64_t	AFILE = 0x0101010101010101;
