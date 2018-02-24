@@ -146,104 +146,71 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 
 
 
-		Bitboard temp;
-/*
-        static Bitboard* backup = 0;
-        if (depth == TREE_DEPTH && backup == 0) {
-                backup = (Bitboard *)malloc(sizeof(Bitboard));
-                copy_board(*b_ptr, backup);
-        }
-        
-*/
-        
-        //int value = 0;
-        //int temp_value = 0;
-        //int new_color = 0;
-        //if (color == 0) new_color = 1;
-        //int src_best = 0;
-        //int dst_best = 0;
-        //int max = 0;
+	Bitboard temp;
 
         uint64_t lm = 0;
         uint64_t pb = 0;
         char tempmove[6];
-        
-        
-        
-        
+
+
+
+
         if (depth == 0) {
-			int value_leaf = getPositionValue(b_ptr);
-			return value_leaf;
+		int value_leaf = getPositionValue(b_ptr);
+		return value_leaf;
         }
-        
-       
-                if (color == 0) {
-                		int bestMove = -999999;
-                        for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
-                                pb = get_board(b_ptr,piece_type);
-                                for (int src = 0; src < 64; src++) {
-                                        lm = getLegalMoves(b_ptr, piece_type, src);
-                                        for(int dst = 0; dst < 64; dst++) {
-                                                if(squares[dst] & lm && pb & squares[src]) {
-                                                		copy_board(*b_ptr, &temp);//copy board to temp
-                                                        to_text(src,dst,tempmove);
-														tempmove[4] = '\0';
-														update(&temp,tempmove);
-                                                        int temp_value = minimax(&temp, depth - 1, 1);
 
-                                                        if (temp_value >= bestMove) {
-                                                        	return temp_value;
-                                                        }
-                                                        else{
-                                                        	return bestMove;
-                                                        }
-                                                }
-                                        }
-                                }
-                        }
-                } else {
 
-                		int bestMove = 999999;                
-                        for (int piece_type = WPAWN; piece_type <= 12; piece_type++) {
-                                pb = get_board(b_ptr,piece_type);
-                                for (int src = 0; src < 64; src++) {
+        if (color == 0) {
+		int bestMove = -999999;
+                for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
+                        pb = get_board(b_ptr,piece_type);
+                        for (int src = 0; src < 64; src++) {
                                 lm = getLegalMoves(b_ptr, piece_type, src);
-                                        for(int dst = 0; dst < 64; dst++) {
-                                                if(squares[dst] & lm && pb & squares[src]) {
-                                                		copy_board(*b_ptr, &temp);//copy board to temp
-                                                        to_text(src,dst,tempmove);
-														tempmove[4] = '\0';
-														update(&temp,tempmove);
+                                for(int dst = 0; dst < 64; dst++) {
+                                        if(squares[dst] & lm && pb & squares[src]) {
+                                        	copy_board(*b_ptr, &temp);//copy board to temp
+                                                to_text(src,dst,tempmove);
+						update(&temp,tempmove);
+                                                int temp_value = minimax(&temp, depth - 1, 1);
 
-                                                        int temp_value = minimax(&temp, depth - 1, 0);
-
-                                                        if (temp_value <= bestMove) {
-                                                        	return temp_value;
-                                                        }
-                                                        else{
-                                                        	return bestMove;
-                                                        }
+                                                if (temp_value >= bestMove) {
+                                                	return temp_value;
+                                                }
+                                                else{
+                                                	return bestMove;
                                                 }
                                         }
                                 }
                         }
+                }
+        } else {
+		int bestMove = 999999;
+                for (int piece_type = WPAWN; piece_type <= 12; piece_type++) {
+                        pb = get_board(b_ptr,piece_type);
+                        for (int src = 0; src < 64; src++) {
+                        lm = getLegalMoves(b_ptr, piece_type, src);
+                                for(int dst = 0; dst < 64; dst++) {
+                                        if(squares[dst] & lm && pb & squares[src]) {
+                                		copy_board(*b_ptr, &temp);//copy board to temp
+                                                to_text(src,dst,tempmove);
+                                                int temp_value = minimax(&temp, depth - 1, 0);
+                                                if (temp_value <= bestMove) {
+                                                	return temp_value;
+                                                }
+                                                else{
+                                                	return bestMove;
+                                                }
+                                        }
+                                }
+                        }
+                }
 
-                }       
+        }
 
-	return 0;        
+	return 0;
 }
 
-       /*
-                       if (src_best != dst_best) {
-                        to_text(src_best,dst_best,tmpmove);
-                        update(b_ptr,tmpmove);
-                        //max += minimax(b_ptr, depth-1, new_color);
-                } else {
-                        max = -100000;
-                }
-        */
-        
-        
 
 int getTotalMaterial(Bitboard *b_ptr)
 {
