@@ -166,7 +166,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 
         uint64_t lm = 0;
         uint64_t pb = 0;
-        char tmpmove[6];
+        char tempmove[6];
         
         
         
@@ -186,8 +186,9 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                         for(int dst = 0; dst < 64; dst++) {
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                 		copy_board(*b_ptr, &temp);//copy board to temp
-                                                        to_text(src,dst,tmpmove);
-
+                                                        to_text(src,dst,tempmove);
+														tempmove[4] = '\0';
+														update(&temp,tempmove);
                                                         int temp_value = minimax(&temp, depth - 1, 1);
 
                                                         if (temp_value >= bestMove) {
@@ -203,15 +204,16 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                 } else {
 
                 		int bestMove = 999999;                
-                        for (int piece_type = WPAWN; piece_type < 13; piece_type++) {
+                        for (int piece_type = WPAWN; piece_type <= 12; piece_type++) {
                                 pb = get_board(b_ptr,piece_type);
                                 for (int src = 0; src < 64; src++) {
                                 lm = getLegalMoves(b_ptr, piece_type, src);
                                         for(int dst = 0; dst < 64; dst++) {
                                                 if(squares[dst] & lm && pb & squares[src]) {
-                                                		copy_board(*b_ptr, &temp);//copy board to temp                                                
-                                                        to_text(src,dst,tmpmove);
-                                                        update(b_ptr,tmpmove);
+                                                		copy_board(*b_ptr, &temp);//copy board to temp
+                                                        to_text(src,dst,tempmove);
+														tempmove[4] = '\0';
+														update(&temp,tempmove);
 
                                                         int temp_value = minimax(&temp, depth - 1, 0);
 
