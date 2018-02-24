@@ -90,6 +90,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 								printf("Move attempted was: %s\n", tempmove);
 								printf("Value is: %d\n", val);
 								printf("Piece max is: %d\n", piece_max);
+
 								///the Following statement assigns the max and also should prevent the a1a1 case
 								if (val >= piece_max || source_square_best[piece_type] == dest_square_best[piece_type]) {
 									piece_max = val;

@@ -145,15 +145,16 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 {
 
 
-		Bitboard temp;
 
+		Bitboard temp;
+/*
         static Bitboard* backup = 0;
         if (depth == TREE_DEPTH && backup == 0) {
                 backup = (Bitboard *)malloc(sizeof(Bitboard));
                 copy_board(*b_ptr, backup);
         }
         
-
+*/
         
         //int value = 0;
         //int temp_value = 0;
@@ -162,6 +163,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
         //int src_best = 0;
         //int dst_best = 0;
         //int max = 0;
+
         uint64_t lm = 0;
         uint64_t pb = 0;
         char tmpmove[6];
@@ -185,9 +187,9 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                                 if(squares[dst] & lm && pb & squares[src]) {
                                                 		copy_board(*b_ptr, &temp);//copy board to temp
                                                         to_text(src,dst,tmpmove);
-                                                        update(b_ptr,tmpmove);
+
                                                         int temp_value = minimax(&temp, depth - 1, 1);
-                                                        copy_board(*backup,b_ptr);
+
                                                         if (temp_value >= bestMove) {
                                                         	return temp_value;
                                                         }
@@ -199,8 +201,9 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                 }
                         }
                 } else {
+
                 		int bestMove = 999999;                
-                        for (int piece_type = WPAWN; piece_type < 12; piece_type++) {
+                        for (int piece_type = WPAWN; piece_type < 13; piece_type++) {
                                 pb = get_board(b_ptr,piece_type);
                                 for (int src = 0; src < 64; src++) {
                                 lm = getLegalMoves(b_ptr, piece_type, src);
@@ -209,8 +212,9 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                                 		copy_board(*b_ptr, &temp);//copy board to temp                                                
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
+
                                                         int temp_value = minimax(&temp, depth - 1, 0);
-                                                        copy_board(*backup,b_ptr);
+
                                                         if (temp_value <= bestMove) {
                                                         	return temp_value;
                                                         }
@@ -221,6 +225,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                         }
                                 }
                         }
+
                 }       
 
 	return 0;        
@@ -235,6 +240,8 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                         max = -100000;
                 }
         */
+        
+        
 
 int getTotalMaterial(Bitboard *b_ptr)
 {
@@ -262,6 +269,7 @@ int getPositionValue(Bitboard *b_ptr){
         uint64_t pb;
         int value = 0;
         int it;
+
 
         //compare with the given piece type's position value array
         //switch(piece_type){
@@ -474,6 +482,7 @@ int getPositionValue(Bitboard *b_ptr){
 
         		//break;
         //}
+
         value += getTotalMaterial(b_ptr);
         return value;
 
