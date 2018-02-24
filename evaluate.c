@@ -139,81 +139,102 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -50,-40,-30,-20,-20,-30,-40, 50};
 */
 
-int minimax(Bitboard * b_ptr, unsigned const int depth, const int color)
+
+int minimax(Bitboard * b_ptr, int depth, const int color)
 
 {
+
+
+		Bitboard temp;
+
         static Bitboard* backup = 0;
         if (depth == TREE_DEPTH && backup == 0) {
                 backup = (Bitboard *)malloc(sizeof(Bitboard));
                 copy_board(*b_ptr, backup);
         }
-	int value = 0;
-        int temp_value = 0;
-        int new_color = 0;
-        if (color == 0) new_color = 1;
-        int src_best = 0;
-        int dst_best = 0;
-        int max = 0;
+        
+
+        
+        //int value = 0;
+        //int temp_value = 0;
+        //int new_color = 0;
+        //if (color == 0) new_color = 1;
+        //int src_best = 0;
+        //int dst_best = 0;
+        //int max = 0;
         uint64_t lm = 0;
         uint64_t pb = 0;
         char tmpmove[6];
-	//TODO:value = getValue(b_ptr);//Getting Features of the current Bitboard
-        if (depth > 0 && value > -999) {//TODO: the idea here is to stop when the branch is very negative
-                /*PSEUDOCODE: for every white legal move, try the move and get the Features
-                save the move that gives you the most negative feautres. outside of the loop make t
-                the move and undo when minimax returns*/
+        
+        
+        
+        
+        if (depth == 0) {
+			int value_leaf = getPositionValue(b_ptr);
+			return value_leaf;
+        }
+        
+       
                 if (color == 0) {
+                		int bestMove = -999999;
                         for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                                 pb = get_board(b_ptr,piece_type);
                                 for (int src = 0; src < 64; src++) {
                                         lm = getLegalMoves(b_ptr, piece_type, src);
                                         for(int dst = 0; dst < 64; dst++) {
                                                 if(squares[dst] & lm && pb & squares[src]) {
+                                                		copy_board(*b_ptr, &temp);//copy board to temp
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = getTotalMaterial(b_ptr);
+                                                        int temp_value = minimax(&temp, depth - 1, 1);
                                                         copy_board(*backup,b_ptr);
-                                                        if (temp_value >= max) {
-                                                                max = temp_value;
-                                                                src_best = src;
-                                                                dst_best = dst;
+                                                        if (temp_value >= bestMove) {
+                                                        	return temp_value;
+                                                        }
+                                                        else{
+                                                        	return bestMove;
                                                         }
                                                 }
                                         }
                                 }
                         }
                 } else {
+                		int bestMove = 999999;                
                         for (int piece_type = WPAWN; piece_type < 12; piece_type++) {
                                 pb = get_board(b_ptr,piece_type);
                                 for (int src = 0; src < 64; src++) {
                                 lm = getLegalMoves(b_ptr, piece_type, src);
                                         for(int dst = 0; dst < 64; dst++) {
                                                 if(squares[dst] & lm && pb & squares[src]) {
+                                                		copy_board(*b_ptr, &temp);//copy board to temp                                                
                                                         to_text(src,dst,tmpmove);
                                                         update(b_ptr,tmpmove);
-                                                        temp_value = getTotalMaterial(b_ptr); //getPositionValue(b_ptr, piece_type);
+                                                        int temp_value = minimax(&temp, depth - 1, 0);
                                                         copy_board(*backup,b_ptr);
-                                                        if (temp_value <= max) {
-                                                                max = temp_value;
-                                                                src_best = src;
-                                                                dst_best = dst;
+                                                        if (temp_value <= bestMove) {
+                                                        	return temp_value;
+                                                        }
+                                                        else{
+                                                        	return bestMove;
                                                         }
                                                 }
                                         }
                                 }
                         }
-                }
-                if (src_best != dst_best) {
+                }       
+
+	return 0;        
+}
+
+       /*
+                       if (src_best != dst_best) {
                         to_text(src_best,dst_best,tmpmove);
                         update(b_ptr,tmpmove);
-                        max += minimax(b_ptr, depth-1, new_color);
+                        //max += minimax(b_ptr, depth-1, new_color);
                 } else {
                         max = -100000;
                 }
-        }
-	return max;
-
-}
+        */
 
 int getTotalMaterial(Bitboard *b_ptr)
 {
@@ -236,7 +257,7 @@ int getTotalMaterial(Bitboard *b_ptr)
 }
 
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
-int getPositionValue(Bitboard *b_ptr, int piece_type){
+int getPositionValue(Bitboard *b_ptr){
 
         uint64_t pb;
         int value = 0;
@@ -453,7 +474,7 @@ int getPositionValue(Bitboard *b_ptr, int piece_type){
 
         		//break;
         //}
-        //value += getTotalMaterial(b_ptr);
+        value += getTotalMaterial(b_ptr);
         return value;
 
 }
