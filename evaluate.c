@@ -143,26 +143,16 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
 int minimax(Bitboard * b_ptr, int depth, const int color)
 
 {
-
+	/*
+		In minimax we do not care about the non-leaf nodes' evaluations,
+		We only care about the leaf node evaluatons,
+		and from there we recurse back, minimizing and maximizing 2 players moves
+		obtining an optimal evaluation at the root (that eval is one of the
+		leaf nodes' evaluations.
+	*/
 
 
 		Bitboard temp;
-/*
-        static Bitboard* backup = 0;
-        if (depth == TREE_DEPTH && backup == 0) {
-                backup = (Bitboard *)malloc(sizeof(Bitboard));
-                copy_board(*b_ptr, backup);
-        }
-        
-*/
-        
-        //int value = 0;
-        //int temp_value = 0;
-        //int new_color = 0;
-        //if (color == 0) new_color = 1;
-        //int src_best = 0;
-        //int dst_best = 0;
-        //int max = 0;
 
         uint64_t lm = 0;
         uint64_t pb = 0;
@@ -178,18 +168,18 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
         
        
                 if (color == 0) {
-                		int bestMove = -999999;
+                		int bestMove = -9999;
                         for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                                 pb = get_board(b_ptr,piece_type);
                                 for (int src = 0; src < 64; src++) {
                                         lm = getLegalMoves(b_ptr, piece_type, src);
                                         for(int dst = 0; dst < 64; dst++) {
                                                 if(squares[dst] & lm && pb & squares[src]) {
-                                                		copy_board(*b_ptr, &temp);//copy board to temp
-                                                        to_text(src,dst,tempmove);
+														copy_board(*b_ptr, &temp);//copy board to temp
+														to_text(src,dst,tempmove);
 														tempmove[4] = '\0';
 														update(&temp,tempmove);
-                                                        int temp_value = minimax(&temp, depth - 1, 1);
+														int temp_value = minimax(&temp, depth - 1, 1);
 
                                                         if (temp_value >= bestMove) {
                                                         	return temp_value;
@@ -203,19 +193,19 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                         }
                 } else {
 
-                		int bestMove = 999999;                
+                		int bestMove = 9999;                
                         for (int piece_type = WPAWN; piece_type <= 12; piece_type++) {
                                 pb = get_board(b_ptr,piece_type);
                                 for (int src = 0; src < 64; src++) {
                                 lm = getLegalMoves(b_ptr, piece_type, src);
                                         for(int dst = 0; dst < 64; dst++) {
                                                 if(squares[dst] & lm && pb & squares[src]) {
-                                                		copy_board(*b_ptr, &temp);//copy board to temp
-                                                        to_text(src,dst,tempmove);
-														tempmove[4] = '\0';
-														update(&temp,tempmove);
+													copy_board(*b_ptr, &temp);//copy board to temp
+													to_text(src,dst,tempmove);
+													tempmove[4] = '\0';
+													update(&temp,tempmove);
 
-                                                        int temp_value = minimax(&temp, depth - 1, 0);
+													int temp_value = minimax(&temp, depth - 1, 0);
 
                                                         if (temp_value <= bestMove) {
                                                         	return temp_value;
@@ -230,7 +220,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 
                 }       
 
-	return 0;        
+	return 0; //We should not reach this return statement     
 }
 
        /*
