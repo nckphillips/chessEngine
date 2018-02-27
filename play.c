@@ -86,7 +86,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 							if (white_moves(&temp) & temp.bKing) {
 								val = -1000000;
 							} else {
-								val = minimax(&temp,TREE_DEPTH,1);//start with white response to this move
+								val = minimax(&temp,TREE_DEPTH,1,-999999,999999);//start with white response to this move
 								printf("Move attempted was: %s\n", tempmove);
 								printf("Value is: %d\n", val);
 								printf("Piece max is: %d\n", piece_max);

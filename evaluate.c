@@ -140,7 +140,7 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
 */
 
 
-int minimax(Bitboard * b_ptr, int depth, const int color)
+int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 
 {
         static unsigned long long totalnodes = 0;
@@ -159,7 +159,6 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
         uint64_t lm = 0;
         uint64_t pb = 0;
         char tempmove[6];
-        int max_value = -999999;
 
 
 
@@ -170,7 +169,6 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 
 
         if (color == 0) {
-		int bestMove = -999999;
                 for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                         pb = get_board(b_ptr,piece_type);
                         for (int src = 0; src < 64; src++) {
@@ -180,16 +178,18 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                         	copy_board(*b_ptr, &temp);//copy board to temp
                                                 to_text(src,dst,tempmove);
 						update(&temp,tempmove);
-                                                int temp_value = minimax(&temp, depth - 1, 1);
-                                                if (temp_value >= bestMove) {
-                                                        max_value = temp_value;
+                                                int temp_value = minimax(&temp, depth - 1, 1,alpha,beta);
+                                                if (temp_value >= beta) {
+                                                        return beta;
+                                                }
+                                                if (temp_value > alpha) {
+                                                        alpha = temp_value;
                                                 }
                                         }
                                 }
                         }
                 }
         } else {
-		int bestMove = 999999;
                 for (int piece_type = 6; piece_type < 12; piece_type++) {
                         pb = get_board(b_ptr,piece_type);
                         for (int src = 0; src < 64; src++) {
@@ -201,18 +201,24 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                 		copy_board(*b_ptr, &temp);//copy board to temp
                                                 to_text(src,dst,tempmove);
 						update(&temp,tempmove);
-                                                int temp_value = minimax(&temp, depth - 1, 0);
-                                                if (temp_value <= bestMove) {
-                                                	max_value = temp_value;
+                                                int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
+                                                if (temp_value <= alpha) {
+                                                	return alpha;
+                                                }
+                                                if (temp_value < beta) {
+                                                        beta = temp_value;
                                                 }
                                         }
                                 }
                         }
                 }
-
         }
 
-	return max_value; //We should not reach this return statement
+	if (color == 0) {
+                return alpha;
+        } else {
+                return beta;
+        }
 }
 
 
