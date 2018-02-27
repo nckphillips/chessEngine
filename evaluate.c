@@ -152,11 +152,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 	*/
 
 
-<<<<<<< HEAD
 	Bitboard temp;
-=======
-		Bitboard temp;
->>>>>>> 3ecd887664746cbbfe743365bd00eff24cebfea4
 
         uint64_t lm = 0;
         uint64_t pb = 0;
@@ -169,7 +165,6 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 		int value_leaf = getPositionValue(b_ptr);
 		return value_leaf;
         }
-<<<<<<< HEAD
 
 
         if (color == 0) {
@@ -190,35 +185,10 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                                 }
                                                 else{
                                                 	return bestMove;
-=======
-        
-       
-                if (color == 0) {
-                		int bestMove = -9999;
-                        for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
-                                pb = get_board(b_ptr,piece_type);
-                                for (int src = 0; src < 64; src++) {
-                                        lm = getLegalMoves(b_ptr, piece_type, src);
-                                        for(int dst = 0; dst < 64; dst++) {
-                                                if(squares[dst] & lm && pb & squares[src]) {
-														copy_board(*b_ptr, &temp);//copy board to temp
-														to_text(src,dst,tempmove);
-														tempmove[4] = '\0';
-														update(&temp,tempmove);
-														int temp_value = minimax(&temp, depth - 1, 1);
-
-                                                        if (temp_value >= bestMove) {
-                                                        	return temp_value;
-                                                        }
-                                                        else{
-                                                        	return bestMove;
-                                                        }
->>>>>>> 3ecd887664746cbbfe743365bd00eff24cebfea4
                                                 }
                                         }
                                 }
                         }
-<<<<<<< HEAD
                 }
         } else {
 		int bestMove = 999999;
@@ -236,30 +206,6 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                                                 }
                                                 else{
                                                 	return bestMove;
-=======
-                } else {
-
-                		int bestMove = 9999;                
-                        for (int piece_type = WPAWN; piece_type <= 12; piece_type++) {
-                                pb = get_board(b_ptr,piece_type);
-                                for (int src = 0; src < 64; src++) {
-                                lm = getLegalMoves(b_ptr, piece_type, src);
-                                        for(int dst = 0; dst < 64; dst++) {
-                                                if(squares[dst] & lm && pb & squares[src]) {
-													copy_board(*b_ptr, &temp);//copy board to temp
-													to_text(src,dst,tempmove);
-													tempmove[4] = '\0';
-													update(&temp,tempmove);
-
-													int temp_value = minimax(&temp, depth - 1, 0);
-
-                                                        if (temp_value <= bestMove) {
-                                                        	return temp_value;
-                                                        }
-                                                        else{
-                                                        	return bestMove;
-                                                        }
->>>>>>> 3ecd887664746cbbfe743365bd00eff24cebfea4
                                                 }
                                         }
                                 }
@@ -268,11 +214,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 
         }
 
-<<<<<<< HEAD
-	return 0;
-=======
-	return 0; //We should not reach this return statement     
->>>>>>> 3ecd887664746cbbfe743365bd00eff24cebfea4
+	return 0; //We should not reach this return statement
 }
 
 
