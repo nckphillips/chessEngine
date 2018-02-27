@@ -143,8 +143,10 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
 int minimax(Bitboard * b_ptr, int depth, const int color)
 
 {
+        static unsigned long long totalnodes = 0;
+        totalnodes++;
 	/*
-		In minimax we do not care about the non-leaf nodes' evaluations,
+		In minimax Consider the netwe do not care about the non-leaf nodes' evaluations,
 		We only care about the leaf node evaluatons,
 		and from there we recurse back, minimizing and maximizing 2 players moves
 		obtining an optimal evaluation at the root (that eval is one of the
@@ -157,7 +159,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
         uint64_t lm = 0;
         uint64_t pb = 0;
         char tempmove[6];
-
+        int max_value = -999999;
 
 
 
@@ -174,17 +176,13 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                         for (int src = 0; src < 64; src++) {
                                 lm = getLegalMoves(b_ptr, piece_type, src);
                                 for(int dst = 0; dst < 64; dst++) {
-                                        if(squares[dst] & lm && pb & squares[src]) {
+                                        if((squares[dst] & lm) && (pb & squares[src])) {
                                         	copy_board(*b_ptr, &temp);//copy board to temp
                                                 to_text(src,dst,tempmove);
 						update(&temp,tempmove);
                                                 int temp_value = minimax(&temp, depth - 1, 1);
-
                                                 if (temp_value >= bestMove) {
-                                                	return temp_value;
-                                                }
-                                                else{
-                                                	return bestMove;
+                                                        max_value = temp_value;
                                                 }
                                         }
                                 }
@@ -192,20 +190,20 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
                 }
         } else {
 		int bestMove = 999999;
-                for (int piece_type = WPAWN; piece_type <= 12; piece_type++) {
+                for (int piece_type = 6; piece_type < 12; piece_type++) {
                         pb = get_board(b_ptr,piece_type);
                         for (int src = 0; src < 64; src++) {
-                        lm = getLegalMoves(b_ptr, piece_type, src);
+                                int lcount = 0;
+                                lm = getLegalMoves(b_ptr, piece_type, src);
                                 for(int dst = 0; dst < 64; dst++) {
-                                        if(squares[dst] & lm && pb & squares[src]) {
+                                        if((squares[dst] & lm) && (pb & squares[src])) {
+                                                lcount ++;
                                 		copy_board(*b_ptr, &temp);//copy board to temp
                                                 to_text(src,dst,tempmove);
+						update(&temp,tempmove);
                                                 int temp_value = minimax(&temp, depth - 1, 0);
                                                 if (temp_value <= bestMove) {
-                                                	return temp_value;
-                                                }
-                                                else{
-                                                	return bestMove;
+                                                	max_value = temp_value;
                                                 }
                                         }
                                 }
@@ -214,7 +212,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color)
 
         }
 
-	return 0; //We should not reach this return statement
+	return max_value; //We should not reach this return statement
 }
 
 
@@ -316,8 +314,6 @@ int getPositionValue(Bitboard *b_ptr){
         			it = it -8;
         		}
 
-                                                printf("Value for a pawn pos: %d\n", value);
-        		//break;
 
         	//case WROOK:
         		pb = get_board(b_ptr, WROOK);
