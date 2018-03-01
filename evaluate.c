@@ -143,8 +143,6 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
 int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 
 {
-        static unsigned long long totalnodes = 0;
-        totalnodes++;
 	/*
 		In minimax Consider the netwe do not care about the non-leaf nodes' evaluations,
 		We only care about the leaf node evaluatons,
@@ -175,7 +173,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
                                 lm = getLegalMoves(b_ptr, piece_type, src);
                                 for(int dst = 0; dst < 64; dst++) {
                                         if((squares[dst] & lm) && (pb & squares[src])) {
-                                        	copy_board(*b_ptr, &temp);//copy board to temp
+                                        	copy_board2(b_ptr, &temp);//copy board to temp
                                                 to_text(src,dst,tempmove);
 						update(&temp,tempmove);
                                                 int temp_value = minimax(&temp, depth - 1, 1,alpha,beta);
@@ -192,13 +190,11 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         } else {
                 for (int piece_type = 6; piece_type < 12; piece_type++) {
                         pb = get_board(b_ptr,piece_type);
-                        for (int src = 0; src < 64; src++) {
-                                int lcount = 0;
+                        for (int src = 0; src < 64; src++) {//////////add condition here to stop if we have examined all moves and if we have checked all pieces
                                 lm = getLegalMoves(b_ptr, piece_type, src);
-                                for(int dst = 0; dst < 64; dst++) {
+                                for(int dst = 0; dst < 64 && num_moves_checked < num_moves; dst++) {
                                         if((squares[dst] & lm) && (pb & squares[src])) {
-                                                lcount ++;
-                                		copy_board(*b_ptr, &temp);//copy board to temp
+                                		copy_board2(b_ptr, &temp);//copy board to temp
                                                 to_text(src,dst,tempmove);
 						update(&temp,tempmove);
                                                 int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
@@ -225,20 +221,20 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 int getTotalMaterial(Bitboard *b_ptr)
 {
         int value = 0;
-	value  = -1 * getValue(b_ptr->wPawns, WPAWN) * count(b_ptr->wPawns); //get the total value of white pawns
-	value -= getValue(b_ptr->wKnights, WKNIGHT) * count(b_ptr->wKnights); //get the total value of white knigts
-	value -= getValue(b_ptr->wBishops, WBISHOP) * count(b_ptr->wBishops); //get the total value of white bishops
-	value -= getValue(b_ptr->wRooks, WROOK) * count(b_ptr->wRooks); //get the total value of white rooks
-	value -= getValue(b_ptr->wQueen, WQUEEN) * count(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
-        //value -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
+	value  = -1 * getValue(b_ptr->wPawns, WPAWN) * __builtin_popcount(b_ptr->wPawns); //get the total value of white pawns
+	value -= getValue(b_ptr->wKnights, WKNIGHT) * __builtin_popcount(b_ptr->wKnights); //get the total value of white knigts
+	value -= getValue(b_ptr->wBishops, WBISHOP) * __builtin_popcount(b_ptr->wBishops); //get the total value of white bishops
+	value -= getValue(b_ptr->wRooks, WROOK) * __builtin_popcount(b_ptr->wRooks); //get the total value of white rooks
+	value -= getValue(b_ptr->wQueen, WQUEEN) * __builtin_popcount(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
+        value -= getValue(b_ptr->wKing, WKING) * __builtin_popcount(b_ptr->wKing);
 
 
-	value += getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
-	value += getValue(b_ptr->bKnights, BKNIGHT) * count(b_ptr->bKnights); //get the total value of black knigts
-	value += getValue(b_ptr->bBishops, BBISHOP) * count(b_ptr->bBishops); //get the total value of black bishops
-	value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
-	value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
-	//value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
+	value += getValue(b_ptr->bPawns, BPAWN) * __builtin_popcount(b_ptr->bPawns); //get the total value of black pawns
+	value += getValue(b_ptr->bKnights, BKNIGHT) * __builtin_popcount(b_ptr->bKnights); //get the total value of black knigts
+	value += getValue(b_ptr->bBishops, BBISHOP) * __builtin_popcount(b_ptr->bBishops); //get the total value of black bishops
+	value += getValue(b_ptr->bRooks, BROOK) * __builtin_popcount(b_ptr->bRooks); //get the total value of black rooks
+	value += getValue(b_ptr->bQueen, BQUEEN) * __builtin_popcount(b_ptr->bQueen); //get the total value of black queen +
+	value += getValue(b_ptr->bKing, BKING) * __builtin_popcount(b_ptr->bKing);
         return value;
 }
 
