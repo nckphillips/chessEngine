@@ -171,19 +171,28 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         if (color == 0) {
                 for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                         pb = get_board(b_ptr,piece_type);
-                        for (int src = 0; src < 64; src++) {
-                                lm = getLegalMoves(b_ptr, piece_type, src);
-                                for(int dst = 0; dst < 64; dst++) {
-                                        if((squares[dst] & lm) && (pb & squares[src])) {
-                                        	copy_board(*b_ptr, &temp);//copy board to temp
-                                                to_text(src,dst,tempmove);
-						update(&temp,tempmove);
-                                                int temp_value = minimax(&temp, depth - 1, 1,alpha,beta);
-                                                if (temp_value >= beta) {
-                                                        return beta;
-                                                }
-                                                if (temp_value > alpha) {
-                                                        alpha = temp_value;
+                        int num_pieces_checked = 0;
+                        int num_pieces = __builtin_popcountll(pb);
+                        printf("%d\n", num_pieces);
+                        for (int src = 0; src < 64 && num_pieces_checked < num_pieces; src++) {
+                                 if (pb & squares[src]){
+                                         num_pieces_checked++;
+                                        lm = getLegalMoves(b_ptr, piece_type, src);
+                                        int num_moves = __builtin_popcountll(lm);
+                                        int moves_checked = 0;
+                                        for(int dst = 0; dst < 64 && moves_checked < num_moves; dst++) {
+                                                if((squares[dst] & lm)) {
+                                                        ++moves_checked;
+                                                	copy_board(*b_ptr, &temp);//copy board to temp
+                                                        to_text(src,dst,tempmove);
+        						update(&temp,tempmove);
+                                                        int temp_value = minimax(&temp, depth - 1, 1,alpha,beta);
+                                                        if (temp_value >= beta) {
+                                                                return beta;
+                                                        }
+                                                        if (temp_value > alpha) {
+                                                                alpha = temp_value;
+                                                        }
                                                 }
                                         }
                                 }
@@ -192,21 +201,29 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         } else {
                 for (int piece_type = 6; piece_type < 12; piece_type++) {
                         pb = get_board(b_ptr,piece_type);
-                        for (int src = 0; src < 64; src++) {
+                        int num_pieces_checked = 0;
+                        int num_pieces = __builtin_popcountll(pb);
+                        for (int src = 0; src < 64 && num_pieces_checked < num_pieces; src++) {
                                 int lcount = 0;
-                                lm = getLegalMoves(b_ptr, piece_type, src);
-                                for(int dst = 0; dst < 64; dst++) {
-                                        if((squares[dst] & lm) && (pb & squares[src])) {
-                                                lcount ++;
-                                		copy_board(*b_ptr, &temp);//copy board to temp
-                                                to_text(src,dst,tempmove);
-						update(&temp,tempmove);
-                                                int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
-                                                if (temp_value <= alpha) {
-                                                	return alpha;
-                                                }
-                                                if (temp_value < beta) {
-                                                        beta = temp_value;
+                                if (pb & squares[src]) {
+                                        num_pieces_checked++;
+                                        lm = getLegalMoves(b_ptr, piece_type, src);
+                                        int num_moves = __builtin_popcountll(lm);
+                                        int moves_checked = 0;
+                                        for(int dst = 0; dst < 64 && num_moves > moves_checked; dst++) {
+                                                if((squares[dst] & lm)) {
+                                                        ++moves_checked;
+                                                        lcount ++;
+                                        		copy_board(*b_ptr, &temp);//copy board to temp
+                                                        to_text(src,dst,tempmove);
+        						update(&temp,tempmove);
+                                                        int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
+                                                        if (temp_value <= alpha) {
+                                                        	return alpha;
+                                                        }
+                                                        if (temp_value < beta) {
+                                                                beta = temp_value;
+                                                        }
                                                 }
                                         }
                                 }
@@ -225,20 +242,20 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 int getTotalMaterial(Bitboard *b_ptr)
 {
         int value = 0;
-	value  = -1 * getValue(b_ptr->wPawns, WPAWN) * count(b_ptr->wPawns); //get the total value of white pawns
-	value -= getValue(b_ptr->wKnights, WKNIGHT) * count(b_ptr->wKnights); //get the total value of white knigts
-	value -= getValue(b_ptr->wBishops, WBISHOP) * count(b_ptr->wBishops); //get the total value of white bishops
-	value -= getValue(b_ptr->wRooks, WROOK) * count(b_ptr->wRooks); //get the total value of white rooks
-	value -= getValue(b_ptr->wQueen, WQUEEN) * count(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
-        //value -= getValue(b_ptr->wKing, WKING) * count(b_ptr->wKing);
+	value  = -1 * getValue(b_ptr->wPawns, WPAWN) * __builtin_popcountll(b_ptr->wPawns); //get the total value of white pawns
+	value -= getValue(b_ptr->wKnights, WKNIGHT) * __builtin_popcountll(b_ptr->wKnights); //get the total value of white knigts
+	value -= getValue(b_ptr->wBishops, WBISHOP) * __builtin_popcountll(b_ptr->wBishops); //get the total value of white bishops
+	value -= getValue(b_ptr->wRooks, WROOK) * __builtin_popcountll(b_ptr->wRooks); //get the total value of white rooks
+	value -= getValue(b_ptr->wQueen, WQUEEN) * __builtin_popcountll(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
+        //value -= getValue(b_ptr->wKing, WKING) * __builtin_popcountll(b_ptr->wKing);
 
 
-	value += getValue(b_ptr->bPawns, BPAWN) * count(b_ptr->bPawns); //get the total value of black pawns
-	value += getValue(b_ptr->bKnights, BKNIGHT) * count(b_ptr->bKnights); //get the total value of black knigts
-	value += getValue(b_ptr->bBishops, BBISHOP) * count(b_ptr->bBishops); //get the total value of black bishops
-	value += getValue(b_ptr->bRooks, BROOK) * count(b_ptr->bRooks); //get the total value of black rooks
-	value += getValue(b_ptr->bQueen, BQUEEN) * count(b_ptr->bQueen); //get the total value of black queen +
-	//value += getValue(b_ptr->bKing, BKING) * count(b_ptr->bKing);
+	value += getValue(b_ptr->bPawns, BPAWN) * __builtin_popcountll(b_ptr->bPawns); //get the total value of black pawns
+	value += getValue(b_ptr->bKnights, BKNIGHT) * __builtin_popcountll(b_ptr->bKnights); //get the total value of black knigts
+	value += getValue(b_ptr->bBishops, BBISHOP) * __builtin_popcountll(b_ptr->bBishops); //get the total value of black bishops
+	value += getValue(b_ptr->bRooks, BROOK) * __builtin_popcountll(b_ptr->bRooks); //get the total value of black rooks
+	value += getValue(b_ptr->bQueen, BQUEEN) * __builtin_popcountll(b_ptr->bQueen); //get the total value of black queen +
+	//value += getValue(b_ptr->bKing, BKING) * __builtin_popcountll(b_ptr->bKing);
         return value;
 }
 
@@ -522,35 +539,35 @@ int same_col_pawns(Bitboard *b_ptr){
 	uint64_t	HFILE =      squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
 				 squares[h4] | squares[h3] | squares[h2] | squares[h1];
 
-	int temp = count(b_ptr->bPawns & AFILE);
+	int temp = __builtin_popcountll(b_ptr->bPawns & AFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & BFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & BFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & CFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & CFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & DFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & DFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & EFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & EFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & FFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & FFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & GFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & GFILE);
 	if (temp > 1)
 		value += temp;
 
-	temp = count(b_ptr->bPawns & HFILE);
+	temp = __builtin_popcountll(b_ptr->bPawns & HFILE);
 	if (temp > 1)
 		value += temp;
 
