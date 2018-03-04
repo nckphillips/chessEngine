@@ -441,7 +441,7 @@ void update(Bitboard * b_ptr, char * move)
 	char * rookMove;
 	move[4] = '\0';
 	/*if castling, move the rook first*/
-	if(wqCastle == 1){
+	//if(wqCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'c') && (move[3] == '1') ){
 			rookMove = "a1d1";
 			from_file = (int)rookMove[0] - 97;
@@ -452,8 +452,8 @@ void update(Bitboard * b_ptr, char * move)
 			dest_square = squares[(to_rank * 8) + to_file];
 			square_move(b_ptr, source_square, dest_square);
 		}
-	}
-	if(wkCastle == 1){
+	//}
+	//if(wkCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '1') && (move[2] == 'g') && (move[3] == '1') ){
 			rookMove = "h1f1";
 			from_file = (int)rookMove[0] - 97;
@@ -464,8 +464,8 @@ void update(Bitboard * b_ptr, char * move)
 			dest_square = squares[(to_rank * 8) + to_file];
 			square_move(b_ptr, source_square, dest_square);
 		}
-	}
-	if(bqCastle == 1){
+	//}
+	//if(bqCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '8') && (move[2] == 'c') && (move[3] == '8') ){
 			rookMove = "a8d8";
 			from_file = (int)rookMove[0] - 97;
@@ -476,8 +476,8 @@ void update(Bitboard * b_ptr, char * move)
 			dest_square = squares[(to_rank * 8) + to_file];
 			square_move(b_ptr, source_square, dest_square);
 		}
-	}
-	if(bkCastle == 1){
+	//}
+	//if(bkCastle == 1){
 		if( (move[0] == 'e') && (move[1] == '8') && (move[2] == 'g') && (move[3] == '8') ){
 			rookMove = "h8f8";
 			from_file = (int)rookMove[0] - 97;
@@ -488,7 +488,7 @@ void update(Bitboard * b_ptr, char * move)
 			dest_square = squares[(to_rank * 8) + to_file];
 			square_move(b_ptr, source_square, dest_square);
 		}
-	}
+	//}
 
 	/*commands are given: "e5e6" so the below lines convert the two parts of
 	 *the command to squares.*/
