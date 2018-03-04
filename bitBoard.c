@@ -182,6 +182,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 {
 	uint64_t moves = 0;
 	uint64_t b = 0;//this was added to simplify square specificity
+	int i = 0;
 	////////////////////TODO: if the checkmate flag is set, tell xboard to end the game
 	switch (piece_type){
 		case BPAWN:
@@ -218,55 +219,56 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		case BROOK:
 		b = board->bRooks & squares[piece_square];
 		//fire a ray from each rook in every direction
-		for(int i = 0; i < 64; i++) {
-			if(squares[i] & b) {
-				//set moves to the right
-				rookMove = bRookMoves(board, BROOK,HFILE, i, piece_square);
-				moves |= rookMove;
+		while(b) {
+			i = __builtin_ffsll(b) - 1;
+			//set moves to the right
+			rookMove = bRookMoves(board, BROOK,HFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves to the left
-				rookMove = bRookMoves(board, BROOK,AFILE, i, piece_square);
-				moves |= rookMove;
+			//set moves to the left
+			rookMove = bRookMoves(board, BROOK,AFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves down
-				rookMove = bRookMoves(board, BROOK,RANK1, i, piece_square);
-				moves |= rookMove;
+			//set moves down
+			rookMove = bRookMoves(board, BROOK,RANK1, i, piece_square);
+			moves |= rookMove;
 
-				//set moves up
-				rookMove = bRookMoves(board, BROOK,RANK8, i, piece_square);
-				moves |= rookMove;
-			}
+			//set moves up
+			rookMove = bRookMoves(board, BROOK,RANK8, i, piece_square);
+			moves |= rookMove;
 			/*subtract the rook positions from the moves*/
 			if (moves) {
 				moves &= ~b;
 			}
+			b &= ~squares[i];
 		}
 		break;
 
 		case WROOK:
 		b = board->wRooks & squares[piece_square];
-		for(int i = 0; i < 64; i++) {
-			if(squares[i] & b) {
-				//set moves to the right
-				rookMove = wRookMoves(board, WROOK, HFILE, i, piece_square);
-				moves |= rookMove;
+		while(b) {
+			i = __builtin_ffsll(b) - 1;
+			//set moves to the right
+			rookMove = wRookMoves(board, WROOK, HFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves to the left
-				rookMove = wRookMoves(board, WROOK, AFILE, i, piece_square);
-				moves |= rookMove;
+			//set moves to the left
+			rookMove = wRookMoves(board, WROOK, AFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves down
-				rookMove = wRookMoves(board, WROOK,RANK1, i, piece_square);
-				moves |= rookMove;
+			//set moves down
+			rookMove = wRookMoves(board, WROOK,RANK1, i, piece_square);
+			moves |= rookMove;
 
-				//set moves up
-				rookMove = wRookMoves(board, WROOK,RANK8, i, piece_square);
-				moves |= rookMove;
-			}
+			//set moves up
+			rookMove = wRookMoves(board, WROOK,RANK8, i, piece_square);
+			moves |= rookMove;
+
 			/*subtract the rook positions from the moves*/
 			if (moves) {
 				moves &= ~b;
 			}
+			b &= ~squares[i];
 		}
 		break;
 
@@ -308,56 +310,56 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		case BQUEEN:
 		b = board->bQueen & squares[piece_square];
 		moves = bishop_moves(board, BQUEEN, piece_square);
-		for(int i = 0; i < 64; i++) {
-			if(squares[i] & b) {
-				//set moves to the right
-				rookMove = bRookMoves(board, BQUEEN,HFILE, i, piece_square);
-				moves |= rookMove;
+		while(b) {
+			i = __builtin_ffsll(b) - 1;
+			//set moves to the right
+			rookMove = bRookMoves(board, BQUEEN,HFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves to the left
-				rookMove = bRookMoves(board, BQUEEN,AFILE, i, piece_square);
-				moves |= rookMove;
+			//set moves to the left
+			rookMove = bRookMoves(board, BQUEEN,AFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves down
-				rookMove = bRookMoves(board, BQUEEN,RANK1, i, piece_square);
-				moves |= rookMove;
+			//set moves down
+			rookMove = bRookMoves(board, BQUEEN,RANK1, i, piece_square);
+			moves |= rookMove;
 
-				//set moves up
-				rookMove = bRookMoves(board, BQUEEN,RANK8, i, piece_square);
-				moves |= rookMove;
-			}
+			//set moves up
+			rookMove = bRookMoves(board, BQUEEN,RANK8, i, piece_square);
+			moves |= rookMove;
 			/*subtract the rook positions from the moves*/
 			if (moves) {
 				moves &= ~b;
 			}
+			b &= ~squares[i];
 		}
 		break;
 
 		case WQUEEN:
 		b = board->wQueen & squares[piece_square];
 		moves = bishop_moves(board, WQUEEN, piece_square);
-		for(int i = 0; i < 64; i++) {
-			if(squares[i] & b) {
-				//set moves to the right
-				rookMove = wRookMoves(board, WQUEEN,HFILE, i, piece_square);
-				moves |= rookMove;
+		while(b) {
+			i = __builtin_ffsll(b) - 1;
+			//set moves to the right
+			rookMove = wRookMoves(board, WQUEEN,HFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves to the left
-				rookMove = wRookMoves(board, WQUEEN,AFILE, i, piece_square);
-				moves |= rookMove;
+			//set moves to the left
+			rookMove = wRookMoves(board, WQUEEN,AFILE, i, piece_square);
+			moves |= rookMove;
 
-				//set moves down
-				rookMove = wRookMoves(board, WQUEEN,RANK1, i, piece_square);
-				moves |= rookMove;
+			//set moves down
+			rookMove = wRookMoves(board, WQUEEN,RANK1, i, piece_square);
+			moves |= rookMove;
 
-				//set moves up
-				rookMove = wRookMoves(board, WQUEEN,RANK8, i, piece_square);
-				moves |= rookMove;
-			}
+			//set moves up
+			rookMove = wRookMoves(board, WQUEEN,RANK8, i, piece_square);
+			moves |= rookMove;
 			/*subtract the rook positions from the moves*/
 			if (moves) {
 				moves &= ~b;
 			}
+			b &= ~squares[i];
 		}
 		break;
 

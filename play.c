@@ -29,7 +29,7 @@ void init_struct_ptr(readThreadParams* rt){
 	rt->move_value[2] = 0;
 	rt->move_value[3] = 0;
 	rt->move_value[4] = 0;
-	rt->move_value[5] = 0;	
+	rt->move_value[5] = 0;
 	rt->source_square_best[0] = 0;
 	rt->source_square_best[1] = 0;
 	rt->source_square_best[2] = 0;
@@ -91,11 +91,11 @@ void* spawn_thread_1(void* ptr)
 	Bitboard temp;
 	int piece_type = 0;
 	int piece_max = -1000000;
-	
+
 	readThreadParams *rt = ptr;
-	
+
 	//printf("Started\n");
-	
+
 	for(piece_type = 5; piece_type >= 3; piece_type--) {
 		uint64_t pb = get_board(rt->b_ptr,piece_type);//piece type board
 		int val = -1000000;
@@ -114,6 +114,9 @@ void* spawn_thread_1(void* ptr)
 							update(&temp,tempmove);
 							if (white_moves(&temp) & temp.bKing) {
 								val = -1000000;
+								piece_max = -1000000;
+								rt->source_square_best[piece_type] = 0;
+								rt->dest_square_best[piece_type] = 0;
 							} else {
 								val = minimax(&temp, TREE_DEPTH, 1, -999999,999999);//start with white response to this move
 
@@ -122,11 +125,6 @@ void* spawn_thread_1(void* ptr)
 									piece_max = val;
 									rt->source_square_best[piece_type] = i;
 									rt->dest_square_best[piece_type] = dst;
-									if (white_moves(&temp) & temp.bKing) {
-										piece_max = -1000000;
-										rt->source_square_best[piece_type] = 0;
-										rt->dest_square_best[piece_type] = 0;
-									}
 								}
 							}
 						}
@@ -149,11 +147,11 @@ void* spawn_thread_2(void* ptr)
 	Bitboard temp;
 	int piece_type = 0;
 	int piece_max = -1000000;
-	
+
 	readThreadParams *rt = ptr;
-	
+
 	//printf("Started\n");
-	
+
 	for(piece_type = 2; piece_type >= 0; piece_type--) {
 		uint64_t pb = get_board(rt->b_ptr,piece_type);//piece type board
 		int val = -1000000;
@@ -172,6 +170,9 @@ void* spawn_thread_2(void* ptr)
 							update(&temp,tempmove);
 							if (white_moves(&temp) & temp.bKing) {
 								val = -1000000;
+								piece_max = -1000000;
+								rt->source_square_best[piece_type] = 0;
+								rt->dest_square_best[piece_type] = 0;
 							} else {
 								val = minimax(&temp, TREE_DEPTH, 1, -999999,999999);//start with white response to this move
 
@@ -180,11 +181,6 @@ void* spawn_thread_2(void* ptr)
 									piece_max = val;
 									rt->source_square_best[piece_type] = i;
 									rt->dest_square_best[piece_type] = dst;
-									if (white_moves(&temp) & temp.bKing) {
-										piece_max = -1000000;
-										rt->source_square_best[piece_type] = 0;
-										rt->dest_square_best[piece_type] = 0;
-									}
 								}
 							}
 						}
@@ -214,33 +210,33 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	rt = &bp;
 	init_struct_ptr(rt);
 	rt->b_ptr = b_ptr;
-	
+
 	readThreadParams* rt2;
 	readThreadParams bp2;
 	rt2 = &bp2;
 	init_struct_ptr(rt2);
 	rt2->b_ptr = b_ptr;
-	
+
 	int  iret1, iret2;
     pthread_t tid1, tid2;
     //printf("Before Thread\n");
-    
-    
+
+
     iret1 = pthread_create(&tid1, NULL, spawn_thread_1, rt);//Spawn 1st thread
     iret2 = pthread_create(&tid2, NULL, spawn_thread_2, rt2);//Spawn 2nd thread
     //printf("After Thread1\n");
 	pthread_join(tid1, NULL);//Wait for 1st thread to return
 	pthread_join(tid2, NULL);//Wait for 2nd thread to return
-    
+
 	/*HERE WE ARE BACK TO 1 THREAD*/
-    
-    
+
+
     printf("Thread 1 returns: %d\n",iret1);
     printf("Thread 2 returns: %d\n",iret2);
 	int move_value[6];
 	int source_square_best[6];
 	int dest_square_best[6];
-	
+
 	move_value[0] = rt->move_value[0];
 	move_value[1] = rt->move_value[1];
 	move_value[2] = rt->move_value[2];
@@ -256,18 +252,18 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	source_square_best[3] = rt->source_square_best[3];
 	source_square_best[4] = rt->source_square_best[4];
 	source_square_best[5] = rt->source_square_best[5];
-	
+
 	dest_square_best[0] = rt->dest_square_best[0];
 	dest_square_best[1] = rt->dest_square_best[1];
 	dest_square_best[2] = rt->dest_square_best[2];
 	dest_square_best[3] = rt->dest_square_best[3];
 	dest_square_best[4] = rt->dest_square_best[4];
 	dest_square_best[5] = rt->dest_square_best[5];
-	
+
 	int move_value1[6];
 	int source_square_best1[6];
 	int dest_square_best1[6];
-	
+
 	move_value1[0] = rt2->move_value[0];
 	move_value1[1] = rt2->move_value[1];
 	move_value1[2] = rt2->move_value[2];
@@ -283,17 +279,17 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	source_square_best1[3] = rt2->source_square_best[3];
 	source_square_best1[4] = rt2->source_square_best[4];
 	source_square_best1[5] = rt2->source_square_best[5];
-	
+
 	dest_square_best1[0] = rt2->dest_square_best[0];
 	dest_square_best1[1] = rt2->dest_square_best[1];
 	dest_square_best1[2] = rt2->dest_square_best[2];
 	dest_square_best1[3] = rt2->dest_square_best[3];
 	dest_square_best1[4] = rt2->dest_square_best[4];
 	dest_square_best1[5] = rt2->dest_square_best[5];
-	
-	
+
+
 	int index_of_max1 = 0;
-	
+
 	for (int i = 0; i < 3; i++) {
 		printf("Val1:%d\n", move_value1[i]);
 		if (source_square_best1[i] != dest_square_best1[i] && move_value1[i] >= move_value1[index_of_max1] && move_value1[i] >= -1000000) {
@@ -314,7 +310,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 			index_of_max = i;
 		}
 	}
-	
+
 	/*
 	printf("index_of_max:%d\n", index_of_max);
 	printf("source: %d\n", source_square_best[index_of_max]);
@@ -323,7 +319,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	*/
 
 	if(move_value[index_of_max] > move_value1[index_of_max1]){
-		to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);	
+		to_text(source_square_best[index_of_max],dest_square_best[index_of_max],best_move_string);
 	}
 	else{
 		to_text(source_square_best1[index_of_max1],dest_square_best1[index_of_max1],best_move_string);
