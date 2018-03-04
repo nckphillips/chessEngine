@@ -171,18 +171,18 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         if (color == 0) {
                 for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                         pb = get_board(b_ptr,piece_type);
-                        int num_pieces_checked = 0;
-                        int num_pieces = __builtin_popcountll(pb);
-                        printf("%d\n", num_pieces);
-                        for (int src = 0; src < 64 && num_pieces_checked < num_pieces; src++) {
+                        //int num_pieces_checked = 0;
+                        //int num_pieces = __builtin_popcountll(pb);
+                        //printf("%d\n", num_pieces);
+                        for (int src = 0; src < 64; src++) {
                                  if (pb & squares[src]){
-                                         num_pieces_checked++;
+                                        //num_pieces_checked++;
                                         lm = getLegalMoves(b_ptr, piece_type, src);
-                                        int num_moves = __builtin_popcountll(lm);
-                                        int moves_checked = 0;
-                                        for(int dst = 0; dst < 64 && moves_checked < num_moves; dst++) {
+                                        //int num_moves = __builtin_popcountll(lm);
+                                        //int moves_checked = 0;
+                                        for(int dst = 0; dst < 64; dst++) {
                                                 if((squares[dst] & lm)) {
-                                                        ++moves_checked;
+                                                        //++moves_checked;
                                                 	copy_board(*b_ptr, &temp);//copy board to temp
                                                         to_text(src,dst,tempmove);
         						update(&temp,tempmove);
@@ -201,18 +201,18 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         } else {
                 for (int piece_type = 6; piece_type < 12; piece_type++) {
                         pb = get_board(b_ptr,piece_type);
-                        int num_pieces_checked = 0;
-                        int num_pieces = __builtin_popcountll(pb);
-                        for (int src = 0; src < 64 && num_pieces_checked < num_pieces; src++) {
+                        //int num_pieces_checked = 0;
+                        //int num_pieces = __builtin_popcountll(pb);
+                        for (int src = 0; src < 64; src++) {
                                 int lcount = 0;
                                 if (pb & squares[src]) {
-                                        num_pieces_checked++;
+                                        //num_pieces_checked++;
                                         lm = getLegalMoves(b_ptr, piece_type, src);
-                                        int num_moves = __builtin_popcountll(lm);
-                                        int moves_checked = 0;
-                                        for(int dst = 0; dst < 64 && num_moves > moves_checked; dst++) {
+                                        //int num_moves = __builtin_popcountll(lm);
+                                        //int moves_checked = 0;
+                                        for(int dst = 0; dst < 64; dst++) {
                                                 if((squares[dst] & lm)) {
-                                                        ++moves_checked;
+                                                        //++moves_checked;
                                                         lcount ++;
                                         		copy_board(*b_ptr, &temp);//copy board to temp
                                                         to_text(src,dst,tempmove);

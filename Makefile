@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -Wall -Werror
+CFLAGS := -Wall -Werror -pthread
 DEBUG := -g
 OBJS := main.o play.o bitBoard.o protocol.o check.o evaluate.o
 main: $(OBJS)
