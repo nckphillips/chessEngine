@@ -22,10 +22,12 @@ int black_stale;
 int white_stale;
 
 /*castling rights*/
+/*
 int wqCastle = 1;
 int wkCastle = 1;
 int bqCastle = 1;
 int bkCastle = 1;
+*/
 
 /*helper functions*/
 uint64_t find_moved_black_pawns(uint64_t bPawns);
@@ -368,7 +370,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			(board->bKing & ~AFILE) >> 1 | (board->bKing & ~HFILE) >>7 | board->bKing >>8 | (board->bKing & ~AFILE) >>9;
 		/*can we castle??*/
 		if(black_check == 0){
-			if(bqCastle == 1){
+			if(board->bqCastle == 1){
 				if( (((board->bKing>>1) & allPieces(board))== 0) && (((board->bKing>>2) & allPieces(board)) == 0) && (((board->bKing>>3) & allPieces(board)) == 0) ){
 				//space between bKing and bqRook is empty
 					if( (((board->bKing>>1) & white_moves(board))== 0) && (((board->bKing>>2) & white_moves(board)) == 0) && (((board->bKing>>3) & white_moves(board)) == 0) ){
@@ -378,7 +380,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 				}
 			}
 
-			if(bkCastle == 1){
+			if(board->bkCastle == 1){
 				if( (( (board->bKing<<1) & allPieces(board) )== 0) && (((board->bKing<<2) & allPieces(board))== 0) ){
 				//space between bKing and bkRook is empty
 					if( (( (board->bKing<<1) & white_moves(board) )== 0) && (((board->bKing<<2) & white_moves(board))== 0) ){
@@ -399,7 +401,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			(board->wKing & ~AFILE) >> 1 | (board->wKing & ~HFILE) >>7 | board->wKing >>8 | (board->wKing & ~AFILE) >>9;
 		/*can we castle??*/
 		if(white_check == 0){
-			if(wqCastle == 1){
+			if(board->wqCastle == 1){
 				if( (((board->wKing>>1) & allPieces(board)) == 0) && (((board->wKing>>2) & allPieces(board)) == 0) && (((board->wKing>>3) & allPieces(board)) == 0) ){
 				//space between wKing and wqRook is empty
 					if( (((board->wKing>>1) & black_moves(board)) == 0) && (((board->wKing>>2) & black_moves(board)) == 0) && (((board->wKing>>3) & black_moves(board)) == 0) ){
@@ -408,7 +410,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 					}
 				}
 			}
-			if(wkCastle == 1){
+			if(board->wkCastle == 1){
 				if( (((board->wKing<<1) & allPieces(board)) == 0) && (((board->wKing<<2) & allPieces(board)) == 0) ){
 				//space between wKing and wkRook is empty
 					if( (((board->wKing<<1) & black_moves(board)) == 0) && (((board->wKing<<2) & black_moves(board)) == 0) ){
@@ -558,45 +560,45 @@ void update(Bitboard * b_ptr, char * move)
 	if (move[0] == 'e'){
 		//white king has moved
 		if(move[1] == '1'){
-			wqCastle = 0;
-			wkCastle = 0;
+			b_ptr->wqCastle = 0;
+			b_ptr->wkCastle = 0;
 		//black king has moved
 		} else if(move[1] == '8'){
-			bqCastle = 0;
-			bkCastle = 0;
+			b_ptr->bqCastle = 0;
+			b_ptr->bkCastle = 0;
 		}
 	} else if(move[0] == 'a'){
 		//white queenside rook has moved
 		if(move[1] == '1'){
-			wqCastle = 0;
+			b_ptr->wqCastle = 0;
 		//black queenside rook has moved
 		} else if(move[1] == '8'){
-			bqCastle = 0;
+			b_ptr->bqCastle = 0;
 		}
 	} else if(move[0] == 'h'){
 		if(move[1] == '1'){
 		//white kingside rook has moved
-			wkCastle = 0;
+			b_ptr->wkCastle = 0;
 		} else if(move[1] == '8'){
 		//black kingside rook has moved
-			bkCastle = 0;
+			b_ptr->bkCastle = 0;
 		}
 	}
 	if(move[2] == 'a'){
 		if(move[3] == '1'){
 		//white queenside rook has been taken, or already moved
-			wqCastle = 0;
+			b_ptr->wqCastle = 0;
 		} else if(move[3] == '8'){
 		//black queenside rook has been taken, or already moved
-			bqCastle = 0;
+			b_ptr->bqCastle = 0;
 		}
 	} else if(move[2] == 'h'){
 		if(move[3] == '1'){
 		//white kingside rook has been taken, or already moved
-			wkCastle = 0;
+			b_ptr->wkCastle = 0;
 		} else if(move[3] == '8'){
 		//black kingside rook has been taken, or already moved
-			bkCastle = 0;
+			b_ptr->bkCastle = 0;
 		}
 	}
 
@@ -710,6 +712,11 @@ void init(struct Bitboard* b){
 	b->bBishops = 0x2400000000000000;
 	b->bQueen = 0x0800000000000000;
 	b->bKing = 0x1000000000000000;
+
+	b->wqCastle = 1;
+	b->wkCastle = 1;
+	b->bqCastle = 1;
+	b->bkCastle = 1;
 	HFILE =      squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
 		     squares[h4] | squares[h3] | squares[h2] | squares[h1];
 	AFILE =      squares[a1] | squares[a2] | squares[a3] | squares[a4] |\
