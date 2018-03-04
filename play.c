@@ -17,8 +17,34 @@
 
 #define RANDOM 0
 
-void *myThreadFun(void* ptr);
-void *myThreadFun2(void* ptr);
+void *spawn_thread_1(void* ptr);
+void *spawn_thread_2(void* ptr);
+void init_struct_ptr(readThreadParams* rt);
+
+
+void init_struct_ptr(readThreadParams* rt){
+
+	rt->move_value[0] = 0;
+	rt->move_value[1] = 0;
+	rt->move_value[2] = 0;
+	rt->move_value[3] = 0;
+	rt->move_value[4] = 0;
+	rt->move_value[5] = 0;	
+	rt->source_square_best[0] = 0;
+	rt->source_square_best[1] = 0;
+	rt->source_square_best[2] = 0;
+	rt->source_square_best[3] = 0;
+	rt->source_square_best[4] = 0;
+	rt->source_square_best[5] = 0;
+	rt->dest_square_best[0] = 0;
+	rt->dest_square_best[1] = 0;
+	rt->dest_square_best[2] = 0;
+	rt->dest_square_best[3] = 0;
+	rt->dest_square_best[4] = 0;
+	rt->dest_square_best[5] = 0;
+	rt->b_ptr = NULL;
+
+}//Initialize readThreadParams struct
 
 
 void to_text(int source_square, int dest_square, char *move)
@@ -176,6 +202,7 @@ void* spawn_thread_2(void* ptr)
 
 
 
+
 /*returns the text string of the best move in the board's current arrangement.*/
 void get_best_move(char *best_move_string, Bitboard *b_ptr)
 {
@@ -185,50 +212,15 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	readThreadParams* rt;
 	readThreadParams bp;
 	rt = &bp;
-	rt->move_value[0] = 0;
-	rt->move_value[1] = 0;
-	rt->move_value[2] = 0;
-	rt->move_value[3] = 0;
-	rt->move_value[4] = 0;
-	rt->move_value[5] = 0;	
-	rt->source_square_best[0] = 0;
-	rt->source_square_best[1] = 0;
-	rt->source_square_best[2] = 0;
-	rt->source_square_best[3] = 0;
-	rt->source_square_best[4] = 0;
-	rt->source_square_best[5] = 0;
-	rt->dest_square_best[0] = 0;
-	rt->dest_square_best[1] = 0;
-	rt->dest_square_best[2] = 0;
-	rt->dest_square_best[3] = 0;
-	rt->dest_square_best[4] = 0;
-	rt->dest_square_best[5] = 0;
+	init_struct_ptr(rt);
 	rt->b_ptr = b_ptr;
 	
 	readThreadParams* rt2;
 	readThreadParams bp2;
 	rt2 = &bp2;
-	rt2->move_value[0] = 0;
-	rt2->move_value[1] = 0;
-	rt2->move_value[2] = 0;
-	rt2->move_value[3] = 0;
-	rt2->move_value[4] = 0;
-	rt2->move_value[5] = 0;	
-	rt2->source_square_best[0] = 0;
-	rt2->source_square_best[1] = 0;
-	rt2->source_square_best[2] = 0;
-	rt2->source_square_best[3] = 0;
-	rt2->source_square_best[4] = 0;
-	rt2->source_square_best[5] = 0;
-	rt2->dest_square_best[0] = 0;
-	rt2->dest_square_best[1] = 0;
-	rt2->dest_square_best[2] = 0;
-	rt2->dest_square_best[3] = 0;
-	rt2->dest_square_best[4] = 0;
-	rt2->dest_square_best[5] = 0;
+	init_struct_ptr(rt2);
 	rt2->b_ptr = b_ptr;
 	
-
 	int  iret1, iret2;
     pthread_t tid1, tid2;
     //printf("Before Thread\n");
@@ -301,7 +293,7 @@ void get_best_move(char *best_move_string, Bitboard *b_ptr)
 	
 	
 	int index_of_max1 = 0;
-	/*select the maximum move of the piece types*/	
+	
 	for (int i = 0; i < 3; i++) {
 		printf("Val1:%d\n", move_value1[i]);
 		if (source_square_best1[i] != dest_square_best1[i] && move_value1[i] >= move_value1[index_of_max1] && move_value1[i] >= -1000000) {
