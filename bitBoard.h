@@ -39,7 +39,11 @@ typedef struct Bitboard{
 	uint64_t bBishops;
 	uint64_t bQueen;
 	uint64_t bKing;
-
+	
+	int wqCastle;
+	int wkCastle;
+	int bqCastle;
+	int bkCastle;
 	//Following 2 lines are just for possible future use
 	//const Bitboard WhiteSquares = 0x55AA55AA55AA55AAULL;
 	//const Bitboard BlackSquares = 0xAA55AA55AA55AA55ULL;
