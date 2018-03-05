@@ -5,7 +5,7 @@
 enum features {WHITE, BLACK, WHITEVALUE, BLACKVALUE, PAWNPOSITION};
 
 #define NUM_FEATURES 4
-#define TREE_DEPTH 4
+#define TREE_DEPTH 3
 
 int features[NUM_FEATURES];//the feature vector to which weights will be applied
 

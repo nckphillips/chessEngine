@@ -20,7 +20,7 @@
 void *spawn_thread_1(void* ptr);
 void *spawn_thread_2(void* ptr);
 void init_struct_ptr(readThreadParams* rt);
-
+int move_count = 0;
 
 void init_struct_ptr(readThreadParams* rt){
 
@@ -91,7 +91,7 @@ void* spawn_thread_1(void* ptr)
 	Bitboard temp;
 	int piece_type = 0;
 	int piece_max = -1000000;
-
+	int deep = TREE_DEPTH - 1;
 	readThreadParams *rt = ptr;
 
 	//printf("Started\n");
@@ -118,8 +118,11 @@ void* spawn_thread_1(void* ptr)
 								rt->source_square_best[piece_type] = 0;
 								rt->dest_square_best[piece_type] = 0;
 							} else {
-								val = minimax(&temp, TREE_DEPTH, 1, -999999,999999);//start with white response to this move
-
+								if (move_count > 10){
+									val = minimax(&temp, deep+1, 1, -999999,999999);//start with white response to this move
+								} else {
+									val = minimax(&temp, deep, 1, -999999,999999);
+								}
 								///the Following statement assigns the max and also should prevent the a1a1 case
 								if (val >= piece_max || rt->source_square_best[piece_type] == rt->dest_square_best[piece_type]) {
 									piece_max = val;
@@ -147,7 +150,7 @@ void* spawn_thread_2(void* ptr)
 	Bitboard temp;
 	int piece_type = 0;
 	int piece_max = -1000000;
-
+	int deep = TREE_DEPTH - 1;
 	readThreadParams *rt = ptr;
 
 	//printf("Started\n");
@@ -174,8 +177,11 @@ void* spawn_thread_2(void* ptr)
 								rt->source_square_best[piece_type] = 0;
 								rt->dest_square_best[piece_type] = 0;
 							} else {
-								val = minimax(&temp, TREE_DEPTH, 1, -999999,999999);//start with white response to this move
-
+								if (move_count > 10){
+									val = minimax(&temp, deep+1, 1, -999999,999999);//start with white response to this move
+								} else {
+									val = minimax(&temp, deep, 1, -999999,999999);
+								}
 								///the Following statement assigns the max and also should prevent the a1a1 case
 								if (val >= piece_max || rt->source_square_best[piece_type] == rt->dest_square_best[piece_type]) {
 									piece_max = val;
@@ -350,6 +356,7 @@ void play(Bitboard *b_ptr)
 		printf("resign\n");
 	} else {
 		fprintf(stdout,"move %s\n", best_move);
+		move_count ++;
 	}
 
 	fflush(stdout);
