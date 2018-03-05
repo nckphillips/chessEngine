@@ -790,22 +790,23 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 	uint64_t r7,r9,l7,l9;//one board to shift left 7, right 9, etc. for diagonals
 	//create bitboard for edge files
 	uint64_t edge_files = HFILE | AFILE;
-	for (int j = 0; j < 64; j++) {
-		if (piece_board & squares[j]) {
-			if (squares[piece_square] & HFILE) {
-				l9 = 0;
-				r7 = 0;
-			} else {
-				l9 = squares[j];
-				r7 = squares[j];
-			}
-			if (squares[piece_square] & AFILE) {
-				l7 = 0;
-				r9 = 0;
-			} else {
-				r9 = squares[j];
-				l7 = squares[j];
-			}
+	int j = 0;
+	while (piece_board) {
+		j = __builtin_ffsll(piece_board) - 1;
+		if (squares[piece_square] & HFILE) {
+			l9 = 0;
+			r7 = 0;
+		} else {
+			l9 = squares[j];
+			r7 = squares[j];
+		}
+		if (squares[piece_square] & AFILE) {
+			l7 = 0;
+			r9 = 0;
+		} else {
+			r9 = squares[j];
+			l7 = squares[j];
+		}
 		//generate diagonals
 
 		for(int i = 0; i < 8; i++) {
@@ -877,7 +878,7 @@ uint64_t bishop_moves(Bitboard* b, unsigned int piece_type, int piece_square)
 			l7 &= ~edge_files;
 
 		}
-		}
+		piece_board &= ~squares[j];
 	}
 
 	return diag;
