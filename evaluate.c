@@ -255,6 +255,23 @@ int closerToCheckMate(Bitboard * b_ptr) {
         return 0xfff >> value;
 }
 
+int castlingRights(Bitboard * b_ptr){
+	int value = 0;
+	if(b_ptr->bkCastle == 1){
+		value += 30;
+	}
+	if(b_ptr->bqCastle == 1){
+		value += 30;
+	}
+	if(b_ptr->wkCastle == 1){
+		value -= 30;
+	}
+	if(b_ptr->wqCastle == 1){
+		value -= 30;
+	}
+	return value;
+}
+
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
 int getPositionValue(Bitboard *b_ptr){
 
@@ -440,6 +457,7 @@ int getPositionValue(Bitboard *b_ptr){
 
         //value += closerToCheckMate(b_ptr);
         value += getTotalMaterial(b_ptr);
+	value += castlingRights(b_ptr);
         return value;
 
 }
