@@ -118,7 +118,7 @@ void* spawn_thread_1(void* ptr)
 								rt->source_square_best[piece_type] = 0;
 								rt->dest_square_best[piece_type] = 0;
 							} else {
-								if (__builtin_popcountll(allBlack(&temp)) < 10){
+								if (move_count > 10){
 									val = minimax(&temp, deep+1, 1, -999999,999999);//start with white response to this move
 								} else {
 									val = minimax(&temp, deep, 1, -999999,999999);
@@ -177,7 +177,7 @@ void* spawn_thread_2(void* ptr)
 								rt->source_square_best[piece_type] = 0;
 								rt->dest_square_best[piece_type] = 0;
 							} else {
-								if (__builtin_popcountll(allBlack(&temp)) < 10){
+								if (move_count > 10){
 									val = minimax(&temp, deep+1, 1, -999999,999999);//start with white response to this move
 								} else {
 									val = minimax(&temp, deep, 1, -999999,999999);
