@@ -252,7 +252,7 @@ int closerToCheckMate(Bitboard * b_ptr) {
         uint64_t lm =getLegalMoves(b_ptr, WKING, index_of_king);
         getCheck(b_ptr, &lm, index_of_king);
         int value = __builtin_popcountll(lm);
-        return 0xfff >> value;
+        return 0xff >> value;
 }
 
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
