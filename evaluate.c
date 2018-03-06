@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "bitBoard.h"
+#include "check.h"
 #include "evaluate.h"
 #include "play.h"
 
@@ -245,6 +246,14 @@ int getTotalMaterial(Bitboard *b_ptr)
 	value += getValue(b_ptr->bKing, BKING) * __builtin_popcountll(b_ptr->bKing);
         return value;
 }
+//returns a value associated with reducing the number of moves for the white king
+int closerToCheckMate(Bitboard * b_ptr) {
+        int index_of_king = __builtin_ffsll(b_ptr->wKing) - 1;
+        uint64_t lm =getLegalMoves(b_ptr, WKING, index_of_king);
+        getCheck(b_ptr, &lm, index_of_king);
+        int value = __builtin_popcountll(lm);
+        return 0xfff >> value;
+}
 
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
 int getPositionValue(Bitboard *b_ptr){
@@ -429,7 +438,7 @@ int getPositionValue(Bitboard *b_ptr){
 		it = it -8;
 	}
 
-
+        //value += closerToCheckMate(b_ptr);
         value += getTotalMaterial(b_ptr);
         return value;
 
