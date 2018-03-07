@@ -255,7 +255,7 @@ int closerToCheckMate(Bitboard * b_ptr) {
         return 0xff >> value;
 }
 
-/*returns a value based on whether all 4 castling rights are retained*/
+/*returns a value based on whether the 4 castling rights are retained*/
 int castlingRights(Bitboard * b_ptr){
 	int value = 0;
 	if(b_ptr->bkCastle == 1){
@@ -425,13 +425,13 @@ int getPositionValue(Bitboard *b_ptr){
 		it = it -8;
 	}
 
-//NOTE: not yet accounting for mid/endgame scenario
+
 	pb = get_board(b_ptr, BKING);
 	it = 56;
 	for(int row = 7; row >= 0; row--){
 		for(int col = 0; col <= 7; col++){
 			if ((pb & 1) == 1){
-				if(__builtin_popcountll(allBlack(b_ptr)) < 8){
+				if(__builtin_popcountll(allBlack(b_ptr)) > 8){
 					value += blackKingMidgameValues[it + col];
 					pb>>=1;
 				}else{
@@ -451,7 +451,7 @@ int getPositionValue(Bitboard *b_ptr){
 	for(int row = 7; row >= 0; row--){
 		for(int col = 0; col <= 7; col++){
 			if ((pb & 1) == 1){
-				if(__builtin_popcountll(allWhite(b_ptr)) < 8){
+				if(__builtin_popcountll(allWhite(b_ptr)) > 8){
 					value -= whiteKingMidgameValues[it + col];
 					pb>>=1;
 				}else{
