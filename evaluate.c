@@ -110,7 +110,7 @@ static const int whiteKingMidgameValues[64]={-30,-40,-40,-50,-50,-40,-40,-30,
                                               20, 20,  0,  0,  0,  0, 20, 20,
                                               20, 30, 10,  0,  0, 10, 30, 20};
 
-/*
+
 static const int whiteKingEndgameValues[64]={-50,-40,-30,-20,-20,-30,-40, 50,
                                              -30,-20,-10,  0,  0,-10,-20,-30,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
@@ -119,7 +119,7 @@ static const int whiteKingEndgameValues[64]={-50,-40,-30,-20,-20,-30,-40, 50,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
                                              -30,-30,  0,  0,  0,  0,-30,-30,
                                              -50,-30,-30,-30,-30,-30,-30,-50};
-*/
+
 
 static const int blackKingMidgameValues[64]={20, 30, 10,  0,  0, 10, 30, 20,
                                              20, 20,  0,  0,  0,  0, 20, 20,
@@ -129,7 +129,7 @@ static const int blackKingMidgameValues[64]={20, 30, 10,  0,  0, 10, 30, 20,
                                             -30,-40,-40,-50,-50,-40,-40,-30,
                                             -30,-40,-40,-50,-50,-40,-40,-30
                                             -30,-40,-40,-50,-50,-40,-40,-30};
-/*
+
 static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -30,-30,  0,  0,  0,  0,-30,-30,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
@@ -138,7 +138,7 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -30,-10, 20, 30, 30, 20,-10,-30,
                                              -30,-20,-10,  0,  0,-10,-20,-30,
                                              -50,-40,-30,-20,-20,-30,-40, 50};
-*/
+
 
 
 int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
@@ -253,6 +253,24 @@ int closerToCheckMate(Bitboard * b_ptr) {
         getCheck(b_ptr, &lm, index_of_king);
         int value = __builtin_popcountll(lm);
         return 0xff >> value;
+}
+
+/*returns a value based on whether the 4 castling rights are retained*/
+int castlingRights(Bitboard * b_ptr){
+	int value = 0;
+	if(b_ptr->bkCastle == 1){
+		value += 30;
+	}
+	if(b_ptr->bqCastle == 1){
+		value += 30;
+	}
+	if(b_ptr->wkCastle == 1){
+		value -= 30;
+	}
+	if(b_ptr->wqCastle == 1){
+		value -= 30;
+	}
+	return value;
 }
 
 /*finds the value of a move for a given piecetype, based on the position value arrays*/
@@ -407,15 +425,19 @@ int getPositionValue(Bitboard *b_ptr){
 		it = it -8;
 	}
 
-//NOTE: not yet accounting for mid/endgame scenario
+
 	pb = get_board(b_ptr, BKING);
 	it = 56;
 	for(int row = 7; row >= 0; row--){
 		for(int col = 0; col <= 7; col++){
 			if ((pb & 1) == 1){
-				value += blackKingMidgameValues[it + col];//TODO: switch which values we use
-			                                                  //depending on where we are in the game
-				pb>>=1;
+				if(__builtin_popcountll(allBlack(b_ptr)) > 8){
+					value += blackKingMidgameValues[it + col];
+					pb>>=1;
+				}else{
+					value += blackKingEndgameValues[it + col];
+					pb>>=1;
+				}
 			}
 			else
 				pb>>=1;
@@ -429,8 +451,13 @@ int getPositionValue(Bitboard *b_ptr){
 	for(int row = 7; row >= 0; row--){
 		for(int col = 0; col <= 7; col++){
 			if ((pb & 1) == 1){
-				value -= whiteKingMidgameValues[it + col];
-				pb>>=1;
+				if(__builtin_popcountll(allWhite(b_ptr)) > 8){
+					value -= whiteKingMidgameValues[it + col];
+					pb>>=1;
+				}else{
+					value -= whiteKingEndgameValues[it + col];
+					pb>>=1;
+				}
 			}
 			else
 				pb>>=1;
@@ -440,6 +467,7 @@ int getPositionValue(Bitboard *b_ptr){
 
         //value += closerToCheckMate(b_ptr);
         value += getTotalMaterial(b_ptr);
+	value += castlingRights(b_ptr);
         return value;
 
 }
