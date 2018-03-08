@@ -246,6 +246,7 @@ int getTotalMaterial(Bitboard *b_ptr)
 	value += 99900 * __builtin_popcountll(b_ptr->bKing); //worth a little less than black king, to avoid "king for a king" trades
         return value;
 }
+
 //returns a value associated with reducing the number of moves for the white king
 int closerToCheckMate(Bitboard * b_ptr) {
         int index_of_king = __builtin_ffsll(b_ptr->wKing) - 1;
@@ -532,34 +533,66 @@ int same_col_pawns(Bitboard *b_ptr){
 	int temp = __builtin_popcountll(b_ptr->bPawns & AFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & AFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & BFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & BFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & CFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & CFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & DFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & DFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & EFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & EFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & FFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & FFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & GFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & GFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	temp = __builtin_popcountll(b_ptr->bPawns & HFILE);
 	if (temp > 1)
 		value += temp;
+	temp = __builtin_popcountll(b_ptr->wPawns & HFILE);
+	if (temp > 1)
+		value -= temp;
+
 
 	return value;
 }

@@ -45,8 +45,8 @@ uint64_t white_moves(Bitboard *b);
 uint64_t all_moves(Bitboard *b);
 //int black_check(Bitboard *b);
 //int white_check(Bitboard *b);
-int black_mate(Bitboard *b);
-int white_mate(Bitboard *b);
+//int black_mate(Bitboard *b);
+//int white_mate(Bitboard *b);
 //int black_stale(Bitboard *b);
 //int white_stale(Bitboard *b);
 
@@ -185,7 +185,6 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 	uint64_t moves = 0;
 	uint64_t b = 0;//this was added to simplify square specificity
 	int i = 0;
-	////////////////////TODO: if the checkmate flag is set, tell xboard to end the game
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
@@ -394,7 +393,6 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		}
 		//don't move where there's another black piece
 		moves &= ~allBlack(board);
-		//TODO: account for check
 
 		break;
 		case WKING:
@@ -521,20 +519,13 @@ void update(Bitboard * b_ptr, char * move)
 
 	//if a pawn was taken en passant: get rid of it
 	if(dest_square & b_ptr->wPawns){
-		//printf("white pawn is moving\n");
 		if(dest_square & bepBoard){
-			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
-			//b_ptr->wPawns &= ~source_square
 			//a white pawn is taking a black pawn en passant
-			//printf("b en passant\n");
 			b_ptr->bPawns &= ~(bepBoard>>8);
 		}
 	} else if(dest_square & b_ptr->bPawns){
-		//printf("black pawn is moving\n");
 		if(dest_square & wepBoard){
-			//TODO
 			//a black pawn is taking a white pawn en passant
-			//printf("w en passant\n");
 			b_ptr->wPawns &= ~(wepBoard<<8);
 		}
 	}
@@ -543,13 +534,11 @@ void update(Bitboard * b_ptr, char * move)
 	if( (move[1] == '7') && (move[3] == '5') && ( dest_square & b_ptr->bPawns) ){
 	//dest_square contains a black pawn which moved forward 2 spaces
 		//enPassant board contains the spot behind that pawn
-		//printf("black2\n");
 		bepBoard = dest_square<<8;
 		wepBoard = 0;
 	} else if( (move[1] == '2') && (move[3] == '4') && (dest_square & b_ptr->wPawns) ){
 	//dest_square contains a white pawn which moved forward 2 spaces
 		//en Passant board contains the spot behind that pawn
-		//printf("white2\n");
 		bepBoard = 0;
 		wepBoard = dest_square>>8;
 	} else{
@@ -615,7 +604,6 @@ void update(Bitboard * b_ptr, char * move)
 	} else{
 		white_stale = 0;
 	}
-	//TODO: figure out what to return if it's your turn, but stale is true for your color
 
 	return;
 
@@ -689,8 +677,6 @@ void square_move(Bitboard *b_ptr, uint64_t source_square, uint64_t dest_square)
 		}
 		take_white(b_ptr);
 	}
-	//printf("board\n");
-	//printChessboard(b_ptr);
 	return;
 }
 
@@ -1007,31 +993,6 @@ uint64_t all_moves(Bitboard *b)
 	uint64_t am = 0;
 	am = black_moves(b) | white_moves(b);
 	return am;
-}
-
-
-/*indicate whether the Black King is in checkmate*/
-int black_mate(Bitboard *b)
-{
-	Bitboard temp;
-	copy_board(*b, &temp);
-	if(black_check == 0){
-		return 0;
-	} else{//TODO: update this
-		return 1;
-	}
-}
-
-/*indicate whether the White King is in checkmate*/
-int white_mate(Bitboard *b)
-{
-	Bitboard temp;
-	copy_board(*b, &temp);
-	if(white_check == 0){
-		return 0;
-	} else{//TODO: update this
-		return 1;
-	}
 }
 
 /*indicate whether black is in stalemate
