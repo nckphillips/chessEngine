@@ -230,20 +230,20 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 int getTotalMaterial(Bitboard *b_ptr)
 {
         int value = 0;
-	value  = -1 * getValue(b_ptr->wPawns, WPAWN) * __builtin_popcountll(b_ptr->wPawns); //get the total value of white pawns
-	value -= getValue(b_ptr->wKnights, WKNIGHT) * __builtin_popcountll(b_ptr->wKnights); //get the total value of white knigts
-	value -= getValue(b_ptr->wBishops, WBISHOP) * __builtin_popcountll(b_ptr->wBishops); //get the total value of white bishops
-	value -= getValue(b_ptr->wRooks, WROOK) * __builtin_popcountll(b_ptr->wRooks); //get the total value of white rooks
-	value -= getValue(b_ptr->wQueen, WQUEEN) * __builtin_popcountll(b_ptr->wQueen); //get the total value of white queen +															  //previous pieces, excluding King
-        value -= getValue(b_ptr->wKing, WKING) * __builtin_popcountll(b_ptr->wKing);
+	value -= 100 * __builtin_popcountll(b_ptr->wPawns); //get the total value of white pawns
+	value -= 300 * __builtin_popcountll(b_ptr->wKnights); //get the total value of white knigts
+	value -= 325 * __builtin_popcountll(b_ptr->wBishops); //get the total value of white bishops
+	value -= 500 * __builtin_popcountll(b_ptr->wRooks); //get the total value of white rooks
+	value -= 900 * __builtin_popcountll(b_ptr->wQueen); //get the total value of white queens
+        value -= 99999 * __builtin_popcountll(b_ptr->wKing);
 
 
-	value += getValue(b_ptr->bPawns, BPAWN) * __builtin_popcountll(b_ptr->bPawns); //get the total value of black pawns
-	value += getValue(b_ptr->bKnights, BKNIGHT) * __builtin_popcountll(b_ptr->bKnights); //get the total value of black knigts
-	value += getValue(b_ptr->bBishops, BBISHOP) * __builtin_popcountll(b_ptr->bBishops); //get the total value of black bishops
-	value += getValue(b_ptr->bRooks, BROOK) * __builtin_popcountll(b_ptr->bRooks); //get the total value of black rooks
-	value += getValue(b_ptr->bQueen, BQUEEN) * __builtin_popcountll(b_ptr->bQueen); //get the total value of black queen +
-	value += getValue(b_ptr->bKing, BKING) * __builtin_popcountll(b_ptr->bKing);
+	value += 100 * __builtin_popcountll(b_ptr->bPawns); //get the total value of black pawns
+	value += 300 * __builtin_popcountll(b_ptr->bKnights); //get the total value of black knigts
+	value += 325 * __builtin_popcountll(b_ptr->bBishops); //get the total value of black bishops
+	value += 500 * __builtin_popcountll(b_ptr->bRooks); //get the total value of black rooks
+	value += 900 * __builtin_popcountll(b_ptr->bQueen); //get the total value of black queens
+	value += 99900 * __builtin_popcountll(b_ptr->bKing); //worth a little less than black king, to avoid "king for a king" trades
         return value;
 }
 //returns a value associated with reducing the number of moves for the white king
@@ -585,6 +585,7 @@ int count(uint64_t board){
 }
 
 /*get total value for given Pieces excluding Kings*/
+/*
 int getValue(uint64_t board, unsigned int piece_type){
 
 	int piece_value = 0;
@@ -641,3 +642,4 @@ int getValue(uint64_t board, unsigned int piece_type){
 	}
 return piece_value;
 }
+*/
