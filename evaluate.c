@@ -567,7 +567,7 @@ int same_col_pawns(Bitboard *b_ptr){
 
 
 
-
+/*
 int count(uint64_t board){
 
 	int count = 0;
@@ -583,6 +583,7 @@ int count(uint64_t board){
 
 	return count;
 }
+*/
 
 /*get total value for given Pieces excluding Kings*/
 /*
