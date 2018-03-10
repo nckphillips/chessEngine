@@ -118,6 +118,9 @@ void* spawn_thread_1(void* ptr)
 								rt->source_square_best[piece_type] = 0;
 								rt->dest_square_best[piece_type] = 0;
 							} else {
+								if (move_count == 0) {
+									val = minimax(&temp, deep+1, 1, -999999,999999);
+								}
 								if (move_count > 10){
 									val = minimax(&temp, deep+1, 1, -999999,999999);//start with white response to this move
 								} else {

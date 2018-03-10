@@ -5,17 +5,14 @@
 #include "bitBoard.h"
 #include "protocol.h"
 #include "play.h"
+#include "transposition.h"
 #include "evaluate.h"
-
 static Bitboard previous_state;
 
 void command(Bitboard *b);//main control loop for engine
 
 int main(void){
-
-
 	uint64_t temp = 1;
-
 	/*the following loop initializes an array of 64 boards with just the square that
 	*it refers to set. this allows you to use the array to manipulate a single square
 	*on the board.*/
@@ -23,10 +20,15 @@ int main(void){
   	for (int i = 0; i < 64; i++) {
 			squares[i] = temp;
 			temp <<= 1;
+	}
+
+	generate_random_numbers();
+	//initialize transposition table to zero
+	for(int i = 0; i < TABLE_SIZE; i++) {
+		for (int j = 0; j < 3; j++) {
+			t_table[i][j] = 0;
 		}
-
-   /* Testing the commads for the xboard */
-
+	}
 
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);

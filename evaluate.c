@@ -5,7 +5,7 @@
 #include "check.h"
 #include "evaluate.h"
 #include "play.h"
-
+#include "transposition.h"
 
 
 
@@ -140,7 +140,6 @@ static const int blackKingEndgameValues[64]={-50,-30,-30,-30,-30,-30,-30,-50,
                                              -50,-40,-30,-20,-20,-30,-40, 50};
 
 
-
 int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 
 {
@@ -180,13 +179,26 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
                                                 	copy_board(*b_ptr, &temp);//copy board to temp
                                                         to_text(src,dst,tempmove);
         						update(&temp,tempmove);
-                                                        int temp_value = minimax(&temp, depth - 1, 1,alpha,beta);
-                                                        if (temp_value >= beta) {
-                                                                return beta;
+                                                        uint64_t zob_hash = zobrist_hash(&temp, color);
+                                                        int index = zob_hash % TABLE_SIZE;
+                                                        if (t_table[index][KEY] == zob_hash && t_table[index][DEPTH] >= 2) {//if the value is in the table
+                                                                printf("match here. hash: %ld\n %ld", zob_hash,t_table[index][KEY]);
+                                                                printChessboard(b_ptr);
+                                                                printf("\n\n");
+                                                                return t_table[index][VALUE];
+                                                        } else {
+                                                                int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
+                                                                t_table[index][KEY] = zob_hash;
+                                                                t_table[index][VALUE] = temp_value;
+                                                                t_table[index][DEPTH] = depth;
+                                                                if (temp_value >= beta) {
+                                                                	return beta;
+                                                                }
+                                                                if (temp_value > alpha) {
+                                                                        alpha = temp_value;
+                                                                }
                                                         }
-                                                        if (temp_value > alpha) {
-                                                                alpha = temp_value;
-                                                        }
+
                                                 }
                                         }
                                 }
@@ -205,13 +217,24 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
                                         		copy_board(*b_ptr, &temp);//copy board to temp
                                                         to_text(src,dst,tempmove);
         						update(&temp,tempmove);
-                                                        int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
-                                                        if (temp_value <= alpha) {
-                                                        	return alpha;
+                                                        //check table
+                                                        uint64_t zob_hash = zobrist_hash(&temp,color);
+                                                        int index = zob_hash % TABLE_SIZE;
+                                                        if (t_table[index][KEY] == zob_hash && t_table[index][DEPTH] >= 2) {//if the value is in the table
+                                                                return t_table[index][VALUE];
+                                                        } else {
+                                                                int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
+                                                                t_table[index][KEY] = zob_hash;
+                                                                t_table[index][VALUE] = temp_value;
+                                                                t_table[index][DEPTH] = depth;
+                                                                if (temp_value <= alpha) {
+                                                                	return alpha;
+                                                                }
+                                                                if (temp_value < beta) {
+                                                                        beta = temp_value;
+                                                                }
                                                         }
-                                                        if (temp_value < beta) {
-                                                                beta = temp_value;
-                                                        }
+
                                                 }
                                         }
                                 }
