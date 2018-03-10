@@ -12,8 +12,8 @@ uint64_t AFILE;
 uint64_t RANK1;
 uint64_t RANK8;
 uint64_t rookMove;
-uint64_t bepBoard = 0; //enPassant board
-uint64_t wepBoard = 0;
+//uint64_t bepBoard = 0; //enPassant board
+//uint64_t wepBoard = 0;
 
 uint64_t checkBoard;
 int black_check;
@@ -45,8 +45,8 @@ uint64_t white_moves(Bitboard *b);
 uint64_t all_moves(Bitboard *b);
 //int black_check(Bitboard *b);
 //int white_check(Bitboard *b);
-//int black_mate(Bitboard *b);
-//int white_mate(Bitboard *b);
+int black_mate(Bitboard *b);
+int white_mate(Bitboard *b);
 //int black_stale(Bitboard *b);
 //int white_stale(Bitboard *b);
 
@@ -185,6 +185,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 	uint64_t moves = 0;
 	uint64_t b = 0;//this was added to simplify square specificity
 	int i = 0;
+	////////////////////TODO: if the checkmate flag is set, tell xboard to end the game
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
@@ -393,6 +394,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		}
 		//don't move where there's another black piece
 		moves &= ~allBlack(board);
+		//TODO: account for check
 
 		break;
 		case WKING:
@@ -519,14 +521,21 @@ void update(Bitboard * b_ptr, char * move)
 
 	//if a pawn was taken en passant: get rid of it
 	if(dest_square & b_ptr->wPawns){
-		if(dest_square & bepBoard){
+		//printf("white pawn is moving\n");
+		if(dest_square & b_ptr->bepBoard){
+			//TODO: and b_ptr with squares(bepBoard>>8) = 0??? use a temp bitboard?
+			//b_ptr->wPawns &= ~source_square
 			//a white pawn is taking a black pawn en passant
-			b_ptr->bPawns &= ~(bepBoard>>8);
+			//printf("b en passant\n");
+			b_ptr->bPawns &= ~(b_ptr->bepBoard>>8);
 		}
 	} else if(dest_square & b_ptr->bPawns){
-		if(dest_square & wepBoard){
+		//printf("black pawn is moving\n");
+		if(dest_square & b_ptr->wepBoard){
+			//TODO
 			//a black pawn is taking a white pawn en passant
-			b_ptr->wPawns &= ~(wepBoard<<8);
+			//printf("w en passant\n");
+			b_ptr->wPawns &= ~(b_ptr->wepBoard<<8);
 		}
 	}
 
@@ -534,16 +543,18 @@ void update(Bitboard * b_ptr, char * move)
 	if( (move[1] == '7') && (move[3] == '5') && ( dest_square & b_ptr->bPawns) ){
 	//dest_square contains a black pawn which moved forward 2 spaces
 		//enPassant board contains the spot behind that pawn
-		bepBoard = dest_square<<8;
-		wepBoard = 0;
+		//printf("black2\n");
+		b_ptr->bepBoard = dest_square<<8;
+		b_ptr->wepBoard = 0;
 	} else if( (move[1] == '2') && (move[3] == '4') && (dest_square & b_ptr->wPawns) ){
 	//dest_square contains a white pawn which moved forward 2 spaces
 		//en Passant board contains the spot behind that pawn
-		bepBoard = 0;
-		wepBoard = dest_square>>8;
+		//printf("white2\n");
+		b_ptr->bepBoard = 0;
+		b_ptr->wepBoard = dest_square>>8;
 	} else{
-		bepBoard = 0;
-		wepBoard = 0;
+		b_ptr->bepBoard = 0;
+		b_ptr->wepBoard = 0;
 	}
 
 
@@ -604,6 +615,7 @@ void update(Bitboard * b_ptr, char * move)
 	} else{
 		white_stale = 0;
 	}
+	//TODO: figure out what to return if it's your turn, but stale is true for your color
 
 	return;
 
@@ -677,6 +689,8 @@ void square_move(Bitboard *b_ptr, uint64_t source_square, uint64_t dest_square)
 		}
 		take_white(b_ptr);
 	}
+	//printf("board\n");
+	//printChessboard(b_ptr);
 	return;
 }
 
@@ -705,6 +719,8 @@ void init(struct Bitboard* b){
 	b->wkCastle = 1;
 	b->bqCastle = 1;
 	b->bkCastle = 1;
+	b->wepBoard = 0;
+	b->bepBoard = 0;
 	HFILE =      squares[h8] | squares[h7] | squares[h6] | squares[h5] |\
 		     squares[h4] | squares[h3] | squares[h2] | squares[h1];
 	AFILE =      squares[a1] | squares[a2] | squares[a3] | squares[a4] |\
@@ -747,7 +763,7 @@ uint64_t black_pawn_attacks(Bitboard* b, int piece_square)
 
 
 	uint64_t diag = (((b->bPawns & squares[piece_square] & ~HFILE) >> 7) & ~allBlack(b)) | (((b->bPawns & squares[piece_square] & ~AFILE) >> 9) & ~allBlack(b));
-	attacks = (diag & allWhite(b)) | (diag & wepBoard);
+	attacks = (diag & allWhite(b)) | (diag & b->wepBoard);
 
 
 	return attacks;
@@ -764,7 +780,7 @@ uint64_t white_pawn_attacks(Bitboard* b, int piece_square)
 	/*NOTE:there may be a bug here if a pawn is on the edge of the board but not sure*/
 
 	uint64_t diag = (((b->wPawns & squares[piece_square] & ~AFILE) << 7) & ~allWhite(b)) | ((((b->wPawns & squares[piece_square] & ~HFILE))<< 9) & ~allWhite(b));
-	attacks = (diag & allBlack(b)) | (diag & bepBoard);
+	attacks = (diag & allBlack(b)) | (diag & b->bepBoard);
 
 	return attacks;
 }
@@ -995,6 +1011,31 @@ uint64_t all_moves(Bitboard *b)
 	return am;
 }
 
+
+/*indicate whether the Black King is in checkmate*/
+int black_mate(Bitboard *b)
+{
+	Bitboard temp;
+	copy_board(*b, &temp);
+	if(black_check == 0){
+		return 0;
+	} else{//TODO: update this
+		return 1;
+	}
+}
+
+/*indicate whether the White King is in checkmate*/
+int white_mate(Bitboard *b)
+{
+	Bitboard temp;
+	copy_board(*b, &temp);
+	if(white_check == 0){
+		return 0;
+	} else{//TODO: update this
+		return 1;
+	}
+}
+
 /*indicate whether black is in stalemate
 int black_stale(Bitboard *b)
 {
@@ -1004,7 +1045,6 @@ int black_stale(Bitboard *b)
 		return 0;
 	}
 }
-
 indicate whether white is in stalemate
 int white_stale(Bitboard *b)
 {

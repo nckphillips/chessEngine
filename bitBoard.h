@@ -40,10 +40,12 @@ typedef struct Bitboard{
 	uint64_t bQueen;
 	uint64_t bKing;
 	
-	int wqCastle;
+	int wqCastle; //castling rights: white queenside
 	int wkCastle;
 	int bqCastle;
 	int bkCastle;
+	uint64_t bepBoard; //enPassant board
+	uint64_t wepBoard;
 	//Following 2 lines are just for possible future use
 	//const Bitboard WhiteSquares = 0x55AA55AA55AA55AAULL;
 	//const Bitboard BlackSquares = 0xAA55AA55AA55AA55ULL;
