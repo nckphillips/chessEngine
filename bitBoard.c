@@ -16,8 +16,8 @@ uint64_t rookMove;
 //uint64_t wepBoard = 0;
 
 uint64_t checkBoard;
-int black_check;
-int white_check;
+//int black_check;
+//int white_check;
 int black_stale;
 int white_stale;
 
@@ -371,7 +371,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		moves = (board->bKing & ~HFILE) << 1 | (board->bKing & ~AFILE) <<7 | board->bKing << 8 | (board->bKing & ~HFILE) << 9 |
 			(board->bKing & ~AFILE) >> 1 | (board->bKing & ~HFILE) >>7 | board->bKing >>8 | (board->bKing & ~AFILE) >>9;
 		/*can we castle??*/
-		if(black_check == 0){
+		if(board->black_check == 0){
 			if(board->bqCastle == 1){
 				if( (((board->bKing>>1) & allPieces(board))== 0) && (((board->bKing>>2) & allPieces(board)) == 0) && (((board->bKing>>3) & allPieces(board)) == 0) ){
 				//space between bKing and bqRook is empty
@@ -402,7 +402,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		moves = (board->wKing & ~HFILE) << 1 | (board->wKing & ~AFILE) <<7 | board->wKing << 8 | (board->wKing & ~HFILE) << 9 |
 			(board->wKing & ~AFILE) >> 1 | (board->wKing & ~HFILE) >>7 | board->wKing >>8 | (board->wKing & ~AFILE) >>9;
 		/*can we castle??*/
-		if(white_check == 0){
+		if(board->white_check == 0){
 			if(board->wqCastle == 1){
 				if( (((board->wKing>>1) & allPieces(board)) == 0) && (((board->wKing>>2) & allPieces(board)) == 0) && (((board->wKing>>3) & allPieces(board)) == 0) ){
 				//space between wKing and wqRook is empty
@@ -604,18 +604,17 @@ void update(Bitboard * b_ptr, char * move)
 		}
 	}
 
-	/*stalemate?*/
-	if((black_moves(b_ptr) == 0) && (black_check == 0)){
-		black_stale = 1;
+	/*is either side in check?*/
+	if((black_moves(b_ptr)) & (b_ptr->wKing)){
+		b_ptr->white_check = 1;
 	} else{
-		black_stale = 0;
+		b_ptr->white_check = 0;
 	}
-	if((white_moves(b_ptr) == 0) && (white_check == 0)){
-		white_stale = 1;
+	if((white_moves(b_ptr)) & (b_ptr->bKing)){
+		b_ptr->black_check = 1;
 	} else{
-		white_stale = 0;
+		b_ptr->black_check = 0;
 	}
-	//TODO: figure out what to return if it's your turn, but stale is true for your color
 
 	return;
 
@@ -730,8 +729,8 @@ void init(struct Bitboard* b){
 	RANK8 =      squares[a8] | squares[b8] | squares[c8] | squares[d8] |\
 		     squares[e8] | squares[f8] | squares[g8] | squares[h8];
 
-	white_check = 0;
-	black_check = 0;
+	b->white_check = 0;
+	b->black_check = 0;
 } //Initialize bitboard
 
 /*Returns a bitboard of all white pieces*/
@@ -1017,7 +1016,7 @@ int black_mate(Bitboard *b)
 {
 	Bitboard temp;
 	copy_board(*b, &temp);
-	if(black_check == 0){
+	if(b->black_check == 0){
 		return 0;
 	} else{//TODO: update this
 		return 1;
@@ -1029,7 +1028,7 @@ int white_mate(Bitboard *b)
 {
 	Bitboard temp;
 	copy_board(*b, &temp);
-	if(white_check == 0){
+	if(b->white_check == 0){
 		return 0;
 	} else{//TODO: update this
 		return 1;

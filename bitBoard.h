@@ -40,6 +40,9 @@ typedef struct Bitboard{
 	uint64_t bQueen;
 	uint64_t bKing;
 	
+	int black_check;
+	int white_check;
+	
 	int wqCastle; //castling rights: white queenside
 	int wkCastle;
 	int bqCastle;
