@@ -6,13 +6,13 @@
 #include "bitBoard.h"
 void generate_random_numbers()
 {
-        srandom(time(0));
+        //srandom(time(0));
         //uint64_t msb = 0;
         for(int i = 0; i < 12; i++) {
                 for(int j = 0; j < 64; j++){
                         for(int k = 0; k < 2; k++) {
                                 //msb = rand();
-                                random_numbers[i][j][k] = random();
+                                //random_numbers[i][j][k] = random();
                         }
                 }
         }
