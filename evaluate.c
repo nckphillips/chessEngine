@@ -171,7 +171,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 		uint64_t zob_hash = zobrist_hash(b_ptr, color);
 		int index = zob_hash % TABLE_SIZE;
 		if (t_table[index][KEY] == zob_hash && t_table[index][DEPTH] >= 2) {//if the value is in the table
-		
+
 			return t_table[index][VALUE];
 		}
 
@@ -222,6 +222,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         										update(&temp,tempmove);
 
                                                                 int temp_value = minimax(&temp, depth - 1, 0,alpha,beta);
+                                                                zob_hash = zobrist_hash(&temp, color);
                                                                 t_table[index][KEY] = zob_hash;
                                                                 t_table[index][VALUE] = temp_value;
                                                                 t_table[index][DEPTH] = depth;
