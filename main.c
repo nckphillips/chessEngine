@@ -22,6 +22,11 @@ int main(void){
 			temp <<= 1;
 	}
 
+	t_table = (uint64_t**)malloc(TABLE_SIZE * sizeof(uint64_t*));
+	for (int i = 0; i < TABLE_SIZE; i++) {
+		t_table[i] = (uint64_t *)malloc(3 * sizeof(uint64_t));
+	}
+
 	generate_random_numbers();
 	//initialize transposition table to zero
 	for(int i = 0; i < TABLE_SIZE; i++) {
@@ -41,7 +46,7 @@ int main(void){
                 }
         }
         */
-        
+
 
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);
@@ -60,14 +65,17 @@ int main(void){
 
 	Bitboard b;
 	init(&b);
-	
-	
+
+
 
 //	int pos = getPositionValue(b.bPawns, BPAWN);
 //	printf("Black Pawns position evaluates to %d", pos);
 	command(&b);
+	for (int i = 0; i < TABLE_SIZE; i++) {
+		free(t_table[i]);
+	}
 
-	
+	free(t_table);
 	return 0;
 }
 

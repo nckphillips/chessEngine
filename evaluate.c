@@ -166,19 +166,16 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 		int value_leaf = getPositionValue(b_ptr);
 		return value_leaf;
         }
-        
-        
+
+
 		uint64_t zob_hash = zobrist_hash(b_ptr, color);
 		int index = zob_hash % TABLE_SIZE;
 		if (t_table[index][KEY] == zob_hash && t_table[index][DEPTH] >= 2) {//if the value is in the table
-			printf("Index of match is %d\n", index);
-			printf("match here. hash: %ld\n %ld", zob_hash,t_table[index][KEY]);
-			printChessboard(b_ptr);
-			printf("\n\n");
+		
 			return t_table[index][VALUE];
-		}     
-        
-        
+		}
+
+
         if (color == 0) {
                 for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                         pb = get_board(b_ptr,piece_type);
@@ -196,14 +193,14 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
                                                                 t_table[index][KEY] = zob_hash;
                                                                 t_table[index][VALUE] = temp_value;
                                                                 t_table[index][DEPTH] = depth;
-                                                                
+
                                                                 if (temp_value >= beta) {
                                                                 	return beta;
                                                                 }
                                                                 if (temp_value > alpha) {
                                                                         alpha = temp_value;
                                                                 }
-                                                        
+
 
                                                 }
                                         }
@@ -228,14 +225,14 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
                                                                 t_table[index][KEY] = zob_hash;
                                                                 t_table[index][VALUE] = temp_value;
                                                                 t_table[index][DEPTH] = depth;
-                                                                
+
                                                                 if (temp_value <= alpha) {
                                                                 	return alpha;
                                                                 }
                                                                 if (temp_value < beta) {
                                                                         beta = temp_value;
                                                                 }
-                                                        
+
 
                                                 }
                                         }
