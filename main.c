@@ -7,7 +7,7 @@
 #include "play.h"
 #include "transposition.h"
 #include "evaluate.h"
-static Bitboard previous_state;
+//static Bitboard previous_state;
 
 void command(Bitboard *b);//main control loop for engine
 
@@ -30,6 +30,19 @@ int main(void){
 		}
 	}
 
+
+/*
+        for(int i = 0; i < 12; i++) {
+                for(int j = 0; j < 64; j++){
+                        for(int k = 0; k < 2; k++) {
+                                //msb = rand();
+                                printf("%ld\n", random_numbers[i][j][k]);
+                        }
+                }
+        }
+        */
+        
+
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);
 	if (!strcmp(s, "xboard\n")) {
@@ -47,11 +60,14 @@ int main(void){
 
 	Bitboard b;
 	init(&b);
-	init(&previous_state);
+	
+	
 
 //	int pos = getPositionValue(b.bPawns, BPAWN);
 //	printf("Black Pawns position evaluates to %d", pos);
 	command(&b);
+
+	
 	return 0;
 }
 
