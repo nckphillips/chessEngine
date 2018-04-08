@@ -170,7 +170,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         
 		uint64_t zob_hash = zobrist_hash(b_ptr, color);
 		int index = zob_hash % TABLE_SIZE;
-		if (t_table[index][KEY] == zob_hash && t_table[index][DEPTH] >= 3) {//if the value is in the table
+		if (t_table[index][KEY] == zob_hash && t_table[index][DEPTH] >= 2) {//if the value is in the table
 			printf("Index of match is %d\n", index);
 			printf("match here. hash: %ld\n %ld", zob_hash,t_table[index][KEY]);
 			printChessboard(b_ptr);
@@ -192,9 +192,11 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         											update(&temp,tempmove);
 
                                                                 int temp_value = minimax(&temp, depth - 1, 1,alpha,beta);
+                                                                zob_hash = zobrist_hash(&temp, color);
                                                                 t_table[index][KEY] = zob_hash;
                                                                 t_table[index][VALUE] = temp_value;
                                                                 t_table[index][DEPTH] = depth;
+                                                                
                                                                 if (temp_value >= beta) {
                                                                 	return beta;
                                                                 }
@@ -226,6 +228,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
                                                                 t_table[index][KEY] = zob_hash;
                                                                 t_table[index][VALUE] = temp_value;
                                                                 t_table[index][DEPTH] = depth;
+                                                                
                                                                 if (temp_value <= alpha) {
                                                                 	return alpha;
                                                                 }
