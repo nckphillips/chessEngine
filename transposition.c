@@ -24,23 +24,6 @@ uint64_t zobrist_hash(Bitboard * b_ptr, char sidetomove)
         int piece_square = 0;
         for(int piecetype = 0; piecetype < 12; piecetype++){
                 uint64_t pb = get_board(b_ptr, piecetype);
-/*                
-        		//We want a square, where the piece is at
-        		for (int i = 0; i < 64; i++){
-        		
-	                int piece_square = pb & 1;
-	                
-        			if (squares[i] == piece_square){ 
-                		hash ^= random_numbers[piecetype][i];
-        				pb >>= 1;                		     					
-        			}
-        			
-        			else{
-        				pb >>= 1;
-        			}
-        		
-        		}
-*/
 
                 while (pb){
                         piece_square = __builtin_ffsll(pb) - 1;
