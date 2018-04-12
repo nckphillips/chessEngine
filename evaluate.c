@@ -168,6 +168,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
         }
 
 
+
         if (color == 0) {
                 for (int piece_type = BPAWN; piece_type >=0; piece_type--) {
                         pb = get_board(b_ptr,piece_type);
@@ -237,6 +238,7 @@ int minimax(Bitboard * b_ptr, int depth, const int color, int alpha, int beta)
 		                                                            t_table[index][DEPTH] = depth;
 																}
 																
+
                                                                 if (temp_value <= alpha) {
                                                                 	return alpha;
                                                                 }
