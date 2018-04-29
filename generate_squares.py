@@ -19,7 +19,38 @@ class Square:
 
     def gen_connects(self):
         if (self.name == "a1") :
-            print("ok")
+            tlin = "0" #top left, continue ccw
+            tlout = "0"
+            midlin = "0"
+            midlout = "0"
+            blin = "0"
+            blout = "0"
+            midbin = "0"
+            midbout = "0"
+            brin = "0"
+            brout = "0"
+            midrin = squares[self.id+1].name + self.name
+            midrout = self.name + squares[self.id+1].name
+            trin = squares[self.id+9].name + self.name
+            trout = self.name + squares[self.id + 9].name
+            midtin = squares[self.id + 8].name + self.name
+            midtout =  self.name + squares[self.id + 8].name
+            kltin = "0"
+            kltout = "0"
+            klbin = "0"
+            klbout = "0"
+            krbin = "0"
+            krbout = "0"
+            krtin = squares[self.id + 10].name + self.name
+            krtout = self.name + squares[self.id + 10].name
+            ktlin ="0"
+            ktlout = "0"
+            ktrin = squares[self.id + 17].name + self.name
+            ktrout = self.name + squares[self.id + 17].name
+            kblin = "0"
+            kblout =  "0"
+            kbrin = "0"
+            kbrout = "0"
         elif (self.name == "a8"):
             print("ok")
         elif (self.name == "h1"):
