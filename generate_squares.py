@@ -54,7 +54,7 @@ class Square:
 
 
     def gen_conn_string(self):
-        self.connection_string = "\n          .in_tl(" + self.in_connections[0] + "), \n          .in_midl(" + self.in_connections[1] + "), \n          .in_bl(" + self.in_connections[2] + "), \n          .in_midb(" + self.in_connections[3] + "), \n          .in_br(" + self.in_connections[4] + "), \n          .in_midr(" + self.in_connections[5] + "), \n          .in_tr(" + self.in_connections[6] + "), \n          .in_midt(" + self.in_connections[7] + "), \n          .in_klt(" + self.in_connections[8] + "), \n          .in_klb(" + self.in_connections[9] + "), \n          .in_krb(" + self.in_connections[10] + "), \n          .in_krt(" + self.in_connections[11] + "), \n          .in_ktl(" + self.in_connections[12] + "), \n          .in_ktr(" + self.in_connections[13] + "), \n          .in_kbl(" + self.in_connections[14] + "), \n          .in_kbr(" + self.in_connections[15] + ")"
+        self.connection_string = "\n          .in_tl(" + self.in_connections[0] + "), \n          .in_midl(" + self.in_connections[1] + "), \n          .in_bl(" + self.in_connections[2] + "), \n          .in_midb(" + self.in_connections[3] + "), \n          .in_br(" + self.in_connections[4] + "), \n          .in_midr(" + self.in_connections[5] + "), \n          .in_tr(" + self.in_connections[6] + "), \n          .in_midt(" + self.in_connections[7] + "), \n          .in_klt(" + self.in_connections[8] + "), \n          .in_klb(" + self.in_connections[9] + "), \n          .in_krb(" + self.in_connections[10] + "), \n          .in_krt(" + self.in_connections[11] + "), \n          .in_ktl(" + self.in_connections[12] + "), \n          .in_ktr(" + self.in_connections[13] + "), \n          .in_kbl(" + self.in_connections[14] + "), \n          .in_kbr(" + self.in_connections[15] + "),"
         self.connection_string += "\n          .out_tl(" + self.out_connections[0] + "), \n          .out_midl(" + self.out_connections[1] + "), \n          .out_bl(" + self.out_connections[2] + "), \n          .out_midb(" + self.out_connections[3] + "), \n          .out_br(" + self.out_connections[4] + "), \n          .out_midr(" + self.out_connections[5] + "), \n          .out_tr(" + self.out_connections[6] + "), \n          .out_midt(" + self.out_connections[7] + "), \n          .out_klt(" + self.out_connections[8] + "), \n          .out_klb(" + self.out_connections[9] + "), \n          .out_krb(" + self.out_connections[10] + "), \n          .out_krt(" + self.out_connections[11] + "), \n          .out_ktl(" + self.out_connections[12] + "), \n          .out_ktr(" + self.out_connections[13] + "), \n          .out_kbl(" + self.out_connections[14] + "), \n          .out_kbr(" + self.out_connections[15] + ")"
 
     def do_special_knights(self):
@@ -593,22 +593,22 @@ fileo.write("\n\n/*************Generated interconnections for squares***********
 for wire in wires:
     fileo.write("wire " + wire + ";\n")
 
-fileo.write("\n\n/*************Generated occupied flags*************/\n")
+"""fileo.write("\n\n/*************Generated occupied flags*************/\n")
 
 for s in squares:
-    fileo.write("reg " + str(s.id) + "_occ;\n")
+    fileo.write("reg " + str(s.id) + "_occ;\n")"""
 
-fileo.write("\n\n/*************Generated occupying piece wires*************/\n")
+"""fileo.write("\n\n/*************Generated occupying piece wires*************/\n")
 for s in squares:
-    fileo.write("reg [3:0] " + str(s.id) + "_occupying_piece;\n")
+    fileo.write("reg [3:0] " + str(s.id) + "_occupying_piece;\n")"""
 
 
 fileo.write("\n\n/*************Generated modules*************/\n")
 
 for s in squares:
-    fileo.write("\n\nsquare " + s.name + "(\n          .clock(clk), \n          .init(init), \n          .occupied(" + str(s.id) + "_occ), \n          .square_id(")
-    fileo.write("5'd" + str(s.id) + "), \n          .piece_type_calc(piece_type_calc), " + "\n          .occupying_piece(" + str(s.id))
-    fileo.write("_occupying_piece), " + s.connection_string + ", \n          .movebit(move_wires[" + str(s.id) + "])")
+    fileo.write("\n\nsquare " + s.name + "(\n          .clock(clk), \n          .init(init), \n          .occupied(" + "is_occupied_wires[" + str(s.id) + "]), \n          .square_id(")
+    fileo.write("5'd" + str(s.id) + "), \n          .piece_type_calc(piece_type_calc), " + "\n          .occupying_piece(" + "occupying_piece_type_wires[" + str(s.id) + "]")
+    fileo.write("), " + s.connection_string + ", \n          .movebit(move_wires[" + str(s.id) + "]);\n")
 
 
 
