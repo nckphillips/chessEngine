@@ -19,37 +19,37 @@ class Square:
         self.connection_string = ""
 
         self.tlin = "0" #top left, continue ccw
-        self.tlout = "0"
+        self.tlout = ""
         self.midlin = "0"
-        self.midlout = "0"
+        self.midlout = ""
         self.blin = "0"
-        self.blout = "0"
+        self.blout = ""
         self.midbin = "0"
-        self.midbout = "0"
+        self.midbout = ""
         self.brin = "0"
-        self.brout = "0"
+        self.brout = ""
         self.midrin = "0"
-        self.midrout = "0"
+        self.midrout = ""
         self.trin = "0"
-        self.trout = "0"
+        self.trout = ""
         self.midtin = "0"
-        self.midtout =  "0"
+        self.midtout =  ""
         self.kltin = "0"
-        self.kltout = "0"
+        self.kltout = ""
         self.klbin = "0"
-        self.klbout = "0"
+        self.klbout = ""
         self.krbin = "0"
-        self.krbout = "0"
+        self.krbout = ""
         self.krtin = "0"
-        self.krtout = "0"
-        self.tlin ="0"
-        self.tlout = "0"
+        self.krtout = ""
+        self.tlin =""
+        self.tlout = ""
         self.trin = "0"
-        self.trout = "0"
+        self.trout = ""
         self.blin = "0"
-        self.blout =  "0"
+        self.blout =  ""
         self.brin = "0"
-        self.brout = "0"
+        self.brout = ""
 
 
 
@@ -60,9 +60,9 @@ class Square:
     def do_special_knights(self):
 	if(self.name == "b2"):
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = squares[self.id-10].name + self.name
             self.krbout = self.name + squares[self.id-10].name
             self.krtin = squares[self.id + 10].name + self.name
@@ -72,22 +72,22 @@ class Square:
             self.ktrin = squares[self.id + 17].name + self.name
             self.ktrout = self.name + squares[self.id + 17].name
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif(self.name == "b7"):
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = squares[self.id-10].name + self.name
             self.krbout = self.name + squares[self.id-10].name
             self.krtin = squares[self.id + 10].name + self.name
             self.krtout = self.name + squares[self.id + 10].name
             self.ktlin = "0"
-            self.ktlout = "0"
+            self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = squares[self.id-17].name + self.name
             self.kblout =  self.name + squares[self.id-17].name
             self.kbrin = squares[self.id-15].name + self.name
@@ -98,39 +98,39 @@ class Square:
             self.klbin = squares[self.id-6].name + self.name
             self.klbout = self.name + squares[self.id-6].name
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = "0"
-            self.krtout = "0"
+            self.krtout = ""
             self.ktlin =squares[self.id + 15].name + self.name
             self.ktlout = self.name + squares[self.id + 15].name
             self.ktrin = squares[self.id + 17].name + self.name
             self.ktrout = self.name + squares[self.id + 17].name
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif(self.name == "g7"):
 	    self.kltin = squares[self.id + 6].name + self.name
             self.kltout = self.name + squares[self.id+6].name
             self.klbin = squares[self.id-6].name + self.name
             self.klbout = self.name + squares[self.id-6].name
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = "0"
-            self.krtout = "0"
+            self.krtout = ""
             self.ktlin = "0"
-            self.ktlout = "0"
+            self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = squares[self.id-17].name + self.name
             self.kblout =  self.name + squares[self.id-17].name
             self.kbrin = squares[self.id-15].name + self.name
             self.kbrout = self.name + squares[self.id-15].name
         elif(self.name[0] == "b"):
 	    self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = squares[self.id-10].name + self.name
             self.krbout = self.name + squares[self.id-10].name
             self.krtin = squares[self.id + 10].name + self.name
@@ -149,9 +149,9 @@ class Square:
             self.klbin = squares[self.id-6].name + self.name
             self.klbout = self.name + squares[self.id-6].name
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = "0"
-            self.krtout = "0"
+            self.krtout = ""
             self.ktlin =squares[self.id + 15].name + self.name
             self.ktlout = self.name + squares[self.id + 15].name
             self.ktrin = squares[self.id + 17].name + self.name
@@ -174,9 +174,9 @@ class Square:
             self.ktrin = squares[self.id + 17].name + self.name
             self.ktrout = self.name + squares[self.id + 17].name
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif(self.name[1] == "7"):
 	    self.kltin = squares[self.id + 6].name + self.name
             self.kltout = self.name + squares[self.id+6].name
@@ -187,9 +187,9 @@ class Square:
             self.krtin = squares[self.id + 10].name + self.name
             self.krtout = self.name + squares[self.id + 10].name
             self.ktlin = "0"
-            self.ktlout = "0"
+            self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = squares[self.id-17].name + self.name
             self.kblout =  self.name + squares[self.id-17].name
             self.kbrin = squares[self.id-15].name + self.name
@@ -216,15 +216,15 @@ class Square:
     def gen_connects(self):
         if (self.name == "a1") :
             self.tlin = "0" #top left, continue ccw
-            self.tlout = "0"
+            self.tlout = ""
             self.midlin = "0"
-            self.midlout = "0"
+            self.midlout = ""
             self.blin = "0"
-            self.blout = "0"
+            self.blout = ""
             self.midbin = "0"
-            self.midbout = "0"
+            self.midbout = ""
             self.brin = "0"
-            self.brout = "0"
+            self.brout = ""
             self.midrin = squares[self.id+1].name + self.name
             self.midrout = self.name + squares[self.id+1].name
             self.trin = squares[self.id+9].name + self.name
@@ -232,28 +232,28 @@ class Square:
             self.midtin = squares[self.id + 8].name + self.name
             self.midtout =  self.name + squares[self.id + 8].name
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = squares[self.id + 10].name + self.name
             self.krtout = self.name + squares[self.id + 10].name
-            self.ktlin ="0"
-            self.ktlout = "0"
+            self.ktlin =""
+            self.ktlout = ""
             self.ktrin = squares[self.id + 17].name + self.name
             self.ktrout = self.name + squares[self.id + 17].name
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif (self.name == "a8"):
             self.tlin = "0" #top left, continue ccw
-            self.tlout = "0"
+            self.tlout = ""
             self.midlin = "0"
-            self.midlout = "0"
+            self.midlout = ""
             self.blin = "0"
-            self.blout = "0"
+            self.blout = ""
             self.midbin = squares[self.id-8].name + self.name
             self.midbout = self.name + squares[self.id-8].name
             self.brin = squares[self.id-7].name + self.name
@@ -261,23 +261,23 @@ class Square:
             self.midrin = squares[self.id+1].name + self.name
             self.midrout = self.name + squares[self.id+1].name
             self.trin = "0"
-            self.trout = "0"
+            self.trout = ""
             self.midtin = "0"
-            self.midtout =  "0"
+            self.midtout =  ""
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = squares[self.id-10].name + self.name
             self.krbout = self.name + squares[self.id-10].name
             self.krtin = "0"
-            self.krtout = "0"
+            self.krtout = ""
             self.ktlin = "0"
-            self.ktlout = "0"
+            self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = squares[self.id-15].name + self.name
             self.kbrout = self.name + squares[self.id-15].name
         elif (self.name == "h1"):
@@ -286,36 +286,36 @@ class Square:
             self.midlin = squares[self.id-1].name + self.name
             self.midlout = self.name + squares[self.id-1].name
             self.blin = "0"
-            self.blout = "0"
+            self.blout = ""
             self.midbin = "0"
-            self.midbout = "0"
+            self.midbout = ""
             self.brin = "0"
-            self.brout = "0"
+            self.brout = ""
             self.midrin = "0"
-            self.midrout = "0"
+            self.midrout = ""
             self.trin = "0"
-            self.trout = "0"
+            self.trout = ""
             self.midtin = squares[self.id + 8].name + self.name
             self.midtout =  self.name + squares[self.id + 8].name
             self.kltin = squares[self.id + 6].name + self.name
             self.kltout = self.name + squares[self.id+6].name
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = "0"
-            self.krtout = "0"
+            self.krtout = ""
             self.ktlin =squares[self.id + 15].name + self.name
             self.ktlout = self.name + squares[self.id + 15].name
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif (self.name == "h8"):
             self.tlin = "0"
-            self.tlout = "0"
+            self.tlout = ""
             self.midlin = squares[self.id-1].name + self.name
             self.midlout = self.name + squares[self.id-1].name
             self.blin = squares[self.id-9].name + self.name
@@ -323,36 +323,36 @@ class Square:
             self.midbin = squares[self.id-8].name + self.name
             self.midbout = self.name + squares[self.id-8].name
             self.brin = "0"
-            self.brout = "0"
+            self.brout = ""
             self.midrin = "0"
-            self.midrout = "0"
+            self.midrout = ""
             self.trin = "0"
-            self.trout = "0"
+            self.trout = ""
             self.midtin = "0"
-            self.midtout =  "0"
+            self.midtout =  ""
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = squares[self.id-6].name + self.name
             self.klbout = self.name + squares[self.id-6].name
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = "0"
-            self.krtout = "0"
-            self.ktlin ="0"
-            self.ktlout = "0"
+            self.krtout = ""
+            self.ktlin =""
+            self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = squares[self.id-17].name + self.name
             self.kblout =  self.name + squares[self.id-17].name
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif (self.name[0] == "a"):
             self.tlin = "0" #top left, continue ccw
-            self.tlout = "0"
+            self.tlout = ""
             self.midlin = "0"
-            self.midlout = "0"
+            self.midlout = ""
             self.blin = "0"
-            self.blout = "0"
+            self.blout = ""
             self.midbin = squares[self.id-8].name + self.name
             self.midbout = self.name + squares[self.id-8].name
             self.brin = squares[self.id-7].name + self.name
@@ -364,29 +364,29 @@ class Square:
             self.midtin = squares[self.id + 8].name + self.name
             self.midtout =  self.name + squares[self.id + 8].name
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = squares[self.id-10].name + self.name
             self.krbout = self.name + squares[self.id-10].name
             self.krtin = squares[self.id + 10].name + self.name
             self.krtout = self.name + squares[self.id + 10].name
             self.ktlin = "0"
-            self.ktlout = "0"
+            self.ktlout = ""
             if (self.name != "a7"):
                 self.ktrin = squares[self.id + 17].name + self.name
                 self.ktrout = self.name + squares[self.id + 17].name
             else:
                 self.ktrin = "0"
-                self.ktrout = "0"
+                self.ktrout = ""
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             if (self.name != "a7"):
                 self.kbrin = squares[self.id - 15].name + self.name
                 self.kbrout = self.name + squares[self.id - 15].name
             else:
                 self.kbrin = "0"
-                self.kbrout = "0"
+                self.kbrout = ""
         elif (self.name[0] == "h"):
             self.tlin = squares[self.id+7].name + self.name #top left, continue ccw
             self.tlout = self.name + squares[self.id + 7].name
@@ -397,11 +397,11 @@ class Square:
             self.midbin = squares[self.id-8].name + self.name
             self.midbout = self.name + squares[self.id-8].name
             self.brin = "0"
-            self.brout = "0"
+            self.brout = ""
             self.midrin = "0"
-            self.midrout = "0"
+            self.midrout = ""
             self.trin = "0"
-            self.trout = "0"
+            self.trout = ""
             self.midtin = squares[self.id + 8].name + self.name
             self.midtout =  self.name + squares[self.id + 8].name
             self.kltin = squares[self.id + 6].name + self.name
@@ -409,36 +409,36 @@ class Square:
             self.klbin = squares[self.id-6].name + self.name
             self.klbout = self.name + squares[self.id-6].name
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             self.krtin = "0"
-            self.krtout = "0"
+            self.krtout = ""
             if(self.name != "h7"):
                 self.ktlin =squares[self.id + 15].name + self.name
                 self.ktlout = self.name + squares[self.id + 15].name
             else:
                 self.ktlin = "0"
-                self.ktlout = "0"
+                self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             if(self.name != "h8"):
                 self.kblin =squares[self.id-17].name + self.name
                 self.kblout = self.name + squares[self.id-17].name
             else:
                 self.kblin = "0"
-                self.kblout = "0"
+                self.kblout = ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif (self.name[1] == "1"):
             self.tlin = squares[self.id+7].name + self.name #top left, continue ccw
             self.tlout = self.name + squares[self.id + 7].name
             self.midlin = squares[self.id-1].name + self.name
             self.midlout = self.name + squares[self.id-1].name
             self.blin = "0"
-            self.blout = "0"
+            self.blout = ""
             self.midbin = "0"
-            self.midbout = "0"
+            self.midbout = ""
             self.brin = "0"
-            self.brout = "0"
+            self.brout = ""
             self.midrin = squares[self.id+1].name + self.name
             self.midrout = self.name + squares[self.id+1].name
             self.trin = squares[self.id+9].name + self.name
@@ -450,30 +450,30 @@ class Square:
                 self.kltout = self.name + squares[self.id+6].name
             else:
                 self.kltin = "0"
-                self.kltout = "0"
+                self.kltout = ""
 
             self.klbin = "0"
-            self.klbout = "0"
+            self.klbout = ""
             self.krbin = "0"
-            self.krbout = "0"
+            self.krbout = ""
             if(self.name != "g1"):
                 self.krtin = squares[self.id + 10].name + self.name
                 self.krtout = self.name + squares[self.id + 10].name
             else:
                 self.krtin = "0"
-                self.krtout = "0"
+                self.krtout = ""
 
             self.ktlin =squares[self.id + 15].name + self.name
             self.ktlout = self.name + squares[self.id + 15].name
             self.ktrin = squares[self.id + 17].name + self.name
             self.ktrout = self.name + squares[self.id + 17].name
             self.kblin = "0"
-            self.kblout =  "0"
+            self.kblout =  ""
             self.kbrin = "0"
-            self.kbrout = "0"
+            self.kbrout = ""
         elif (self.name[1] == "8"):
             self.tlin = "0" #top left, continue ccw
-            self.tlout = "0"
+            self.tlout = ""
             self.midlin = squares[self.id-1].name + self.name
             self.midlout = self.name + squares[self.id-1].name
             self.blin = squares[self.id-9].name + self.name
@@ -485,31 +485,31 @@ class Square:
             self.midrin = squares[self.id+1].name + self.name
             self.midrout = self.name + squares[self.id+1].name
             self.trin = "0"
-            self.trout = "0"
+            self.trout = ""
             self.midtin = "0"
-            self.midtout =  "0"
+            self.midtout =  ""
             self.kltin = "0"
-            self.kltout = "0"
+            self.kltout = ""
             if(self.name != "b8"):
                 self.klbin = squares[self.id-6].name + self.name
                 self.klbout = self.name + squares[self.id-6].name
             else:
                 self.klbin = "0"
-                self.klbout = "0"
+                self.klbout = ""
                 
             if(self.name != "g8"):
                 self.krbin = squares[self.id-10].name + self.name
                 self.krbout = self.name + squares[self.id-10].name
             else:
                 self.krbin = "0"
-                self.krbout = "0"
+                self.krbout = ""
                 
             self.krtin = "0"
-            self.krtout = "0"
-            self.ktlin ="0"
-            self.ktlout = "0"
+            self.krtout = ""
+            self.ktlin =""
+            self.ktlout = ""
             self.ktrin = "0"
-            self.ktrout = "0"
+            self.ktrout = ""
             self.kblin = squares[self.id-17].name + self.name
             self.kblout =  self.name + squares[self.id-17].name
             self.kbrin = squares[self.id-15].name + self.name
@@ -582,12 +582,12 @@ for s in squares:
 wires = []#contains text wires to write to file
 for s in squares:
     for i in range(0,16):
-        if s.in_connections[i] not in wires:
+        if s.in_connections[i] not in wires and s.in_connections[i] != "" and s.in_connections[i] != "0":
             wires.append(s.in_connections[i])
-        elif s.out_connections[i] not in wires:
+        elif s.out_connections[i] not in wires and s.in_connections[i] != "" and s.in_connections[i] != "0":
             wires.append(s.out_connections[i])
 
-fileo.write("\n\n/reg trash; //Trash register for outputs that we dont cae about./\n")
+fileo.write("wire init;\nwire clk;\nwire [3:0] piece_type_calc; \n\n\n\n")
 
 fileo.write("\n\n/*************Generated interconnections for squares*************/\n")
 for wire in wires:
