@@ -587,12 +587,27 @@ for s in squares:
         elif s.out_connections[i] not in wires:
             wires.append(s.out_connections[i])
 
+fileo.write("\n\n/reg trash; //Trash register for outputs that we dont cae about./\n")
+
+fileo.write("\n\n/*************Generated interconnections for squares*************/\n")
 for wire in wires:
     fileo.write("wire " + wire + ";\n")
 
+fileo.write("\n\n/*************Generated occupied flags*************/\n")
+
 for s in squares:
-    fileo.write("\n\nsquare " + s.name + "(\n          .clock(clk), \n          .init(init), \n          .occupied(" + s.name + "_occ), \n          .square_id(")
-    fileo.write("5'd" + str(s.id) + "), \n          .piece_type_calc(piece_type_calc), " + "\n          .occupying_piece(" + s.name)
+    fileo.write("reg " + str(s.id) + "_occ;\n")
+
+fileo.write("\n\n/*************Generated occupying piece wires*************/\n")
+for s in squares:
+    fileo.write("reg [3:0] " + str(s.id) + "_occupying_piece;\n")
+
+
+fileo.write("\n\n/*************Generated modules*************/\n")
+
+for s in squares:
+    fileo.write("\n\nsquare " + s.name + "(\n          .clock(clk), \n          .init(init), \n          .occupied(" + str(s.id) + "_occ), \n          .square_id(")
+    fileo.write("5'd" + str(s.id) + "), \n          .piece_type_calc(piece_type_calc), " + "\n          .occupying_piece(" + str(s.id))
     fileo.write("_occupying_piece), " + s.connection_string + ", \n          .movebit(move_wires[" + str(s.id) + "])")
 
 
