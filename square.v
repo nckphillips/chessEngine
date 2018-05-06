@@ -5,7 +5,7 @@ input occupied, 	     //whether this square is occupied or not
 input [5:0] square_id,       //number of the square, should be assigned a const when instantiated in top level module
 input [5:0] square_calc,     //number of the square we want to calc moves for, parameter received from software
 input [3:0] piece_type_calc, //piecetype we are calculating for
-input [3:0] occupying_piece, //type of piece on the square
+input [1:0] occupying_piece_color, //color of piece on the square, true for white
 input in_tl, in_midl, in_bl, in_midb, in_br, in_midr, in_tr, in_midt, in_klt, in_klb, in_krb, in_krt, in_ktl, in_ktr, in_kbl, in_kbr, //in directions
 output reg out_tl, out_midl, out_bl, out_midb, out_br, out_midr, out_tr, out_midt, out_klt, out_klb, out_krb, out_krt, out_ktl, out_ktr, out_kbl, out_kbr,  //out directions
 output reg movebit);
@@ -241,7 +241,7 @@ begin
 
 		else begin //square is occupied
 			/*pieces are same color*/
-			if (((piece_type_calc < 6) & (occupying_piece < 6)) | ((piece_type_calc > 6) & (occupying_piece > 6))) begin
+			if (((piece_type_calc < 6) & ~occupying_piece_color) | ((piece_type_calc > 6) & occupying_piece_color)) begin
 				movebit = 0;
 				out_tl = 0;	//top left to bottom right (reverse these comments...)
 				out_midt = 0;	//top to bottom
