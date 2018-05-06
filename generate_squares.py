@@ -605,15 +605,11 @@ for s in squares:
 
 fileo.write("\n\n/*************Generated modules*************/\n")
 
-upper = 3
-lower = 0
 
 for s in squares:
     fileo.write("\n\nsquare " + s.name + "(\n          .clock(clk), \n          .init(init), \n          .occupied(" + "is_occupied_wires[" + str(s.id) + "]), \n          .square_id(")
-    fileo.write("5'd" + str(s.id) + "), \n          .piece_type_calc(piece_type_calc), " + "\n          .occupying_piece(" + "occupying_piece_type_wires[" + str(upper) + ":" + str(lower) + "]")
+    fileo.write("5'd" + str(s.id) + "), \n          .square_calc(square_currently_calculating),\n         .piece_type_calc(piece_type_calc), " + "\n          .occupying_piece(" + "occupying_piece_color[" + str(s.id)+ "]")
     fileo.write("), " + s.connection_string + ", \n          .movebit(move_wires[" + str(s.id) + "]));\n")
-    upper = upper + 4
-    lower = lower + 4
 
 
 
