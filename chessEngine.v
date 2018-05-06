@@ -653,7 +653,7 @@ square a1(
           .out_ktr(a1b2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[0]);
+          .movebit(move_wires[0]));
 
 
 square b1(
@@ -695,7 +695,7 @@ square b1(
           .out_ktr(b1c2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[1]);
+          .movebit(move_wires[1]));
 
 
 square c1(
@@ -737,7 +737,7 @@ square c1(
           .out_ktr(c1d2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[2]);
+          .movebit(move_wires[2]));
 
 
 square d1(
@@ -779,7 +779,7 @@ square d1(
           .out_ktr(d1e2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[3]);
+          .movebit(move_wires[3]));
 
 
 square e1(
@@ -821,7 +821,7 @@ square e1(
           .out_ktr(e1f2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[4]);
+          .movebit(move_wires[4]));
 
 
 square f1(
@@ -863,7 +863,7 @@ square f1(
           .out_ktr(f1g2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[5]);
+          .movebit(move_wires[5]));
 
 
 square g1(
@@ -905,7 +905,7 @@ square g1(
           .out_ktr(g1h2), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[6]);
+          .movebit(move_wires[6]));
 
 
 square h1(
@@ -947,7 +947,7 @@ square h1(
           .out_ktr(), 
           .out_kbl(), 
           .out_kbr(), 
-          .movebit(move_wires[7]);
+          .movebit(move_wires[7]));
 
 
 square a2(
@@ -989,7 +989,7 @@ square a2(
           .out_ktr(a2b3), 
           .out_kbl(), 
           .out_kbr(a2b1), 
-          .movebit(move_wires[8]);
+          .movebit(move_wires[8]));
 
 
 square b2(
@@ -1031,7 +1031,7 @@ square b2(
           .out_ktr(b2c3), 
           .out_kbl(b2a1), 
           .out_kbr(b2c1), 
-          .movebit(move_wires[9]);
+          .movebit(move_wires[9]));
 
 
 square c2(
@@ -1073,7 +1073,7 @@ square c2(
           .out_ktr(c2d3), 
           .out_kbl(c2b1), 
           .out_kbr(c2d1), 
-          .movebit(move_wires[10]);
+          .movebit(move_wires[10]));
 
 
 square d2(
@@ -1115,7 +1115,7 @@ square d2(
           .out_ktr(d2e3), 
           .out_kbl(d2c1), 
           .out_kbr(d2e1), 
-          .movebit(move_wires[11]);
+          .movebit(move_wires[11]));
 
 
 square e2(
@@ -1157,7 +1157,7 @@ square e2(
           .out_ktr(e2f3), 
           .out_kbl(e2d1), 
           .out_kbr(e2f1), 
-          .movebit(move_wires[12]);
+          .movebit(move_wires[12]));
 
 
 square f2(
@@ -1199,7 +1199,7 @@ square f2(
           .out_ktr(f2g3), 
           .out_kbl(f2e1), 
           .out_kbr(f2g1), 
-          .movebit(move_wires[13]);
+          .movebit(move_wires[13]));
 
 
 square g2(
@@ -1241,7 +1241,7 @@ square g2(
           .out_ktr(g2h3), 
           .out_kbl(g2f1), 
           .out_kbr(g2h1), 
-          .movebit(move_wires[14]);
+          .movebit(move_wires[14]));
 
 
 square h2(
@@ -1283,7 +1283,7 @@ square h2(
           .out_ktr(), 
           .out_kbl(h2g1), 
           .out_kbr(), 
-          .movebit(move_wires[15]);
+          .movebit(move_wires[15]));
 
 
 square a3(
@@ -1325,7 +1325,7 @@ square a3(
           .out_ktr(a3b4), 
           .out_kbl(), 
           .out_kbr(a3b2), 
-          .movebit(move_wires[16]);
+          .movebit(move_wires[16]));
 
 
 square b3(
@@ -1367,7 +1367,7 @@ square b3(
           .out_ktr(b3c4), 
           .out_kbl(b3a2), 
           .out_kbr(b3c2), 
-          .movebit(move_wires[17]);
+          .movebit(move_wires[17]));
 
 
 square c3(
@@ -1409,7 +1409,7 @@ square c3(
           .out_ktr(c3d4), 
           .out_kbl(c3b2), 
           .out_kbr(c3d2), 
-          .movebit(move_wires[18]);
+          .movebit(move_wires[18]));
 
 
 square d3(
@@ -1451,7 +1451,7 @@ square d3(
           .out_ktr(d3e4), 
           .out_kbl(d3c2), 
           .out_kbr(d3e2), 
-          .movebit(move_wires[19]);
+          .movebit(move_wires[19]));
 
 
 square e3(
@@ -1493,7 +1493,7 @@ square e3(
           .out_ktr(e3f4), 
           .out_kbl(e3d2), 
           .out_kbr(e3f2), 
-          .movebit(move_wires[20]);
+          .movebit(move_wires[20]));
 
 
 square f3(
@@ -1535,7 +1535,7 @@ square f3(
           .out_ktr(f3g4), 
           .out_kbl(f3e2), 
           .out_kbr(f3g2), 
-          .movebit(move_wires[21]);
+          .movebit(move_wires[21]));
 
 
 square g3(
@@ -1577,7 +1577,7 @@ square g3(
           .out_ktr(g3h4), 
           .out_kbl(g3f2), 
           .out_kbr(g3h2), 
-          .movebit(move_wires[22]);
+          .movebit(move_wires[22]));
 
 
 square h3(
@@ -1619,7 +1619,7 @@ square h3(
           .out_ktr(), 
           .out_kbl(h3g2), 
           .out_kbr(), 
-          .movebit(move_wires[23]);
+          .movebit(move_wires[23]));
 
 
 square a4(
@@ -1661,7 +1661,7 @@ square a4(
           .out_ktr(a4b5), 
           .out_kbl(), 
           .out_kbr(a4b3), 
-          .movebit(move_wires[24]);
+          .movebit(move_wires[24]));
 
 
 square b4(
@@ -1703,7 +1703,7 @@ square b4(
           .out_ktr(b4c5), 
           .out_kbl(b4a3), 
           .out_kbr(b4c3), 
-          .movebit(move_wires[25]);
+          .movebit(move_wires[25]));
 
 
 square c4(
@@ -1745,7 +1745,7 @@ square c4(
           .out_ktr(c4d5), 
           .out_kbl(c4b3), 
           .out_kbr(c4d3), 
-          .movebit(move_wires[26]);
+          .movebit(move_wires[26]));
 
 
 square d4(
@@ -1787,7 +1787,7 @@ square d4(
           .out_ktr(d4e5), 
           .out_kbl(d4c3), 
           .out_kbr(d4e3), 
-          .movebit(move_wires[27]);
+          .movebit(move_wires[27]));
 
 
 square e4(
@@ -1829,7 +1829,7 @@ square e4(
           .out_ktr(e4f5), 
           .out_kbl(e4d3), 
           .out_kbr(e4f3), 
-          .movebit(move_wires[28]);
+          .movebit(move_wires[28]));
 
 
 square f4(
@@ -1871,7 +1871,7 @@ square f4(
           .out_ktr(f4g5), 
           .out_kbl(f4e3), 
           .out_kbr(f4g3), 
-          .movebit(move_wires[29]);
+          .movebit(move_wires[29]));
 
 
 square g4(
@@ -1913,7 +1913,7 @@ square g4(
           .out_ktr(g4h5), 
           .out_kbl(g4f3), 
           .out_kbr(g4h3), 
-          .movebit(move_wires[30]);
+          .movebit(move_wires[30]));
 
 
 square h4(
@@ -1955,7 +1955,7 @@ square h4(
           .out_ktr(), 
           .out_kbl(h4g3), 
           .out_kbr(), 
-          .movebit(move_wires[31]);
+          .movebit(move_wires[31]));
 
 
 square a5(
@@ -1997,7 +1997,7 @@ square a5(
           .out_ktr(a5b6), 
           .out_kbl(), 
           .out_kbr(a5b4), 
-          .movebit(move_wires[32]);
+          .movebit(move_wires[32]));
 
 
 square b5(
@@ -2039,7 +2039,7 @@ square b5(
           .out_ktr(b5c6), 
           .out_kbl(b5a4), 
           .out_kbr(b5c4), 
-          .movebit(move_wires[33]);
+          .movebit(move_wires[33]));
 
 
 square c5(
@@ -2081,7 +2081,7 @@ square c5(
           .out_ktr(c5d6), 
           .out_kbl(c5b4), 
           .out_kbr(c5d4), 
-          .movebit(move_wires[34]);
+          .movebit(move_wires[34]));
 
 
 square d5(
@@ -2123,7 +2123,7 @@ square d5(
           .out_ktr(d5e6), 
           .out_kbl(d5c4), 
           .out_kbr(d5e4), 
-          .movebit(move_wires[35]);
+          .movebit(move_wires[35]));
 
 
 square e5(
@@ -2165,7 +2165,7 @@ square e5(
           .out_ktr(e5f6), 
           .out_kbl(e5d4), 
           .out_kbr(e5f4), 
-          .movebit(move_wires[36]);
+          .movebit(move_wires[36]));
 
 
 square f5(
@@ -2207,7 +2207,7 @@ square f5(
           .out_ktr(f5g6), 
           .out_kbl(f5e4), 
           .out_kbr(f5g4), 
-          .movebit(move_wires[37]);
+          .movebit(move_wires[37]));
 
 
 square g5(
@@ -2249,7 +2249,7 @@ square g5(
           .out_ktr(g5h6), 
           .out_kbl(g5f4), 
           .out_kbr(g5h4), 
-          .movebit(move_wires[38]);
+          .movebit(move_wires[38]));
 
 
 square h5(
@@ -2291,7 +2291,7 @@ square h5(
           .out_ktr(), 
           .out_kbl(h5g4), 
           .out_kbr(), 
-          .movebit(move_wires[39]);
+          .movebit(move_wires[39]));
 
 
 square a6(
@@ -2333,7 +2333,7 @@ square a6(
           .out_ktr(a6b7), 
           .out_kbl(), 
           .out_kbr(a6b5), 
-          .movebit(move_wires[40]);
+          .movebit(move_wires[40]));
 
 
 square b6(
@@ -2375,7 +2375,7 @@ square b6(
           .out_ktr(b6c7), 
           .out_kbl(b6a5), 
           .out_kbr(b6c5), 
-          .movebit(move_wires[41]);
+          .movebit(move_wires[41]));
 
 
 square c6(
@@ -2417,7 +2417,7 @@ square c6(
           .out_ktr(c6d7), 
           .out_kbl(c6b5), 
           .out_kbr(c6d5), 
-          .movebit(move_wires[42]);
+          .movebit(move_wires[42]));
 
 
 square d6(
@@ -2459,7 +2459,7 @@ square d6(
           .out_ktr(d6e7), 
           .out_kbl(d6c5), 
           .out_kbr(d6e5), 
-          .movebit(move_wires[43]);
+          .movebit(move_wires[43]));
 
 
 square e6(
@@ -2501,7 +2501,7 @@ square e6(
           .out_ktr(e6f7), 
           .out_kbl(e6d5), 
           .out_kbr(e6f5), 
-          .movebit(move_wires[44]);
+          .movebit(move_wires[44]));
 
 
 square f6(
@@ -2543,7 +2543,7 @@ square f6(
           .out_ktr(f6g7), 
           .out_kbl(f6e5), 
           .out_kbr(f6g5), 
-          .movebit(move_wires[45]);
+          .movebit(move_wires[45]));
 
 
 square g6(
@@ -2585,7 +2585,7 @@ square g6(
           .out_ktr(g6h7), 
           .out_kbl(g6f5), 
           .out_kbr(g6h5), 
-          .movebit(move_wires[46]);
+          .movebit(move_wires[46]));
 
 
 square h6(
@@ -2627,7 +2627,7 @@ square h6(
           .out_ktr(), 
           .out_kbl(h6g5), 
           .out_kbr(), 
-          .movebit(move_wires[47]);
+          .movebit(move_wires[47]));
 
 
 square a7(
@@ -2669,7 +2669,7 @@ square a7(
           .out_ktr(a7b8), 
           .out_kbl(), 
           .out_kbr(a7b6), 
-          .movebit(move_wires[48]);
+          .movebit(move_wires[48]));
 
 
 square b7(
@@ -2711,7 +2711,7 @@ square b7(
           .out_ktr(b7c8), 
           .out_kbl(b7a6), 
           .out_kbr(b7c6), 
-          .movebit(move_wires[49]);
+          .movebit(move_wires[49]));
 
 
 square c7(
@@ -2753,7 +2753,7 @@ square c7(
           .out_ktr(c7d8), 
           .out_kbl(c7b6), 
           .out_kbr(c7d6), 
-          .movebit(move_wires[50]);
+          .movebit(move_wires[50]));
 
 
 square d7(
@@ -2795,7 +2795,7 @@ square d7(
           .out_ktr(d7e8), 
           .out_kbl(d7c6), 
           .out_kbr(d7e6), 
-          .movebit(move_wires[51]);
+          .movebit(move_wires[51]));
 
 
 square e7(
@@ -2837,7 +2837,7 @@ square e7(
           .out_ktr(e7f8), 
           .out_kbl(e7d6), 
           .out_kbr(e7f6), 
-          .movebit(move_wires[52]);
+          .movebit(move_wires[52]));
 
 
 square f7(
@@ -2879,7 +2879,7 @@ square f7(
           .out_ktr(f7g8), 
           .out_kbl(f7e6), 
           .out_kbr(f7g6), 
-          .movebit(move_wires[53]);
+          .movebit(move_wires[53]));
 
 
 square g7(
@@ -2921,7 +2921,7 @@ square g7(
           .out_ktr(g7h8), 
           .out_kbl(g7f6), 
           .out_kbr(g7h6), 
-          .movebit(move_wires[54]);
+          .movebit(move_wires[54]));
 
 
 square h7(
@@ -2963,7 +2963,7 @@ square h7(
           .out_ktr(), 
           .out_kbl(h7g6), 
           .out_kbr(), 
-          .movebit(move_wires[55]);
+          .movebit(move_wires[55]));
 
 
 square a8(
@@ -3005,7 +3005,7 @@ square a8(
           .out_ktr(), 
           .out_kbl(), 
           .out_kbr(a8b7), 
-          .movebit(move_wires[56]);
+          .movebit(move_wires[56]));
 
 
 square b8(
@@ -3047,7 +3047,7 @@ square b8(
           .out_ktr(), 
           .out_kbl(b8a7), 
           .out_kbr(b8c7), 
-          .movebit(move_wires[57]);
+          .movebit(move_wires[57]));
 
 
 square c8(
@@ -3089,7 +3089,7 @@ square c8(
           .out_ktr(), 
           .out_kbl(c8b7), 
           .out_kbr(c8d7), 
-          .movebit(move_wires[58]);
+          .movebit(move_wires[58]));
 
 
 square d8(
@@ -3131,7 +3131,7 @@ square d8(
           .out_ktr(), 
           .out_kbl(d8c7), 
           .out_kbr(d8e7), 
-          .movebit(move_wires[59]);
+          .movebit(move_wires[59]));
 
 
 square e8(
@@ -3173,7 +3173,7 @@ square e8(
           .out_ktr(), 
           .out_kbl(e8d7), 
           .out_kbr(e8f7), 
-          .movebit(move_wires[60]);
+          .movebit(move_wires[60]));
 
 
 square f8(
@@ -3215,7 +3215,7 @@ square f8(
           .out_ktr(), 
           .out_kbl(f8e7), 
           .out_kbr(f8g7), 
-          .movebit(move_wires[61]);
+          .movebit(move_wires[61]));
 
 
 square g8(
@@ -3257,7 +3257,7 @@ square g8(
           .out_ktr(), 
           .out_kbl(g8f7), 
           .out_kbr(g8h7), 
-          .movebit(move_wires[62]);
+          .movebit(move_wires[62]));
 
 
 square h8(
@@ -3299,7 +3299,6 @@ square h8(
           .out_ktr(), 
           .out_kbl(h8g7), 
           .out_kbr(), 
-          .movebit(move_wires[63]);
-
+          .movebit(move_wires[63]));
 
 endmodule

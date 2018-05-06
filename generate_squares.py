@@ -560,14 +560,14 @@ class Square:
         self.out_connections[10] = self.krbout
         self.in_connections[11] = self.krtin
         self.out_connections[11] = self.krtout
-        self.in_connections[12] = self.tlin
-        self.out_connections[12] = self.tlout
-        self.in_connections[13] = self.trin
-        self.out_connections[13] = self.trout
-        self.in_connections[14] = self.blin
-        self.out_connections[14] = self.blout
-        self.in_connections[15] = self.brin
-        self.out_connections[15] = self.brout
+        self.in_connections[12] = self.ktlin
+        self.out_connections[12] = self.ktlout
+        self.in_connections[13] = self.ktrin
+        self.out_connections[13] = self.ktrout
+        self.in_connections[14] = self.kblin
+        self.out_connections[14] = self.kblout
+        self.in_connections[15] = self.kbrin
+        self.out_connections[15] = self.kbrout
 
 
 for i in range(0,64):
