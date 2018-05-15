@@ -23,15 +23,15 @@ wire b1a1;
 wire b2a1;
 wire a2a1;
 wire c2a1;
-wire a1b2;
+wire b3a1;
 wire a2b1;
 wire a1b1;
 wire c1b1;
 wire c2b1;
 wire b2b1;
 wire d2b1;
-wire b1a2;
-wire b1c2;
+wire a3b1;
+wire c3b1;
 wire b2c1;
 wire b1c1;
 wire d1c1;
@@ -39,8 +39,8 @@ wire d2c1;
 wire c2c1;
 wire a2c1;
 wire e2c1;
-wire c1b2;
-wire c1d2;
+wire b3c1;
+wire d3c1;
 wire c2d1;
 wire c1d1;
 wire e1d1;
@@ -48,8 +48,8 @@ wire e2d1;
 wire d2d1;
 wire b2d1;
 wire f2d1;
-wire d1c2;
-wire d1e2;
+wire c3d1;
+wire e3d1;
 wire d2e1;
 wire d1e1;
 wire f1e1;
@@ -57,8 +57,8 @@ wire f2e1;
 wire e2e1;
 wire c2e1;
 wire g2e1;
-wire e1d2;
-wire e1f2;
+wire d3e1;
+wire f3e1;
 wire e2f1;
 wire e1f1;
 wire g1f1;
@@ -66,558 +66,727 @@ wire g2f1;
 wire f2f1;
 wire d2f1;
 wire h2f1;
-wire f1e2;
-wire f1g2;
+wire e3f1;
+wire g3f1;
 wire f2g1;
 wire f1g1;
 wire h1g1;
 wire h2g1;
 wire g2g1;
 wire e2g1;
-wire g1f2;
-wire g1h2;
+wire f3g1;
+wire h3g1;
 wire g2h1;
 wire g1h1;
 wire h2h1;
 wire f2h1;
-wire h1g2;
+wire g3h1;
 wire a1a2;
+wire b1a2;
 wire b2a2;
 wire b3a2;
 wire a3a2;
-wire g8a2;
+wire c1a2;
 wire c3a2;
-wire a2b3;
+wire b4a2;
+wire b8a2;
 wire a3b2;
 wire a2b2;
+wire a1b2;
 wire b1b2;
+wire c1b2;
 wire c2b2;
 wire c3b2;
 wire b3b2;
-wire h8b2;
+wire d1b2;
 wire d3b2;
-wire b2a3;
-wire b2c3;
+wire a4b2;
+wire c4b2;
 wire b3c2;
 wire b2c2;
+wire b1c2;
 wire c1c2;
+wire d1c2;
 wire d2c2;
 wire d3c2;
 wire c3c2;
 wire a3c2;
-wire e1c2;
 wire a1c2;
+wire e1c2;
 wire e3c2;
-wire c2b3;
-wire c2d3;
+wire b4c2;
+wire d4c2;
 wire c3d2;
 wire c2d2;
+wire c1d2;
 wire d1d2;
+wire e1d2;
 wire e2d2;
 wire e3d2;
 wire d3d2;
 wire b3d2;
-wire f1d2;
 wire b1d2;
+wire f1d2;
 wire f3d2;
-wire d2c3;
-wire d2e3;
+wire c4d2;
+wire e4d2;
 wire d3e2;
 wire d2e2;
+wire d1e2;
 wire e1e2;
+wire f1e2;
 wire f2e2;
 wire f3e2;
 wire e3e2;
 wire c3e2;
-wire g1e2;
 wire c1e2;
+wire g1e2;
 wire g3e2;
-wire e2d3;
-wire e2f3;
+wire d4e2;
+wire f4e2;
 wire e3f2;
 wire e2f2;
+wire e1f2;
 wire f1f2;
+wire g1f2;
 wire g2f2;
 wire g3f2;
 wire f3f2;
 wire d3f2;
-wire h1f2;
 wire d1f2;
+wire h1f2;
 wire h3f2;
-wire f2e3;
-wire f2g3;
+wire e4f2;
+wire g4f2;
 wire f3g2;
 wire f2g2;
+wire f1g2;
 wire g1g2;
+wire h1g2;
 wire h2g2;
 wire h3g2;
 wire g3g2;
 wire e3g2;
-wire a2g2;
-wire g2f3;
-wire g2h3;
+wire e1g2;
+wire f4g2;
+wire h4g2;
 wire g3h2;
 wire g2h2;
+wire g1h2;
 wire h1h2;
 wire h3h2;
 wire f3h2;
-wire b2h2;
-wire h2g3;
+wire f1h2;
+wire g4h2;
+wire g8h2;
 wire a2a3;
+wire b2a3;
 wire b3a3;
 wire b4a3;
 wire a4a3;
-wire g1a3;
+wire c2a3;
 wire c4a3;
-wire a3b4;
+wire b5a3;
+wire b1a3;
 wire a4b3;
 wire a3b3;
+wire a2b3;
 wire b2b3;
+wire c2b3;
 wire c3b3;
 wire c4b3;
 wire b4b3;
-wire h1b3;
+wire d2b3;
 wire d4b3;
-wire b3a4;
-wire b3c4;
+wire a5b3;
+wire c5b3;
+wire a1b3;
+wire c1b3;
 wire b4c3;
 wire b3c3;
+wire b2c3;
 wire c2c3;
+wire d2c3;
 wire d3c3;
 wire d4c3;
 wire c4c3;
 wire a4c3;
-wire e2c3;
 wire a2c3;
+wire e2c3;
 wire e4c3;
-wire c3b4;
-wire c3d4;
+wire b5c3;
+wire d5c3;
+wire b1c3;
+wire d1c3;
 wire c4d3;
 wire c3d3;
+wire c2d3;
 wire d2d3;
+wire e2d3;
 wire e3d3;
 wire e4d3;
 wire d4d3;
 wire b4d3;
-wire f2d3;
 wire b2d3;
+wire f2d3;
 wire f4d3;
-wire d3c4;
-wire d3e4;
+wire c5d3;
+wire e5d3;
+wire c1d3;
+wire e1d3;
 wire d4e3;
 wire d3e3;
+wire d2e3;
 wire e2e3;
+wire f2e3;
 wire f3e3;
 wire f4e3;
 wire e4e3;
 wire c4e3;
-wire g2e3;
 wire c2e3;
+wire g2e3;
 wire g4e3;
-wire e3d4;
-wire e3f4;
+wire d5e3;
+wire f5e3;
+wire d1e3;
+wire f1e3;
 wire e4f3;
 wire e3f3;
+wire e2f3;
 wire f2f3;
+wire g2f3;
 wire g3f3;
 wire g4f3;
 wire f4f3;
 wire d4f3;
-wire h2f3;
 wire d2f3;
+wire h2f3;
 wire h4f3;
-wire f3e4;
-wire f3g4;
+wire e5f3;
+wire g5f3;
+wire e1f3;
+wire g1f3;
 wire f4g3;
 wire f3g3;
+wire f2g3;
 wire g2g3;
+wire h2g3;
 wire h3g3;
 wire h4g3;
 wire g4g3;
 wire e4g3;
-wire a3g3;
-wire g3f4;
-wire g3h4;
+wire e2g3;
+wire f5g3;
+wire h5g3;
+wire f1g3;
+wire h1g3;
 wire g4h3;
 wire g3h3;
+wire g2h3;
 wire h2h3;
 wire h4h3;
 wire f4h3;
-wire b3h3;
-wire h3g4;
+wire f2h3;
+wire g5h3;
+wire g1h3;
 wire a3a4;
+wire b3a4;
 wire b4a4;
 wire b5a4;
 wire a5a4;
-wire g2a4;
+wire c3a4;
 wire c5a4;
-wire a4b5;
+wire b6a4;
+wire b2a4;
 wire a5b4;
 wire a4b4;
+wire a3b4;
 wire b3b4;
+wire c3b4;
 wire c4b4;
 wire c5b4;
 wire b5b4;
-wire h2b4;
+wire d3b4;
 wire d5b4;
-wire b4a5;
-wire b4c5;
+wire a6b4;
+wire c6b4;
+wire a2b4;
+wire c2b4;
 wire b5c4;
 wire b4c4;
+wire b3c4;
 wire c3c4;
+wire d3c4;
 wire d4c4;
 wire d5c4;
 wire c5c4;
 wire a5c4;
-wire e3c4;
 wire a3c4;
+wire e3c4;
 wire e5c4;
-wire c4b5;
-wire c4d5;
+wire b6c4;
+wire d6c4;
+wire b2c4;
+wire d2c4;
 wire c5d4;
 wire c4d4;
+wire c3d4;
 wire d3d4;
+wire e3d4;
 wire e4d4;
 wire e5d4;
 wire d5d4;
 wire b5d4;
-wire f3d4;
 wire b3d4;
+wire f3d4;
 wire f5d4;
-wire d4c5;
-wire d4e5;
+wire c6d4;
+wire e6d4;
+wire c2d4;
+wire e2d4;
 wire d5e4;
 wire d4e4;
+wire d3e4;
 wire e3e4;
+wire f3e4;
 wire f4e4;
 wire f5e4;
 wire e5e4;
 wire c5e4;
-wire g3e4;
 wire c3e4;
+wire g3e4;
 wire g5e4;
-wire e4d5;
-wire e4f5;
+wire d6e4;
+wire f6e4;
+wire d2e4;
+wire f2e4;
 wire e5f4;
 wire e4f4;
+wire e3f4;
 wire f3f4;
+wire g3f4;
 wire g4f4;
 wire g5f4;
 wire f5f4;
 wire d5f4;
-wire h3f4;
 wire d3f4;
+wire h3f4;
 wire h5f4;
-wire f4e5;
-wire f4g5;
+wire e6f4;
+wire g6f4;
+wire e2f4;
+wire g2f4;
 wire f5g4;
 wire f4g4;
+wire f3g4;
 wire g3g4;
+wire h3g4;
 wire h4g4;
 wire h5g4;
 wire g5g4;
 wire e5g4;
-wire a4g4;
-wire g4f5;
-wire g4h5;
+wire e3g4;
+wire f6g4;
+wire h6g4;
+wire f2g4;
+wire h2g4;
 wire g5h4;
 wire g4h4;
+wire g3h4;
 wire h3h4;
 wire h5h4;
 wire f5h4;
-wire b4h4;
-wire h4g5;
+wire f3h4;
+wire g6h4;
+wire g2h4;
 wire a4a5;
+wire b4a5;
 wire b5a5;
 wire b6a5;
 wire a6a5;
-wire g3a5;
+wire c4a5;
 wire c6a5;
-wire a5b6;
+wire b7a5;
+wire b3a5;
 wire a6b5;
 wire a5b5;
+wire a4b5;
 wire b4b5;
+wire c4b5;
 wire c5b5;
 wire c6b5;
 wire b6b5;
-wire h3b5;
+wire d4b5;
 wire d6b5;
-wire b5a6;
-wire b5c6;
+wire a7b5;
+wire c7b5;
+wire a3b5;
+wire c3b5;
 wire b6c5;
 wire b5c5;
+wire b4c5;
 wire c4c5;
+wire d4c5;
 wire d5c5;
 wire d6c5;
 wire c6c5;
 wire a6c5;
-wire e4c5;
 wire a4c5;
+wire e4c5;
 wire e6c5;
-wire c5b6;
-wire c5d6;
+wire b7c5;
+wire d7c5;
+wire b3c5;
+wire d3c5;
 wire c6d5;
 wire c5d5;
+wire c4d5;
 wire d4d5;
+wire e4d5;
 wire e5d5;
 wire e6d5;
 wire d6d5;
 wire b6d5;
-wire f4d5;
 wire b4d5;
+wire f4d5;
 wire f6d5;
-wire d5c6;
-wire d5e6;
+wire c7d5;
+wire e7d5;
+wire c3d5;
+wire e3d5;
 wire d6e5;
 wire d5e5;
+wire d4e5;
 wire e4e5;
+wire f4e5;
 wire f5e5;
 wire f6e5;
 wire e6e5;
 wire c6e5;
-wire g4e5;
 wire c4e5;
+wire g4e5;
 wire g6e5;
-wire e5d6;
-wire e5f6;
+wire d7e5;
+wire f7e5;
+wire d3e5;
+wire f3e5;
 wire e6f5;
 wire e5f5;
+wire e4f5;
 wire f4f5;
+wire g4f5;
 wire g5f5;
 wire g6f5;
 wire f6f5;
 wire d6f5;
-wire h4f5;
 wire d4f5;
+wire h4f5;
 wire h6f5;
-wire f5e6;
-wire f5g6;
+wire e7f5;
+wire g7f5;
+wire e3f5;
+wire g3f5;
 wire f6g5;
 wire f5g5;
+wire f4g5;
 wire g4g5;
+wire h4g5;
 wire h5g5;
 wire h6g5;
 wire g6g5;
 wire e6g5;
-wire a5g5;
-wire g5f6;
-wire g5h6;
+wire e4g5;
+wire f7g5;
+wire h7g5;
+wire f3g5;
+wire h3g5;
 wire g6h5;
 wire g5h5;
+wire g4h5;
 wire h4h5;
 wire h6h5;
 wire f6h5;
-wire b5h5;
-wire h5g6;
+wire f4h5;
+wire g7h5;
+wire g3h5;
 wire a5a6;
+wire b5a6;
 wire b6a6;
 wire b7a6;
 wire a7a6;
-wire g4a6;
+wire c5a6;
 wire c7a6;
-wire a6b7;
+wire b8a6;
+wire b4a6;
 wire a7b6;
 wire a6b6;
+wire a5b6;
 wire b5b6;
+wire c5b6;
 wire c6b6;
 wire c7b6;
 wire b7b6;
-wire h4b6;
+wire d5b6;
 wire d7b6;
-wire b6a7;
-wire b6c7;
+wire a8b6;
+wire c8b6;
+wire a4b6;
+wire c4b6;
 wire b7c6;
 wire b6c6;
+wire b5c6;
 wire c5c6;
+wire d5c6;
 wire d6c6;
 wire d7c6;
 wire c7c6;
 wire a7c6;
-wire e5c6;
 wire a5c6;
+wire e5c6;
 wire e7c6;
-wire c6b7;
-wire c6d7;
+wire b8c6;
+wire d8c6;
+wire b4c6;
+wire d4c6;
 wire c7d6;
 wire c6d6;
+wire c5d6;
 wire d5d6;
+wire e5d6;
 wire e6d6;
 wire e7d6;
 wire d7d6;
 wire b7d6;
-wire f5d6;
 wire b5d6;
+wire f5d6;
 wire f7d6;
-wire d6c7;
-wire d6e7;
+wire c8d6;
+wire e8d6;
+wire c4d6;
+wire e4d6;
 wire d7e6;
 wire d6e6;
+wire d5e6;
 wire e5e6;
+wire f5e6;
 wire f6e6;
 wire f7e6;
 wire e7e6;
 wire c7e6;
-wire g5e6;
 wire c5e6;
+wire g5e6;
 wire g7e6;
-wire e6d7;
-wire e6f7;
+wire d8e6;
+wire f8e6;
+wire d4e6;
+wire f4e6;
 wire e7f6;
 wire e6f6;
+wire e5f6;
 wire f5f6;
+wire g5f6;
 wire g6f6;
 wire g7f6;
 wire f7f6;
 wire d7f6;
-wire h5f6;
 wire d5f6;
+wire h5f6;
 wire h7f6;
-wire f6e7;
-wire f6g7;
+wire e8f6;
+wire g8f6;
+wire e4f6;
+wire g4f6;
 wire f7g6;
 wire f6g6;
+wire f5g6;
 wire g5g6;
+wire h5g6;
 wire h6g6;
 wire h7g6;
 wire g7g6;
 wire e7g6;
-wire a6g6;
-wire g6f7;
-wire g6h7;
+wire e5g6;
+wire f8g6;
+wire h8g6;
+wire f4g6;
+wire h4g6;
 wire g7h6;
 wire g6h6;
+wire g5h6;
 wire h5h6;
 wire h7h6;
 wire f7h6;
-wire b6h6;
-wire h6g7;
+wire f5h6;
+wire g8h6;
+wire g4h6;
 wire a6a7;
+wire b6a7;
 wire b7a7;
 wire b8a7;
 wire a8a7;
-wire g5a7;
+wire c6a7;
 wire c8a7;
-wire a7b8;
 wire a8b7;
 wire a7b7;
+wire a6b7;
 wire b6b7;
+wire c6b7;
 wire c7b7;
 wire c8b7;
 wire b8b7;
-wire h5b7;
+wire d6b7;
 wire d8b7;
-wire b7a8;
-wire b7c8;
+wire a5b7;
+wire c5b7;
 wire b8c7;
 wire b7c7;
+wire b6c7;
 wire c6c7;
+wire d6c7;
 wire d7c7;
 wire d8c7;
 wire c8c7;
 wire a8c7;
-wire e6c7;
 wire a6c7;
+wire e6c7;
 wire e8c7;
-wire c7b8;
-wire c7d8;
+wire b5c7;
+wire d5c7;
 wire c8d7;
 wire c7d7;
+wire c6d7;
 wire d6d7;
+wire e6d7;
 wire e7d7;
 wire e8d7;
 wire d8d7;
 wire b8d7;
-wire f6d7;
 wire b6d7;
+wire f6d7;
 wire f8d7;
-wire d7c8;
-wire d7e8;
+wire c5d7;
+wire e5d7;
 wire d8e7;
 wire d7e7;
+wire d6e7;
 wire e6e7;
+wire f6e7;
 wire f7e7;
 wire f8e7;
 wire e8e7;
 wire c8e7;
-wire g6e7;
 wire c6e7;
+wire g6e7;
 wire g8e7;
-wire e7d8;
-wire e7f8;
+wire d5e7;
+wire f5e7;
 wire e8f7;
 wire e7f7;
+wire e6f7;
 wire f6f7;
+wire g6f7;
 wire g7f7;
 wire g8f7;
 wire f8f7;
 wire d8f7;
-wire h6f7;
 wire d6f7;
+wire h6f7;
 wire h8f7;
-wire f7e8;
-wire f7g8;
+wire e5f7;
+wire g5f7;
 wire f8g7;
 wire f7g7;
+wire f6g7;
 wire g6g7;
+wire h6g7;
 wire h7g7;
 wire h8g7;
 wire g8g7;
 wire e8g7;
-wire a7g7;
-wire g7f8;
-wire g7h8;
+wire e6g7;
+wire f5g7;
+wire h5g7;
 wire g8h7;
 wire g7h7;
+wire g6h7;
 wire h6h7;
 wire h8h7;
 wire f8h7;
-wire b7h7;
-wire h7g8;
+wire f6h7;
+wire g5h7;
 wire a7a8;
+wire b7a8;
 wire b8a8;
-wire g6a8;
+wire c7a8;
+wire b6a8;
 wire a8b8;
+wire a7b8;
 wire b7b8;
+wire c7b8;
 wire c8b8;
-wire h6b8;
+wire d7b8;
+wire a6b8;
+wire c6b8;
 wire b8c8;
+wire b7c8;
 wire c7c8;
+wire d7c8;
 wire d8c8;
-wire e7c8;
 wire a7c8;
+wire e7c8;
+wire b6c8;
+wire d6c8;
 wire c8d8;
+wire c7d8;
 wire d7d8;
+wire e7d8;
 wire e8d8;
-wire f7d8;
 wire b7d8;
+wire f7d8;
+wire c6d8;
+wire e6d8;
 wire d8e8;
+wire d7e8;
 wire e7e8;
+wire f7e8;
 wire f8e8;
-wire g7e8;
 wire c7e8;
+wire g7e8;
+wire d6e8;
+wire f6e8;
 wire e8f8;
+wire e7f8;
 wire f7f8;
+wire g7f8;
 wire g8f8;
-wire h7f8;
 wire d7f8;
+wire h7f8;
+wire e6f8;
+wire g6f8;
 wire f8g8;
+wire f7g8;
 wire g7g8;
+wire h7g8;
 wire h8g8;
-wire a8g8;
+wire e7g8;
+wire f6g8;
+wire h6g8;
 wire g8h8;
+wire g7h8;
 wire h7h8;
-wire b8h8;
+wire f7h8;
+wire g6h8;
 
 
 /*************Generated modules*************/
 
 
-
-square a1( 
+square a1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[0]), 
-          .square_id(6'd0), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd0), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[0]), 
           .in_tl(0), 
@@ -643,7 +812,7 @@ square a1(
           .out_br(), 
           .out_midr(a1b1), 
           .out_tr(a1b2), 
-          .out_midt(a1a2),
+          .out_midt(a1a2), 
           .out_klt(), 
           .out_klb(), 
           .out_krb(), 
@@ -655,11 +824,12 @@ square a1(
           .movebit(move_wires[0]));
 
 
-square b1( 
+square b1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[1]), 
-          .square_id(6'd1), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd1), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[1]), 
           .in_tl(a2b1), 
@@ -697,11 +867,12 @@ square b1(
           .movebit(move_wires[1]));
 
 
-square c1( 
+square c1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[2]), 
-          .square_id(6'd2), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd2), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[2]), 
           .in_tl(b2c1), 
@@ -739,11 +910,12 @@ square c1(
           .movebit(move_wires[2]));
 
 
-square d1( 
+square d1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[3]), 
-          .square_id(6'd3), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd3), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[3]), 
           .in_tl(c2d1), 
@@ -781,14 +953,15 @@ square d1(
           .movebit(move_wires[3]));
 
 
-square e1( 
+square e1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[4]), 
-          .square_id(6'd4), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd4), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[4]), 
-          .in_tl(d2e1),         
+          .in_tl(d2e1), 
           .in_midl(d1e1), 
           .in_bl(0), 
           .in_midb(0), 
@@ -823,11 +996,12 @@ square e1(
           .movebit(move_wires[4]));
 
 
-square f1( 
+square f1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[5]), 
-          .square_id(6'd5), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd5), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[5]), 
           .in_tl(e2f1), 
@@ -847,7 +1021,7 @@ square f1(
           .in_kbl(0), 
           .in_kbr(0),
           .out_tl(f1e2), 
-          .out_midl(f1e1),          
+          .out_midl(f1e1), 
           .out_bl(), 
           .out_midb(), 
           .out_br(), 
@@ -865,11 +1039,12 @@ square f1(
           .movebit(move_wires[5]));
 
 
-square g1( 
+square g1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[6]), 
-          .square_id(6'd6), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd6), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[6]), 
           .in_tl(f2g1), 
@@ -907,11 +1082,12 @@ square g1(
           .movebit(move_wires[6]));
 
 
-square h1( 
+square h1(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[7]), 
-          .square_id(6'd7), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd7), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[7]), 
           .in_tl(g2h1), 
@@ -949,11 +1125,12 @@ square h1(
           .movebit(move_wires[7]));
 
 
-square a2( 
+square a2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[8]), 
-          .square_id(6'd8), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd8), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[8]), 
           .in_tl(0), 
@@ -966,7 +1143,7 @@ square a2(
           .in_midt(a3a2), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g8a2), 
+          .in_krb(c1a2), 
           .in_krt(c3a2), 
           .in_ktl(0), 
           .in_ktr(b4a2), 
@@ -982,7 +1159,7 @@ square a2(
           .out_midt(a2a3), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a2g8), 
+          .out_krb(a2c1), 
           .out_krt(a2c3), 
           .out_ktl(), 
           .out_ktr(a2b4), 
@@ -991,11 +1168,12 @@ square a2(
           .movebit(move_wires[8]));
 
 
-square b2( 
+square b2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[9]), 
-          .square_id(6'd9), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd9), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[9]), 
           .in_tl(a3b2), 
@@ -1008,7 +1186,7 @@ square b2(
           .in_midt(b3b2), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h8b2), 
+          .in_krb(d1b2), 
           .in_krt(d3b2), 
           .in_ktl(a4b2), 
           .in_ktr(c4b2), 
@@ -1024,7 +1202,7 @@ square b2(
           .out_midt(b2b3), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b2h8), 
+          .out_krb(b2d1), 
           .out_krt(b2d3), 
           .out_ktl(b2a4), 
           .out_ktr(b2c4), 
@@ -1033,11 +1211,12 @@ square b2(
           .movebit(move_wires[9]));
 
 
-square c2( 
+square c2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[10]), 
-          .square_id(6'd10), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd10), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[10]), 
           .in_tl(b3c2), 
@@ -1049,8 +1228,8 @@ square c2(
           .in_tr(d3c2), 
           .in_midt(c3c2), 
           .in_klt(a3c2), 
-          .in_klb(e1c2), 
-          .in_krb(a1c2), 
+          .in_klb(a1c2), 
+          .in_krb(e1c2), 
           .in_krt(e3c2), 
           .in_ktl(b4c2), 
           .in_ktr(d4c2), 
@@ -1065,8 +1244,8 @@ square c2(
           .out_tr(c2d3), 
           .out_midt(c2c3), 
           .out_klt(c2a3), 
-          .out_klb(c2e1), 
-          .out_krb(c2a1), 
+          .out_klb(c2a1), 
+          .out_krb(c2e1), 
           .out_krt(c2e3), 
           .out_ktl(c2b4), 
           .out_ktr(c2d4), 
@@ -1075,11 +1254,12 @@ square c2(
           .movebit(move_wires[10]));
 
 
-square d2( 
+square d2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[11]), 
-          .square_id(6'd11), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd11), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[11]), 
           .in_tl(c3d2), 
@@ -1091,8 +1271,8 @@ square d2(
           .in_tr(e3d2), 
           .in_midt(d3d2), 
           .in_klt(b3d2), 
-          .in_klb(f1d2), 
-          .in_krb(b1d2), 
+          .in_klb(b1d2), 
+          .in_krb(f1d2), 
           .in_krt(f3d2), 
           .in_ktl(c4d2), 
           .in_ktr(e4d2), 
@@ -1107,8 +1287,8 @@ square d2(
           .out_tr(d2e3), 
           .out_midt(d2d3), 
           .out_klt(d2b3), 
-          .out_klb(d2f1), 
-          .out_krb(d2b1), 
+          .out_klb(d2b1), 
+          .out_krb(d2f1), 
           .out_krt(d2f3), 
           .out_ktl(d2c4), 
           .out_ktr(d2e4), 
@@ -1117,11 +1297,12 @@ square d2(
           .movebit(move_wires[11]));
 
 
-square e2( 
+square e2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[12]), 
-          .square_id(6'd12), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd12), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[12]), 
           .in_tl(d3e2), 
@@ -1133,8 +1314,8 @@ square e2(
           .in_tr(f3e2), 
           .in_midt(e3e2), 
           .in_klt(c3e2), 
-          .in_klb(g1e2), 
-          .in_krb(c1e2), 
+          .in_klb(c1e2), 
+          .in_krb(g1e2), 
           .in_krt(g3e2), 
           .in_ktl(d4e2), 
           .in_ktr(f4e2), 
@@ -1149,8 +1330,8 @@ square e2(
           .out_tr(e2f3), 
           .out_midt(e2e3), 
           .out_klt(e2c3), 
-          .out_klb(e2g1), 
-          .out_krb(e2c1), 
+          .out_klb(e2c1), 
+          .out_krb(e2g1), 
           .out_krt(e2g3), 
           .out_ktl(e2d4), 
           .out_ktr(e2f4), 
@@ -1159,11 +1340,12 @@ square e2(
           .movebit(move_wires[12]));
 
 
-square f2( 
+square f2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[13]), 
-          .square_id(6'd13), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd13), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[13]), 
           .in_tl(e3f2), 
@@ -1175,8 +1357,8 @@ square f2(
           .in_tr(g3f2), 
           .in_midt(f3f2), 
           .in_klt(d3f2), 
-          .in_klb(h1f2), 
-          .in_krb(d1f2), 
+          .in_klb(d1f2), 
+          .in_krb(h1f2), 
           .in_krt(h3f2), 
           .in_ktl(e4f2), 
           .in_ktr(g4f2), 
@@ -1191,8 +1373,8 @@ square f2(
           .out_tr(f2g3), 
           .out_midt(f2f3), 
           .out_klt(f2d3), 
-          .out_klb(f2h1), 
-          .out_krb(f2d1), 
+          .out_klb(f2d1), 
+          .out_krb(f2h1), 
           .out_krt(f2h3), 
           .out_ktl(f2e4), 
           .out_ktr(f2g4), 
@@ -1201,11 +1383,12 @@ square f2(
           .movebit(move_wires[13]));
 
 
-square g2( 
+square g2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[14]), 
-          .square_id(6'd14), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd14), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[14]), 
           .in_tl(f3g2), 
@@ -1217,7 +1400,7 @@ square g2(
           .in_tr(h3g2), 
           .in_midt(g3g2), 
           .in_klt(e3g2), 
-          .in_klb(a2g2), 
+          .in_klb(e1g2), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(f4g2), 
@@ -1233,7 +1416,7 @@ square g2(
           .out_tr(g2h3), 
           .out_midt(g2g3), 
           .out_klt(g2e3), 
-          .out_klb(g2a2), 
+          .out_klb(g2e1), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(g2f4), 
@@ -1243,11 +1426,12 @@ square g2(
           .movebit(move_wires[14]));
 
 
-square h2( 
+square h2(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[15]), 
-          .square_id(6'd15), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd15), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[15]), 
           .in_tl(g3h2), 
@@ -1259,7 +1443,7 @@ square h2(
           .in_tr(0), 
           .in_midt(h3h2), 
           .in_klt(f3h2), 
-          .in_klb(b2h2), 
+          .in_klb(f1h2), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(g4h2), 
@@ -1275,7 +1459,7 @@ square h2(
           .out_tr(), 
           .out_midt(h2h3), 
           .out_klt(h2f3), 
-          .out_klb(h2b2), 
+          .out_klb(h2f1), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(h2g4), 
@@ -1285,11 +1469,12 @@ square h2(
           .movebit(move_wires[15]));
 
 
-square a3( 
+square a3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[16]), 
-          .square_id(6'd16), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd16), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[16]), 
           .in_tl(0), 
@@ -1302,7 +1487,7 @@ square a3(
           .in_midt(a4a3), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g1a3), 
+          .in_krb(c2a3), 
           .in_krt(c4a3), 
           .in_ktl(0), 
           .in_ktr(b5a3), 
@@ -1318,7 +1503,7 @@ square a3(
           .out_midt(a3a4), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a3g1), 
+          .out_krb(a3c2), 
           .out_krt(a3c4), 
           .out_ktl(), 
           .out_ktr(a3b5), 
@@ -1327,11 +1512,12 @@ square a3(
           .movebit(move_wires[16]));
 
 
-square b3( 
+square b3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[17]), 
-          .square_id(6'd17), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd17), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[17]), 
           .in_tl(a4b3), 
@@ -1344,7 +1530,7 @@ square b3(
           .in_midt(b4b3), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h1b3), 
+          .in_krb(d2b3), 
           .in_krt(d4b3), 
           .in_ktl(a5b3), 
           .in_ktr(c5b3), 
@@ -1360,7 +1546,7 @@ square b3(
           .out_midt(b3b4), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b3h1), 
+          .out_krb(b3d2), 
           .out_krt(b3d4), 
           .out_ktl(b3a5), 
           .out_ktr(b3c5), 
@@ -1369,11 +1555,12 @@ square b3(
           .movebit(move_wires[17]));
 
 
-square c3( 
+square c3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[18]), 
-          .square_id(6'd18), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd18), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[18]), 
           .in_tl(b4c3), 
@@ -1385,8 +1572,8 @@ square c3(
           .in_tr(d4c3), 
           .in_midt(c4c3), 
           .in_klt(a4c3), 
-          .in_klb(e2c3), 
-          .in_krb(a2c3), 
+          .in_klb(a2c3), 
+          .in_krb(e2c3), 
           .in_krt(e4c3), 
           .in_ktl(b5c3), 
           .in_ktr(d5c3), 
@@ -1401,8 +1588,8 @@ square c3(
           .out_tr(c3d4), 
           .out_midt(c3c4), 
           .out_klt(c3a4), 
-          .out_klb(c3e2), 
-          .out_krb(c3a2), 
+          .out_klb(c3a2), 
+          .out_krb(c3e2), 
           .out_krt(c3e4), 
           .out_ktl(c3b5), 
           .out_ktr(c3d5), 
@@ -1411,11 +1598,12 @@ square c3(
           .movebit(move_wires[18]));
 
 
-square d3( 
+square d3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[19]), 
-          .square_id(6'd19), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd19), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[19]), 
           .in_tl(c4d3), 
@@ -1427,8 +1615,8 @@ square d3(
           .in_tr(e4d3), 
           .in_midt(d4d3), 
           .in_klt(b4d3), 
-          .in_klb(f2d3), 
-          .in_krb(b2d3), 
+          .in_klb(b2d3), 
+          .in_krb(f2d3), 
           .in_krt(f4d3), 
           .in_ktl(c5d3), 
           .in_ktr(e5d3), 
@@ -1443,8 +1631,8 @@ square d3(
           .out_tr(d3e4), 
           .out_midt(d3d4), 
           .out_klt(d3b4), 
-          .out_klb(d3f2), 
-          .out_krb(d3b2), 
+          .out_klb(d3b2), 
+          .out_krb(d3f2), 
           .out_krt(d3f4), 
           .out_ktl(d3c5), 
           .out_ktr(d3e5), 
@@ -1453,11 +1641,12 @@ square d3(
           .movebit(move_wires[19]));
 
 
-square e3( 
+square e3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[20]), 
-          .square_id(6'd20), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd20), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[20]), 
           .in_tl(d4e3), 
@@ -1469,8 +1658,8 @@ square e3(
           .in_tr(f4e3), 
           .in_midt(e4e3), 
           .in_klt(c4e3), 
-          .in_klb(g2e3), 
-          .in_krb(c2e3), 
+          .in_klb(c2e3), 
+          .in_krb(g2e3), 
           .in_krt(g4e3), 
           .in_ktl(d5e3), 
           .in_ktr(f5e3), 
@@ -1485,8 +1674,8 @@ square e3(
           .out_tr(e3f4), 
           .out_midt(e3e4), 
           .out_klt(e3c4), 
-          .out_klb(e3g2), 
-          .out_krb(e3c2), 
+          .out_klb(e3c2), 
+          .out_krb(e3g2), 
           .out_krt(e3g4), 
           .out_ktl(e3d5), 
           .out_ktr(e3f5), 
@@ -1495,11 +1684,12 @@ square e3(
           .movebit(move_wires[20]));
 
 
-square f3( 
+square f3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[21]), 
-          .square_id(6'd21), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd21), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[21]), 
           .in_tl(e4f3), 
@@ -1511,8 +1701,8 @@ square f3(
           .in_tr(g4f3), 
           .in_midt(f4f3), 
           .in_klt(d4f3), 
-          .in_klb(h2f3), 
-          .in_krb(d2f3), 
+          .in_klb(d2f3), 
+          .in_krb(h2f3), 
           .in_krt(h4f3), 
           .in_ktl(e5f3), 
           .in_ktr(g5f3), 
@@ -1527,8 +1717,8 @@ square f3(
           .out_tr(f3g4), 
           .out_midt(f3f4), 
           .out_klt(f3d4), 
-          .out_klb(f3h2), 
-          .out_krb(f3d2), 
+          .out_klb(f3d2), 
+          .out_krb(f3h2), 
           .out_krt(f3h4), 
           .out_ktl(f3e5), 
           .out_ktr(f3g5), 
@@ -1537,11 +1727,12 @@ square f3(
           .movebit(move_wires[21]));
 
 
-square g3( 
+square g3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[22]), 
-          .square_id(6'd22), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd22), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[22]), 
           .in_tl(f4g3), 
@@ -1553,7 +1744,7 @@ square g3(
           .in_tr(h4g3), 
           .in_midt(g4g3), 
           .in_klt(e4g3), 
-          .in_klb(a3g3), 
+          .in_klb(e2g3), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(f5g3), 
@@ -1569,7 +1760,7 @@ square g3(
           .out_tr(g3h4), 
           .out_midt(g3g4), 
           .out_klt(g3e4), 
-          .out_klb(g3a3), 
+          .out_klb(g3e2), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(g3f5), 
@@ -1579,11 +1770,12 @@ square g3(
           .movebit(move_wires[22]));
 
 
-square h3( 
+square h3(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[23]), 
-          .square_id(6'd23), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd23), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[23]), 
           .in_tl(g4h3), 
@@ -1595,7 +1787,7 @@ square h3(
           .in_tr(0), 
           .in_midt(h4h3), 
           .in_klt(f4h3), 
-          .in_klb(b3h3), 
+          .in_klb(f2h3), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(g5h3), 
@@ -1611,7 +1803,7 @@ square h3(
           .out_tr(), 
           .out_midt(h3h4), 
           .out_klt(h3f4), 
-          .out_klb(h3b3), 
+          .out_klb(h3f2), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(h3g5), 
@@ -1621,11 +1813,12 @@ square h3(
           .movebit(move_wires[23]));
 
 
-square a4( 
+square a4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[24]), 
-          .square_id(6'd24), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd24), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[24]), 
           .in_tl(0), 
@@ -1638,7 +1831,7 @@ square a4(
           .in_midt(a5a4), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g2a4), 
+          .in_krb(c3a4), 
           .in_krt(c5a4), 
           .in_ktl(0), 
           .in_ktr(b6a4), 
@@ -1654,7 +1847,7 @@ square a4(
           .out_midt(a4a5), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a4g2), 
+          .out_krb(a4c3), 
           .out_krt(a4c5), 
           .out_ktl(), 
           .out_ktr(a4b6), 
@@ -1663,11 +1856,12 @@ square a4(
           .movebit(move_wires[24]));
 
 
-square b4( 
+square b4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[25]), 
-          .square_id(6'd25), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd25), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[25]), 
           .in_tl(a5b4), 
@@ -1680,7 +1874,7 @@ square b4(
           .in_midt(b5b4), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h2b4), 
+          .in_krb(d3b4), 
           .in_krt(d5b4), 
           .in_ktl(a6b4), 
           .in_ktr(c6b4), 
@@ -1696,7 +1890,7 @@ square b4(
           .out_midt(b4b5), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b4h2), 
+          .out_krb(b4d3), 
           .out_krt(b4d5), 
           .out_ktl(b4a6), 
           .out_ktr(b4c6), 
@@ -1705,11 +1899,12 @@ square b4(
           .movebit(move_wires[25]));
 
 
-square c4( 
+square c4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[26]), 
-          .square_id(6'd26), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd26), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[26]), 
           .in_tl(b5c4), 
@@ -1721,8 +1916,8 @@ square c4(
           .in_tr(d5c4), 
           .in_midt(c5c4), 
           .in_klt(a5c4), 
-          .in_klb(e3c4), 
-          .in_krb(a3c4), 
+          .in_klb(a3c4), 
+          .in_krb(e3c4), 
           .in_krt(e5c4), 
           .in_ktl(b6c4), 
           .in_ktr(d6c4), 
@@ -1737,8 +1932,8 @@ square c4(
           .out_tr(c4d5), 
           .out_midt(c4c5), 
           .out_klt(c4a5), 
-          .out_klb(c4e3), 
-          .out_krb(c4a3), 
+          .out_klb(c4a3), 
+          .out_krb(c4e3), 
           .out_krt(c4e5), 
           .out_ktl(c4b6), 
           .out_ktr(c4d6), 
@@ -1747,11 +1942,12 @@ square c4(
           .movebit(move_wires[26]));
 
 
-square d4( 
+square d4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[27]), 
-          .square_id(6'd27), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd27), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[27]), 
           .in_tl(c5d4), 
@@ -1763,8 +1959,8 @@ square d4(
           .in_tr(e5d4), 
           .in_midt(d5d4), 
           .in_klt(b5d4), 
-          .in_klb(f3d4), 
-          .in_krb(b3d4), 
+          .in_klb(b3d4), 
+          .in_krb(f3d4), 
           .in_krt(f5d4), 
           .in_ktl(c6d4), 
           .in_ktr(e6d4), 
@@ -1779,8 +1975,8 @@ square d4(
           .out_tr(d4e5), 
           .out_midt(d4d5), 
           .out_klt(d4b5), 
-          .out_klb(d4f3), 
-          .out_krb(d4b3), 
+          .out_klb(d4b3), 
+          .out_krb(d4f3), 
           .out_krt(d4f5), 
           .out_ktl(d4c6), 
           .out_ktr(d4e6), 
@@ -1789,11 +1985,12 @@ square d4(
           .movebit(move_wires[27]));
 
 
-square e4( 
+square e4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[28]), 
-          .square_id(6'd28), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd28), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[28]), 
           .in_tl(d5e4), 
@@ -1805,8 +2002,8 @@ square e4(
           .in_tr(f5e4), 
           .in_midt(e5e4), 
           .in_klt(c5e4), 
-          .in_klb(g3e4), 
-          .in_krb(c3e4), 
+          .in_klb(c3e4), 
+          .in_krb(g3e4), 
           .in_krt(g5e4), 
           .in_ktl(d6e4), 
           .in_ktr(f6e4), 
@@ -1821,8 +2018,8 @@ square e4(
           .out_tr(e4f5), 
           .out_midt(e4e5), 
           .out_klt(e4c5), 
-          .out_klb(e4g3), 
-          .out_krb(e4c3), 
+          .out_klb(e4c3), 
+          .out_krb(e4g3), 
           .out_krt(e4g5), 
           .out_ktl(e4d6), 
           .out_ktr(e4f6), 
@@ -1831,11 +2028,12 @@ square e4(
           .movebit(move_wires[28]));
 
 
-square f4( 
+square f4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[29]), 
-          .square_id(6'd29), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd29), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[29]), 
           .in_tl(e5f4), 
@@ -1847,8 +2045,8 @@ square f4(
           .in_tr(g5f4), 
           .in_midt(f5f4), 
           .in_klt(d5f4), 
-          .in_klb(h3f4), 
-          .in_krb(d3f4), 
+          .in_klb(d3f4), 
+          .in_krb(h3f4), 
           .in_krt(h5f4), 
           .in_ktl(e6f4), 
           .in_ktr(g6f4), 
@@ -1863,8 +2061,8 @@ square f4(
           .out_tr(f4g5), 
           .out_midt(f4f5), 
           .out_klt(f4d5), 
-          .out_klb(f4h3), 
-          .out_krb(f4d3), 
+          .out_klb(f4d3), 
+          .out_krb(f4h3), 
           .out_krt(f4h5), 
           .out_ktl(f4e6), 
           .out_ktr(f4g6), 
@@ -1873,11 +2071,12 @@ square f4(
           .movebit(move_wires[29]));
 
 
-square g4( 
+square g4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[30]), 
-          .square_id(6'd30), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd30), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[30]), 
           .in_tl(f5g4), 
@@ -1889,7 +2088,7 @@ square g4(
           .in_tr(h5g4), 
           .in_midt(g5g4), 
           .in_klt(e5g4), 
-          .in_klb(a4g4), 
+          .in_klb(e3g4), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(f6g4), 
@@ -1905,7 +2104,7 @@ square g4(
           .out_tr(g4h5), 
           .out_midt(g4g5), 
           .out_klt(g4e5), 
-          .out_klb(g4a4), 
+          .out_klb(g4e3), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(g4f6), 
@@ -1915,11 +2114,12 @@ square g4(
           .movebit(move_wires[30]));
 
 
-square h4( 
+square h4(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[31]), 
-          .square_id(6'd31), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd31), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[31]), 
           .in_tl(g5h4), 
@@ -1931,7 +2131,7 @@ square h4(
           .in_tr(0), 
           .in_midt(h5h4), 
           .in_klt(f5h4), 
-          .in_klb(b4h4), 
+          .in_klb(f3h4), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(g6h4), 
@@ -1947,7 +2147,7 @@ square h4(
           .out_tr(), 
           .out_midt(h4h5), 
           .out_klt(h4f5), 
-          .out_klb(h4b4), 
+          .out_klb(h4f3), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(h4g6), 
@@ -1957,11 +2157,12 @@ square h4(
           .movebit(move_wires[31]));
 
 
-square a5( 
+square a5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[32]), 
-          .square_id(6'd32), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd32), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[32]), 
           .in_tl(0), 
@@ -1974,7 +2175,7 @@ square a5(
           .in_midt(a6a5), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g3a5), 
+          .in_krb(c4a5), 
           .in_krt(c6a5), 
           .in_ktl(0), 
           .in_ktr(b7a5), 
@@ -1990,7 +2191,7 @@ square a5(
           .out_midt(a5a6), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a5g3), 
+          .out_krb(a5c4), 
           .out_krt(a5c6), 
           .out_ktl(), 
           .out_ktr(a5b7), 
@@ -1999,11 +2200,12 @@ square a5(
           .movebit(move_wires[32]));
 
 
-square b5( 
+square b5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[33]), 
-          .square_id(6'd33), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd33), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[33]), 
           .in_tl(a6b5), 
@@ -2016,7 +2218,7 @@ square b5(
           .in_midt(b6b5), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h3b5), 
+          .in_krb(d4b5), 
           .in_krt(d6b5), 
           .in_ktl(a7b5), 
           .in_ktr(c7b5), 
@@ -2032,7 +2234,7 @@ square b5(
           .out_midt(b5b6), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b5h3), 
+          .out_krb(b5d4), 
           .out_krt(b5d6), 
           .out_ktl(b5a7), 
           .out_ktr(b5c7), 
@@ -2041,11 +2243,12 @@ square b5(
           .movebit(move_wires[33]));
 
 
-square c5( 
+square c5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[34]), 
-          .square_id(6'd34), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd34), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[34]), 
           .in_tl(b6c5), 
@@ -2057,8 +2260,8 @@ square c5(
           .in_tr(d6c5), 
           .in_midt(c6c5), 
           .in_klt(a6c5), 
-          .in_klb(e4c5), 
-          .in_krb(a4c5), 
+          .in_klb(a4c5), 
+          .in_krb(e4c5), 
           .in_krt(e6c5), 
           .in_ktl(b7c5), 
           .in_ktr(d7c5), 
@@ -2073,8 +2276,8 @@ square c5(
           .out_tr(c5d6), 
           .out_midt(c5c6), 
           .out_klt(c5a6), 
-          .out_klb(c5e4), 
-          .out_krb(c5a4), 
+          .out_klb(c5a4), 
+          .out_krb(c5e4), 
           .out_krt(c5e6), 
           .out_ktl(c5b7), 
           .out_ktr(c5d7), 
@@ -2083,11 +2286,12 @@ square c5(
           .movebit(move_wires[34]));
 
 
-square d5( 
+square d5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[35]), 
-          .square_id(6'd35), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd35), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[35]), 
           .in_tl(c6d5), 
@@ -2099,8 +2303,8 @@ square d5(
           .in_tr(e6d5), 
           .in_midt(d6d5), 
           .in_klt(b6d5), 
-          .in_klb(f4d5), 
-          .in_krb(b4d5), 
+          .in_klb(b4d5), 
+          .in_krb(f4d5), 
           .in_krt(f6d5), 
           .in_ktl(c7d5), 
           .in_ktr(e7d5), 
@@ -2115,8 +2319,8 @@ square d5(
           .out_tr(d5e6), 
           .out_midt(d5d6), 
           .out_klt(d5b6), 
-          .out_klb(d5f4), 
-          .out_krb(d5b4), 
+          .out_klb(d5b4), 
+          .out_krb(d5f4), 
           .out_krt(d5f6), 
           .out_ktl(d5c7), 
           .out_ktr(d5e7), 
@@ -2125,11 +2329,12 @@ square d5(
           .movebit(move_wires[35]));
 
 
-square e5( 
+square e5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[36]), 
-          .square_id(6'd36), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd36), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[36]), 
           .in_tl(d6e5), 
@@ -2141,8 +2346,8 @@ square e5(
           .in_tr(f6e5), 
           .in_midt(e6e5), 
           .in_klt(c6e5), 
-          .in_klb(g4e5), 
-          .in_krb(c4e5), 
+          .in_klb(c4e5), 
+          .in_krb(g4e5), 
           .in_krt(g6e5), 
           .in_ktl(d7e5), 
           .in_ktr(f7e5), 
@@ -2157,8 +2362,8 @@ square e5(
           .out_tr(e5f6), 
           .out_midt(e5e6), 
           .out_klt(e5c6), 
-          .out_klb(e5g4), 
-          .out_krb(e5c4), 
+          .out_klb(e5c4), 
+          .out_krb(e5g4), 
           .out_krt(e5g6), 
           .out_ktl(e5d7), 
           .out_ktr(e5f7), 
@@ -2167,11 +2372,12 @@ square e5(
           .movebit(move_wires[36]));
 
 
-square f5( 
+square f5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[37]), 
-          .square_id(6'd37), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd37), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[37]), 
           .in_tl(e6f5), 
@@ -2183,8 +2389,8 @@ square f5(
           .in_tr(g6f5), 
           .in_midt(f6f5), 
           .in_klt(d6f5), 
-          .in_klb(h4f5), 
-          .in_krb(d4f5), 
+          .in_klb(d4f5), 
+          .in_krb(h4f5), 
           .in_krt(h6f5), 
           .in_ktl(e7f5), 
           .in_ktr(g7f5), 
@@ -2199,8 +2405,8 @@ square f5(
           .out_tr(f5g6), 
           .out_midt(f5f6), 
           .out_klt(f5d6), 
-          .out_klb(f5h4), 
-          .out_krb(f5d4), 
+          .out_klb(f5d4), 
+          .out_krb(f5h4), 
           .out_krt(f5h6), 
           .out_ktl(f5e7), 
           .out_ktr(f5g7), 
@@ -2209,11 +2415,12 @@ square f5(
           .movebit(move_wires[37]));
 
 
-square g5( 
+square g5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[38]), 
-          .square_id(6'd38), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd38), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[38]), 
           .in_tl(f6g5), 
@@ -2225,7 +2432,7 @@ square g5(
           .in_tr(h6g5), 
           .in_midt(g6g5), 
           .in_klt(e6g5), 
-          .in_klb(a5g5), 
+          .in_klb(e4g5), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(f7g5), 
@@ -2241,7 +2448,7 @@ square g5(
           .out_tr(g5h6), 
           .out_midt(g5g6), 
           .out_klt(g5e6), 
-          .out_klb(g5a5), 
+          .out_klb(g5e4), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(g5f7), 
@@ -2251,11 +2458,12 @@ square g5(
           .movebit(move_wires[38]));
 
 
-square h5( 
+square h5(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[39]), 
-          .square_id(6'd39), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd39), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[39]), 
           .in_tl(g6h5), 
@@ -2267,7 +2475,7 @@ square h5(
           .in_tr(0), 
           .in_midt(h6h5), 
           .in_klt(f6h5), 
-          .in_klb(b5h5), 
+          .in_klb(f4h5), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(g7h5), 
@@ -2283,7 +2491,7 @@ square h5(
           .out_tr(), 
           .out_midt(h5h6), 
           .out_klt(h5f6), 
-          .out_klb(h5b5), 
+          .out_klb(h5f4), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(h5g7), 
@@ -2293,11 +2501,12 @@ square h5(
           .movebit(move_wires[39]));
 
 
-square a6( 
+square a6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[40]), 
-          .square_id(6'd40), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd40), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[40]), 
           .in_tl(0), 
@@ -2310,7 +2519,7 @@ square a6(
           .in_midt(a7a6), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g4a6), 
+          .in_krb(c5a6), 
           .in_krt(c7a6), 
           .in_ktl(0), 
           .in_ktr(b8a6), 
@@ -2326,7 +2535,7 @@ square a6(
           .out_midt(a6a7), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a6g4), 
+          .out_krb(a6c5), 
           .out_krt(a6c7), 
           .out_ktl(), 
           .out_ktr(a6b8), 
@@ -2335,11 +2544,12 @@ square a6(
           .movebit(move_wires[40]));
 
 
-square b6( 
+square b6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[41]), 
-          .square_id(6'd41), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd41), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[41]), 
           .in_tl(a7b6), 
@@ -2352,7 +2562,7 @@ square b6(
           .in_midt(b7b6), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h4b6), 
+          .in_krb(d5b6), 
           .in_krt(d7b6), 
           .in_ktl(a8b6), 
           .in_ktr(c8b6), 
@@ -2368,7 +2578,7 @@ square b6(
           .out_midt(b6b7), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b6h4), 
+          .out_krb(b6d5), 
           .out_krt(b6d7), 
           .out_ktl(b6a8), 
           .out_ktr(b6c8), 
@@ -2377,11 +2587,12 @@ square b6(
           .movebit(move_wires[41]));
 
 
-square c6( 
+square c6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[42]), 
-          .square_id(6'd42), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd42), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[42]), 
           .in_tl(b7c6), 
@@ -2393,8 +2604,8 @@ square c6(
           .in_tr(d7c6), 
           .in_midt(c7c6), 
           .in_klt(a7c6), 
-          .in_klb(e5c6), 
-          .in_krb(a5c6), 
+          .in_klb(a5c6), 
+          .in_krb(e5c6), 
           .in_krt(e7c6), 
           .in_ktl(b8c6), 
           .in_ktr(d8c6), 
@@ -2409,8 +2620,8 @@ square c6(
           .out_tr(c6d7), 
           .out_midt(c6c7), 
           .out_klt(c6a7), 
-          .out_klb(c6e5), 
-          .out_krb(c6a5), 
+          .out_klb(c6a5), 
+          .out_krb(c6e5), 
           .out_krt(c6e7), 
           .out_ktl(c6b8), 
           .out_ktr(c6d8), 
@@ -2419,11 +2630,12 @@ square c6(
           .movebit(move_wires[42]));
 
 
-square d6( 
+square d6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[43]), 
-          .square_id(6'd43), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd43), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[43]), 
           .in_tl(c7d6), 
@@ -2435,8 +2647,8 @@ square d6(
           .in_tr(e7d6), 
           .in_midt(d7d6), 
           .in_klt(b7d6), 
-          .in_klb(f5d6), 
-          .in_krb(b5d6), 
+          .in_klb(b5d6), 
+          .in_krb(f5d6), 
           .in_krt(f7d6), 
           .in_ktl(c8d6), 
           .in_ktr(e8d6), 
@@ -2451,8 +2663,8 @@ square d6(
           .out_tr(d6e7), 
           .out_midt(d6d7), 
           .out_klt(d6b7), 
-          .out_klb(d6f5), 
-          .out_krb(d6b5), 
+          .out_klb(d6b5), 
+          .out_krb(d6f5), 
           .out_krt(d6f7), 
           .out_ktl(d6c8), 
           .out_ktr(d6e8), 
@@ -2461,11 +2673,12 @@ square d6(
           .movebit(move_wires[43]));
 
 
-square e6( 
+square e6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[44]), 
-          .square_id(6'd44), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd44), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[44]), 
           .in_tl(d7e6), 
@@ -2477,8 +2690,8 @@ square e6(
           .in_tr(f7e6), 
           .in_midt(e7e6), 
           .in_klt(c7e6), 
-          .in_klb(g5e6), 
-          .in_krb(c5e6), 
+          .in_klb(c5e6), 
+          .in_krb(g5e6), 
           .in_krt(g7e6), 
           .in_ktl(d8e6), 
           .in_ktr(f8e6), 
@@ -2493,8 +2706,8 @@ square e6(
           .out_tr(e6f7), 
           .out_midt(e6e7), 
           .out_klt(e6c7), 
-          .out_klb(e6g5), 
-          .out_krb(e6c5), 
+          .out_klb(e6c5), 
+          .out_krb(e6g5), 
           .out_krt(e6g7), 
           .out_ktl(e6d8), 
           .out_ktr(e6f8), 
@@ -2503,11 +2716,12 @@ square e6(
           .movebit(move_wires[44]));
 
 
-square f6( 
+square f6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[45]), 
-          .square_id(6'd45), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd45), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[45]), 
           .in_tl(e7f6), 
@@ -2519,8 +2733,8 @@ square f6(
           .in_tr(g7f6), 
           .in_midt(f7f6), 
           .in_klt(d7f6), 
-          .in_klb(h5f6), 
-          .in_krb(d5f6), 
+          .in_klb(d5f6), 
+          .in_krb(h5f6), 
           .in_krt(h7f6), 
           .in_ktl(e8f6), 
           .in_ktr(g8f6), 
@@ -2535,8 +2749,8 @@ square f6(
           .out_tr(f6g7), 
           .out_midt(f6f7), 
           .out_klt(f6d7), 
-          .out_klb(f6h5), 
-          .out_krb(f6d5), 
+          .out_klb(f6d5), 
+          .out_krb(f6h5), 
           .out_krt(f6h7), 
           .out_ktl(f6e8), 
           .out_ktr(f6g8), 
@@ -2545,11 +2759,12 @@ square f6(
           .movebit(move_wires[45]));
 
 
-square g6( 
+square g6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[46]), 
-          .square_id(6'd46), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd46), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[46]), 
           .in_tl(f7g6), 
@@ -2561,7 +2776,7 @@ square g6(
           .in_tr(h7g6), 
           .in_midt(g7g6), 
           .in_klt(e7g6), 
-          .in_klb(a6g6), 
+          .in_klb(e5g6), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(f8g6), 
@@ -2577,7 +2792,7 @@ square g6(
           .out_tr(g6h7), 
           .out_midt(g6g7), 
           .out_klt(g6e7), 
-          .out_klb(g6a6), 
+          .out_klb(g6e5), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(g6f8), 
@@ -2587,11 +2802,12 @@ square g6(
           .movebit(move_wires[46]));
 
 
-square h6( 
+square h6(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[47]), 
-          .square_id(6'd47), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd47), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[47]), 
           .in_tl(g7h6), 
@@ -2603,7 +2819,7 @@ square h6(
           .in_tr(0), 
           .in_midt(h7h6), 
           .in_klt(f7h6), 
-          .in_klb(b6h6), 
+          .in_klb(f5h6), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(g8h6), 
@@ -2619,7 +2835,7 @@ square h6(
           .out_tr(), 
           .out_midt(h6h7), 
           .out_klt(h6f7), 
-          .out_klb(h6b6), 
+          .out_klb(h6f5), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(h6g8), 
@@ -2629,11 +2845,12 @@ square h6(
           .movebit(move_wires[47]));
 
 
-square a7( 
+square a7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[48]), 
-          .square_id(6'd48), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd48), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[48]), 
           .in_tl(0), 
@@ -2646,7 +2863,7 @@ square a7(
           .in_midt(a8a7), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g5a7), 
+          .in_krb(c6a7), 
           .in_krt(c8a7), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2662,7 +2879,7 @@ square a7(
           .out_midt(a7a8), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a7g5), 
+          .out_krb(a7c6), 
           .out_krt(a7c8), 
           .out_ktl(), 
           .out_ktr(), 
@@ -2671,11 +2888,12 @@ square a7(
           .movebit(move_wires[48]));
 
 
-square b7( 
+square b7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[49]), 
-          .square_id(6'd49), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd49), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[49]), 
           .in_tl(a8b7), 
@@ -2688,7 +2906,7 @@ square b7(
           .in_midt(b8b7), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h5b7), 
+          .in_krb(d6b7), 
           .in_krt(d8b7), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2704,7 +2922,7 @@ square b7(
           .out_midt(b7b8), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b7h5), 
+          .out_krb(b7d6), 
           .out_krt(b7d8), 
           .out_ktl(), 
           .out_ktr(), 
@@ -2713,11 +2931,12 @@ square b7(
           .movebit(move_wires[49]));
 
 
-square c7( 
+square c7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[50]), 
-          .square_id(6'd50), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd50), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[50]), 
           .in_tl(b8c7), 
@@ -2729,8 +2948,8 @@ square c7(
           .in_tr(d8c7), 
           .in_midt(c8c7), 
           .in_klt(a8c7), 
-          .in_klb(e6c7), 
-          .in_krb(a6c7), 
+          .in_klb(a6c7), 
+          .in_krb(e6c7), 
           .in_krt(e8c7), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2745,8 +2964,8 @@ square c7(
           .out_tr(c7d8), 
           .out_midt(c7c8), 
           .out_klt(c7a8), 
-          .out_klb(c7e6), 
-          .out_krb(c7a6), 
+          .out_klb(c7a6), 
+          .out_krb(c7e6), 
           .out_krt(c7e8), 
           .out_ktl(), 
           .out_ktr(), 
@@ -2755,11 +2974,12 @@ square c7(
           .movebit(move_wires[50]));
 
 
-square d7( 
+square d7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[51]), 
-          .square_id(6'd51), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd51), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[51]), 
           .in_tl(c8d7), 
@@ -2771,8 +2991,8 @@ square d7(
           .in_tr(e8d7), 
           .in_midt(d8d7), 
           .in_klt(b8d7), 
-          .in_klb(f6d7), 
-          .in_krb(b6d7), 
+          .in_klb(b6d7), 
+          .in_krb(f6d7), 
           .in_krt(f8d7), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2787,8 +3007,8 @@ square d7(
           .out_tr(d7e8), 
           .out_midt(d7d8), 
           .out_klt(d7b8), 
-          .out_klb(d7f6), 
-          .out_krb(d7b6), 
+          .out_klb(d7b6), 
+          .out_krb(d7f6), 
           .out_krt(d7f8), 
           .out_ktl(), 
           .out_ktr(), 
@@ -2797,11 +3017,12 @@ square d7(
           .movebit(move_wires[51]));
 
 
-square e7( 
+square e7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[52]), 
-          .square_id(6'd52), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd52), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[52]), 
           .in_tl(d8e7), 
@@ -2813,8 +3034,8 @@ square e7(
           .in_tr(f8e7), 
           .in_midt(e8e7), 
           .in_klt(c8e7), 
-          .in_klb(g6e7), 
-          .in_krb(c6e7), 
+          .in_klb(c6e7), 
+          .in_krb(g6e7), 
           .in_krt(g8e7), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2829,8 +3050,8 @@ square e7(
           .out_tr(e7f8), 
           .out_midt(e7e8), 
           .out_klt(e7c8), 
-          .out_klb(e7g6), 
-          .out_krb(e7c6), 
+          .out_klb(e7c6), 
+          .out_krb(e7g6), 
           .out_krt(e7g8), 
           .out_ktl(), 
           .out_ktr(), 
@@ -2839,11 +3060,12 @@ square e7(
           .movebit(move_wires[52]));
 
 
-square f7( 
+square f7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[53]), 
-          .square_id(6'd53), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd53), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[53]), 
           .in_tl(e8f7), 
@@ -2855,8 +3077,8 @@ square f7(
           .in_tr(g8f7), 
           .in_midt(f8f7), 
           .in_klt(d8f7), 
-          .in_klb(h6f7), 
-          .in_krb(d6f7), 
+          .in_klb(d6f7), 
+          .in_krb(h6f7), 
           .in_krt(h8f7), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2871,8 +3093,8 @@ square f7(
           .out_tr(f7g8), 
           .out_midt(f7f8), 
           .out_klt(f7d8), 
-          .out_klb(f7h6), 
-          .out_krb(f7d6), 
+          .out_klb(f7d6), 
+          .out_krb(f7h6), 
           .out_krt(f7h8), 
           .out_ktl(), 
           .out_ktr(), 
@@ -2881,11 +3103,12 @@ square f7(
           .movebit(move_wires[53]));
 
 
-square g7( 
+square g7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[54]), 
-          .square_id(6'd54), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd54), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[54]), 
           .in_tl(f8g7), 
@@ -2897,7 +3120,7 @@ square g7(
           .in_tr(h8g7), 
           .in_midt(g8g7), 
           .in_klt(e8g7), 
-          .in_klb(a7g7), 
+          .in_klb(e6g7), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(0), 
@@ -2913,7 +3136,7 @@ square g7(
           .out_tr(g7h8), 
           .out_midt(g7g8), 
           .out_klt(g7e8), 
-          .out_klb(g7a7), 
+          .out_klb(g7e6), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(), 
@@ -2923,11 +3146,12 @@ square g7(
           .movebit(move_wires[54]));
 
 
-square h7( 
+square h7(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[55]), 
-          .square_id(6'd55), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd55), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[55]), 
           .in_tl(g8h7), 
@@ -2939,7 +3163,7 @@ square h7(
           .in_tr(0), 
           .in_midt(h8h7), 
           .in_klt(f8h7), 
-          .in_klb(b7h7), 
+          .in_klb(f6h7), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(0), 
@@ -2955,7 +3179,7 @@ square h7(
           .out_tr(), 
           .out_midt(h7h8), 
           .out_klt(h7f8), 
-          .out_klb(h7b7), 
+          .out_klb(h7f6), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(), 
@@ -2965,11 +3189,12 @@ square h7(
           .movebit(move_wires[55]));
 
 
-square a8( 
+square a8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[56]), 
-          .square_id(6'd56), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd56), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[56]), 
           .in_tl(0), 
@@ -2982,7 +3207,7 @@ square a8(
           .in_midt(0), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(g6a8), 
+          .in_krb(c7a8), 
           .in_krt(0), 
           .in_ktl(0), 
           .in_ktr(0), 
@@ -2998,7 +3223,7 @@ square a8(
           .out_midt(), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(a8g6), 
+          .out_krb(a8c7), 
           .out_krt(), 
           .out_ktl(), 
           .out_ktr(), 
@@ -3007,11 +3232,12 @@ square a8(
           .movebit(move_wires[56]));
 
 
-square b8( 
+square b8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[57]), 
-          .square_id(6'd57), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd57), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[57]), 
           .in_tl(0), 
@@ -3024,7 +3250,7 @@ square b8(
           .in_midt(0), 
           .in_klt(0), 
           .in_klb(0), 
-          .in_krb(h6b8), 
+          .in_krb(d7b8), 
           .in_krt(0), 
           .in_ktl(), 
           .in_ktr(0), 
@@ -3040,7 +3266,7 @@ square b8(
           .out_midt(), 
           .out_klt(), 
           .out_klb(), 
-          .out_krb(b8h6), 
+          .out_krb(b8d7), 
           .out_krt(), 
           .out_ktl(), 
           .out_ktr(), 
@@ -3049,11 +3275,12 @@ square b8(
           .movebit(move_wires[57]));
 
 
-square c8( 
+square c8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[58]), 
-          .square_id(6'd58), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd58), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[58]), 
           .in_tl(0), 
@@ -3065,8 +3292,8 @@ square c8(
           .in_tr(0), 
           .in_midt(0), 
           .in_klt(0), 
-          .in_klb(e7c8), 
-          .in_krb(a7c8), 
+          .in_klb(a7c8), 
+          .in_krb(e7c8), 
           .in_krt(0), 
           .in_ktl(), 
           .in_ktr(0), 
@@ -3081,8 +3308,8 @@ square c8(
           .out_tr(), 
           .out_midt(), 
           .out_klt(), 
-          .out_klb(c8e7), 
-          .out_krb(c8a7), 
+          .out_klb(c8a7), 
+          .out_krb(c8e7), 
           .out_krt(), 
           .out_ktl(), 
           .out_ktr(), 
@@ -3091,11 +3318,12 @@ square c8(
           .movebit(move_wires[58]));
 
 
-square d8( 
+square d8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[59]), 
-          .square_id(6'd59), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd59), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[59]), 
           .in_tl(0), 
@@ -3107,8 +3335,8 @@ square d8(
           .in_tr(0), 
           .in_midt(0), 
           .in_klt(0), 
-          .in_klb(f7d8), 
-          .in_krb(b7d8), 
+          .in_klb(b7d8), 
+          .in_krb(f7d8), 
           .in_krt(0), 
           .in_ktl(), 
           .in_ktr(0), 
@@ -3123,8 +3351,8 @@ square d8(
           .out_tr(), 
           .out_midt(), 
           .out_klt(), 
-          .out_klb(d8f7), 
-          .out_krb(d8b7), 
+          .out_klb(d8b7), 
+          .out_krb(d8f7), 
           .out_krt(), 
           .out_ktl(), 
           .out_ktr(), 
@@ -3133,11 +3361,12 @@ square d8(
           .movebit(move_wires[59]));
 
 
-square e8( 
+square e8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[60]), 
-          .square_id(6'd60), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd60), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[60]), 
           .in_tl(0), 
@@ -3149,8 +3378,8 @@ square e8(
           .in_tr(0), 
           .in_midt(0), 
           .in_klt(0), 
-          .in_klb(g7e8), 
-          .in_krb(c7e8), 
+          .in_klb(c7e8), 
+          .in_krb(g7e8), 
           .in_krt(0), 
           .in_ktl(), 
           .in_ktr(0), 
@@ -3165,8 +3394,8 @@ square e8(
           .out_tr(), 
           .out_midt(), 
           .out_klt(), 
-          .out_klb(e8g7), 
-          .out_krb(e8c7), 
+          .out_klb(e8c7), 
+          .out_krb(e8g7), 
           .out_krt(), 
           .out_ktl(), 
           .out_ktr(), 
@@ -3175,11 +3404,12 @@ square e8(
           .movebit(move_wires[60]));
 
 
-square f8( 
+square f8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[61]), 
-          .square_id(6'd61), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd61), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[61]), 
           .in_tl(0), 
@@ -3191,8 +3421,8 @@ square f8(
           .in_tr(0), 
           .in_midt(0), 
           .in_klt(0), 
-          .in_klb(h7f8), 
-          .in_krb(d7f8), 
+          .in_klb(d7f8), 
+          .in_krb(h7f8), 
           .in_krt(0), 
           .in_ktl(), 
           .in_ktr(0), 
@@ -3207,8 +3437,8 @@ square f8(
           .out_tr(), 
           .out_midt(), 
           .out_klt(), 
-          .out_klb(f8h7), 
-          .out_krb(f8d7), 
+          .out_klb(f8d7), 
+          .out_krb(f8h7), 
           .out_krt(), 
           .out_ktl(), 
           .out_ktr(), 
@@ -3217,11 +3447,12 @@ square f8(
           .movebit(move_wires[61]));
 
 
-square g8( 
+square g8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[62]), 
-          .square_id(6'd62), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd62), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[62]), 
           .in_tl(0), 
@@ -3233,7 +3464,7 @@ square g8(
           .in_tr(0), 
           .in_midt(0), 
           .in_klt(0), 
-          .in_klb(a8g8), 
+          .in_klb(e7g8), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(), 
@@ -3249,7 +3480,7 @@ square g8(
           .out_tr(), 
           .out_midt(), 
           .out_klt(), 
-          .out_klb(g8a8), 
+          .out_klb(g8e7), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(), 
@@ -3259,11 +3490,12 @@ square g8(
           .movebit(move_wires[62]));
 
 
-square h8( 
+square h8(
+          .clock(clk), 
           .init(init), 
           .occupied(is_occupied_wires[63]), 
-          .square_id(6'd63), 
-  .square_calc(square_currently_calculating),
+          .square_id(5'd63), 
+          .square_calc(square_currently_calculating),
          .piece_type_calc(piece_type_calc), 
           .occupying_piece(occupying_piece_color[63]), 
           .in_tl(0), 
@@ -3275,7 +3507,7 @@ square h8(
           .in_tr(0), 
           .in_midt(0), 
           .in_klt(0), 
-          .in_klb(b8h8), 
+          .in_klb(f7h8), 
           .in_krb(0), 
           .in_krt(0), 
           .in_ktl(), 
@@ -3291,7 +3523,7 @@ square h8(
           .out_tr(), 
           .out_midt(), 
           .out_klt(), 
-          .out_klb(h8b8), 
+          .out_klb(h8f7), 
           .out_krb(), 
           .out_krt(), 
           .out_ktl(), 
