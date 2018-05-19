@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "bitBoard.h"
+#include "fpga.h"
 
 uint64_t HFILE;
 uint64_t AFILE;
@@ -182,10 +183,45 @@ void loop(uint64_t b, char board[8][8], unsigned int piece_type){
 /*gets the legal moves for a piece. Pass the bitboard corresponding the piece*/
 uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_square)
 {
-	uint64_t moves = 0;
-	uint64_t b = 0;//this was added to simplify square specificity
-	int i = 0;
-	////////////////////TODO: if the checkmate flag is set, tell xboard to end the game
+	static uint64_t moves;
+	moves = 0;
+	static uint64_t b;
+	static uint64_t black_pieces;
+	static uint64_t white_pieces;
+	b = 0;//this was added to simplify square specificity
+	//static int i ;
+	//i = 0;
+
+
+	/*TODO: set mem buf with appropriate data*/
+
+	/*0b11111101 since second bit is done bit*/
+	static uint8_t done_mask = 0xfd;
+	/*clear buffer*/
+	memset((void *)mem_buf, 0, sizeof(fpga_mem));
+
+	black_pieces = allBlack(board);
+	white_pieces = allWhite(board);
+	mem_buf->bitboards[0] = black_pieces;
+	mem_buf->bitboards[1] = white_pieces;
+	mem_buf->piece_type = piece_type;
+	mem_buf->piece_square = piece_square;
+	mem_buf->command_field = 1;
+
+	/*write initialize bit 1 while data structures are copied to memory */
+	*(uint8_t *)FPGA_ONCHIP_ADDR = 1;
+	memcpy((void *)FPGA_ONCHIP_ADDR, (void *)mem_buf, sizeof(fpga_mem));
+	*(uint8_t *)FPGA_ONCHIP_ADDR = 0;//start calculating legal Moves
+
+	/*poll sdram for done signal*/
+	while (!(*((uint8_t*)FPGA_ONCHIP_ADDR) & done_mask)) {
+
+	}
+
+	/*FPGA is finished, get the results*/
+	memcpy((void *)mem_buf, (void *)FPGA_ONCHIP_ADDR, sizeof(fpga_mem));
+	moves = mem_buf->move_bits;
+
 	switch (piece_type){
 		case BPAWN:
 		//moves is initialized to one square in front or'ed with two squares
@@ -194,34 +230,27 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 		b = board->bPawns & squares[piece_square];
 		moves =  (b >> 8 & ~allPieces(board)) | (b >> 16 & ~allPieces(board)>>8);
 		//check which pawns have moved and fix the board
-		moves &= ~(find_moved_black_pawns(b) >> 16);
+		moves &= ~(find_moved_black_pawns(b) >> 16);//TODO: fix this
 		//now check for collisions with other pieces
-		moves &= ~allPieces(board);
+		// fpga takes care of this moves &= ~allPieces(board);
 		//now calculate attacks and add them to moves.
-
-		//moves |= black_pawn_attacks(board);
-
-		//en passant:
-
-
-
-		moves |= black_pawn_attacks(board,piece_square);
+		// FPGA should do thismoves |= black_pawn_attacks(board,piece_square);
 		break;
 
 		case WPAWN:
 		//philosphy here is same as black pawn but for the opposite side
 		//of the board.
-		b = board->wPawns & squares[piece_square];
-		moves = (b << 8 & ~allPieces(board)) | (b << 16 & ~allPieces(board)<<8);
+		//b = board->wPawns & squares[piece_square];
+		//fpga moves = (b << 8 & ~allPieces(board)) | (b << 16 & ~allPieces(board)<<8);
 		moves &= ~(find_moved_white_pawns(b) << 16);
-		moves &= ~allPieces(board);
-		moves |= white_pawn_attacks(board,piece_square);
+		//fpga moves &= ~allPieces(board);
+		//fpga moves |= white_pawn_attacks(board,piece_square);
 		break;
 
 		case BROOK:
-		b = board->bRooks & squares[piece_square];
+		//b = board->bRooks & squares[piece_square];
 		//fire a ray from each rook in every direction
-		while(b) {
+		/*while(b) {
 			i = __builtin_ffsll(b) - 1;
 			//set moves to the right
 			rookMove = bRookMoves(board, BROOK,HFILE, i, piece_square);
@@ -238,8 +267,8 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			//set moves up
 			rookMove = bRookMoves(board, BROOK,RANK8, i, piece_square);
 			moves |= rookMove;
-			/*subtract the rook positions from the moves*/
-			if (moves) {
+			subtract the rook positions from the moves*/
+	/*		if (moves) {
 				moves &= ~b;
 			}
 			b &= ~squares[i];
@@ -266,8 +295,8 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			rookMove = wRookMoves(board, WROOK,RANK8, i, piece_square);
 			moves |= rookMove;
 
-			/*subtract the rook positions from the moves*/
-			if (moves) {
+			subtract the rook positions from the moves*/
+	/*		if (moves) {
 				moves &= ~b;
 			}
 			b &= ~squares[i];
@@ -329,8 +358,8 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			//set moves up
 			rookMove = bRookMoves(board, BQUEEN,RANK8, i, piece_square);
 			moves |= rookMove;
-			/*subtract the rook positions from the moves*/
-			if (moves) {
+			subtract the rook positions from the moves*/
+	/*		if (moves) {
 				moves &= ~b;
 			}
 			b &= ~squares[i];
@@ -357,19 +386,19 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			//set moves up
 			rookMove = wRookMoves(board, WQUEEN,RANK8, i, piece_square);
 			moves |= rookMove;
-			/*subtract the rook positions from the moves*/
-			if (moves) {
+			subtract the rook positions from the moves*/
+	/*		if (moves) {
 				moves &= ~b;
 			}
 			b &= ~squares[i];
 		}
-		break;
+		break;*/
 
 		case BKING:
 
 		//move up, down, right, left, or diagonal by 1 square, but not beyond the edges
-		moves = (board->bKing & ~HFILE) << 1 | (board->bKing & ~AFILE) <<7 | board->bKing << 8 | (board->bKing & ~HFILE) << 9 |
-			(board->bKing & ~AFILE) >> 1 | (board->bKing & ~HFILE) >>7 | board->bKing >>8 | (board->bKing & ~AFILE) >>9;
+	//fpga	moves = (board->bKing & ~HFILE) << 1 | (board->bKing & ~AFILE) <<7 | board->bKing << 8 | (board->bKing & ~HFILE) << 9 |
+		//	(board->bKing & ~AFILE) >> 1 | (board->bKing & ~HFILE) >>7 | board->bKing >>8 | (board->bKing & ~AFILE) >>9;
 		/*can we castle??*/
 		if(board->black_check == 0){
 			if(board->bqCastle == 1){
@@ -393,14 +422,14 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			}
 		}
 		//don't move where there's another black piece
-		moves &= ~allBlack(board);
+	//fpga	moves &= ~allBlack(board);
 		//TODO: account for check
 
 		break;
 		case WKING:
 		//move up, down, right, left, or diagonal by 1 square, but not beyond the edges
-		moves = (board->wKing & ~HFILE) << 1 | (board->wKing & ~AFILE) <<7 | board->wKing << 8 | (board->wKing & ~HFILE) << 9 |
-			(board->wKing & ~AFILE) >> 1 | (board->wKing & ~HFILE) >>7 | board->wKing >>8 | (board->wKing & ~AFILE) >>9;
+	//fpga	moves = (board->wKing & ~HFILE) << 1 | (board->wKing & ~AFILE) <<7 | board->wKing << 8 | (board->wKing & ~HFILE) << 9 |
+		//	(board->wKing & ~AFILE) >> 1 | (board->wKing & ~HFILE) >>7 | board->wKing >>8 | (board->wKing & ~AFILE) >>9;
 		/*can we castle??*/
 		if(board->white_check == 0){
 			if(board->wqCastle == 1){
@@ -423,7 +452,7 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 			}
 		}
 		//don't move where there's another white piece
-		moves &= ~allWhite(board);
+	//fpga	moves &= ~allWhite(board);
 
 		break;
 		default: return -1;

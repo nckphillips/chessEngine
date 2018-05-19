@@ -7,6 +7,7 @@
 #include "play.h"
 #include "transposition.h"
 #include "evaluate.h"
+#include "fpga.h"
 //static Bitboard previous_state;
 
 void command(Bitboard *b);//main control loop for engine
@@ -35,19 +36,6 @@ int main(void){
 		}
 	}
 
-
-/*
-        for(int i = 0; i < 12; i++) {
-                for(int j = 0; j < 64; j++){
-                        for(int k = 0; k < 2; k++) {
-                                //msb = rand();
-                                printf("%ld\n", random_numbers[i][j][k]);
-                        }
-                }
-        }
-        */
-
-
   	char *s = (char *)malloc(MAX_CMD_LEN);
   	fgets(s, MAX_CMD_LEN, stdin);
 	if (!strcmp(s, "xboard\n")) {
@@ -62,19 +50,19 @@ int main(void){
 	setbuf(stdout, NULL);//disable buffered output for xboard
 	setbuf(stdin, NULL);
 
+	/*Allocate FPGA buffer*/
+	mem_buf = (volatile fpga_mem *)malloc(sizeof(fpga_mem));
 
 	Bitboard b;
 	init(&b);
 
 
-
-//	int pos = getPositionValue(b.bPawns, BPAWN);
-//	printf("Black Pawns position evaluates to %d", pos);
 	command(&b);
 	for (int i = 0; i < TABLE_SIZE; i++) {
 		free(t_table[i]);
 	}
 
+	free((void *)mem_buf);
 	free(t_table);
 	return 0;
 }
