@@ -202,14 +202,13 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 
 	black_pieces = allBlack(board);
 	white_pieces = allWhite(board);
-	mem_buf->bitboards[0] = black_pieces;
-	mem_buf->bitboards[1] = white_pieces;
+	mem_buf->command_field = 1;
 	mem_buf->piece_type = piece_type;
 	mem_buf->piece_square = piece_square;
-	mem_buf->command_field = 1;
+	mem_buf->occupying_piece_color = allWhite(board);
+	mem_buf->is_occupied_wires = allWhite(board) | allBlack(board);
+	uint64_t move_bits;
 
-	/*write initialize bit 1 while data structures are copied to memory */
-	*(uint8_t *)FPGA_ONCHIP_ADDR = 1;
 	memcpy((void *)FPGA_ONCHIP_ADDR, (void *)mem_buf, sizeof(fpga_mem));
 	*(uint8_t *)FPGA_ONCHIP_ADDR = 0;//start calculating legal Moves
 

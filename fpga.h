@@ -4,12 +4,13 @@
 #define FPGA_ONCHIP_ADDR 0xc4000000
 
 typedef struct __fpga_mem {
-	uint8_t  command_field;
-	uint64_t move_bits;
-	uint64_t  piece_type :4,
+	uint64_t  command_field:8,
+						piece_type :4,
 						piece_square :6,
-						:54;
-	uint64_t bitboards[2];
+						:46;
+	uint64_t occupying_piece_color;
+	uint64_t is_occupied_wires;
+	uint64_t move_bits;
 
 } fpga_mem;
 
