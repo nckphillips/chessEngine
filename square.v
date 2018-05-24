@@ -178,6 +178,12 @@ begin
 			movebit = in_tl | in_midl | in_bl | in_midb | in_br | in_midr | in_tr | 
 				  in_midt | in_klt | in_klb | in_krb | in_krt | in_ktl | in_ktr | in_kbl | in_kbr;
 			
+			if (movebit != 1)
+			begin
+			movebit = 0;
+			end
+			
+			
 			//piece is not a pawn or king, propagate signal
 			if (~((piece_type_calc == BPAWN) | (piece_type_calc == WPAWN)) | ~((piece_type_calc == BKING) | (piece_type_calc == WKING))) begin 
 				out_tl = in_br;		//top left to bottom right (reverse these comments...)
@@ -290,14 +296,6 @@ begin
 				out_kbr = 0; 
 			end
 		end 
-		out_klt = 0;//knights always only get one move per turn
-		out_klb = 0;
-		out_krb = 0;
-		out_krt = 0;
-		out_ktl = 0;
-		out_ktr = 0;
-		out_kbl = 0;
-		out_kbr = 0;  
 	end
 end
 
