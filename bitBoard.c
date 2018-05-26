@@ -186,8 +186,6 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 	static uint64_t moves;
 	moves = 0;
 	static uint64_t b;
-	static uint64_t black_pieces;
-	static uint64_t white_pieces;
 	b = 0;//this was added to simplify square specificity
 	//static int i ;
 	//i = 0;
@@ -200,25 +198,21 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 	/*clear buffer*/
 	memset((void *)mem_buf, 0, sizeof(fpga_mem));
 
-	black_pieces = allBlack(board);
-	white_pieces = allWhite(board);
 	mem_buf->command_field = 1;
 	mem_buf->piece_type = piece_type;
 	mem_buf->piece_square = piece_square;
 	mem_buf->occupying_piece_color = allWhite(board);
 	mem_buf->is_occupied_wires = allWhite(board) | allBlack(board);
-	uint64_t move_bits;
-
-	memcpy((void *)FPGA_ONCHIP_ADDR, (void *)mem_buf, sizeof(fpga_mem));
-	*(uint8_t *)FPGA_ONCHIP_ADDR = 0;//start calculating legal Moves
+	memcpy((void *)mem_ptr, (void *)mem_buf, sizeof(fpga_mem));
+	*(uint8_t *)mem_ptr = 0;//start calculating legal Moves
 
 	/*poll sdram for done signal*/
-	while (!(*((uint8_t*)FPGA_ONCHIP_ADDR) & done_mask)) {
+	while (!(*((uint8_t*)mem_ptr) & done_mask)) {
 
 	}
 
 	/*FPGA is finished, get the results*/
-	memcpy((void *)mem_buf, (void *)FPGA_ONCHIP_ADDR, sizeof(fpga_mem));
+	memcpy((void *)mem_buf, (void *)mem_ptr, sizeof(fpga_mem));
 	moves = mem_buf->move_bits;
 
 	switch (piece_type){

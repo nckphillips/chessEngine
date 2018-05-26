@@ -1,4 +1,4 @@
-CC := gcc
+CC := arm-linux-gnueabihf-gcc
 CFLAGS := -Wall -Werror -pthread
 DEBUG := -g
 OBJS := main.o play.o bitBoard.o protocol.o check.o evaluate.o transposition.o

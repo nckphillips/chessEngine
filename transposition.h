@@ -1,7 +1,7 @@
 #ifndef TRANSPOSE_H_
 #define TRANSPOSE_H_
 
-#define TABLE_SIZE 18000000
+#define TABLE_SIZE 18000
 #include "bitBoard.h"
 enum table_indices{KEY,VALUE,DEPTH};
 

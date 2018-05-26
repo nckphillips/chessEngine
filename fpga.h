@@ -1,7 +1,7 @@
 #ifndef _FPGA_H
 #define _FPGA_H
 
-#define FPGA_ONCHIP_ADDR 0xc4000000
+#define FPGA_ONCHIP_ADDR 0xff200000
 
 typedef struct __fpga_mem {
 	uint64_t  command_field:8,
@@ -16,5 +16,6 @@ typedef struct __fpga_mem {
 
 /*Buffer used for communicating with the FPGA, allocated in main.c*/
 volatile fpga_mem *mem_buf;
+volatile void *mem_ptr;
 
 #endif

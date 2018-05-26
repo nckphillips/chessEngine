@@ -1,7 +1,10 @@
+#include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <sys/mman.h>
 #include "bitBoard.h"
 #include "protocol.h"
 #include "play.h"
@@ -11,8 +14,9 @@
 //static Bitboard previous_state;
 
 void command(Bitboard *b);//main control loop for engine
-
+#include <unistd.h>
 int main(void){
+	int memfd = open("/dev/mem", O_RDWR | O_SYNC);
 	uint64_t temp = 1;
 	/*the following loop initializes an array of 64 boards with just the square that
 	*it refers to set. this allows you to use the array to manipulate a single square
@@ -53,6 +57,14 @@ int main(void){
 	/*Allocate FPGA buffer*/
 	mem_buf = (volatile fpga_mem *)malloc(sizeof(fpga_mem));
 
+	/* Map HPS into our address space. */
+	void *virtual_base = 0;
+	virtual_base = mmap(0, 0x04000000, PROT_READ | PROT_WRITE, MAP_SHARED,
+                  memfd, 0xfc000000);
+	mem_ptr  =  virtual_base  +  ((unsigned  long)(0xff200000)  &  (unsigned long)(0x04000000 - 1));
+	int tj = *(int*)mem_ptr;
+	printf("%d\n", tj);
+
 	Bitboard b;
 	init(&b);
 
@@ -61,7 +73,8 @@ int main(void){
 	for (int i = 0; i < TABLE_SIZE; i++) {
 		free(t_table[i]);
 	}
-
+ close(memfd);
+	munmap((void *)mem_ptr, 256);
 	free((void *)mem_buf);
 	free(t_table);
 	return 0;
