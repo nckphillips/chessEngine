@@ -203,16 +203,20 @@ uint64_t getLegalMoves(Bitboard *board, unsigned int piece_type, int piece_squar
 	mem_buf->piece_square = piece_square;
 	mem_buf->occupying_piece_color = allWhite(board);
 	mem_buf->is_occupied_wires = allWhite(board) | allBlack(board);
-	memcpy((void *)mem_ptr, (void *)mem_buf, sizeof(fpga_mem));
+	uint8_t *command_byte = (uint8_t*)(mem_ptr + 248);//initialize and pt calc
+	uint8_t *square_currently_calc = (uint8_t *)( mem_ptr + 240);
+	uint64_t *occupying_piece_color = (uint64_t *)(mem_ptr + 176);
+	uint64_t *is_occupied_wires = (uint64_t*)(mem_ptr + 112);
+	uint64_t *move_wires = (uint64_t)(mem_ptr);
 	*(uint8_t *)mem_ptr = 0;//start calculating legal Moves
 
+
 	/*poll sdram for done signal*/
-	while (!(*((uint8_t*)mem_ptr) & done_mask)) {
+	while (!(*(command_byte) & done_mask)) {
 
 	}
 
 	/*FPGA is finished, get the results*/
-	memcpy((void *)mem_buf, (void *)mem_ptr, sizeof(fpga_mem));
 	moves = mem_buf->move_bits;
 
 	switch (piece_type){

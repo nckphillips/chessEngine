@@ -16,6 +16,7 @@ module mysystem (
 	memory_mem_odt,
 	memory_mem_dm,
 	memory_oct_rzqin,
+	pushbutton_export,
 	sdram_clk_clk,
 	sdram_wire_addr,
 	sdram_wire_ba,
@@ -27,7 +28,14 @@ module mysystem (
 	sdram_wire_ras_n,
 	sdram_wire_we_n,
 	system_ref_clk_clk,
-	system_ref_reset_reset);	
+	system_ref_reset_reset,
+	s2_address,
+	s2_chipselect,
+	s2_clken,
+	s2_write,
+	s2_readdata,
+	s2_writedata,
+	s2_byteenable);	
 
 	output	[12:0]	memory_mem_a;
 	output	[2:0]	memory_mem_ba;
@@ -45,6 +53,7 @@ module mysystem (
 	output		memory_mem_odt;
 	output		memory_mem_dm;
 	input		memory_oct_rzqin;
+	input	[3:0]	pushbutton_export;
 	output		sdram_clk_clk;
 	output	[12:0]	sdram_wire_addr;
 	output	[1:0]	sdram_wire_ba;
@@ -57,4 +66,11 @@ module mysystem (
 	output		sdram_wire_we_n;
 	input		system_ref_clk_clk;
 	input		system_ref_reset_reset;
+	input	[11:0]	s2_address;
+	input		s2_chipselect;
+	input		s2_clken;
+	input		s2_write;
+	output	[31:0]	s2_readdata;
+	input	[31:0]	s2_writedata;
+	input	[3:0]	s2_byteenable;
 endmodule

@@ -27,7 +27,12 @@ module lab2(
 	DRAM_WE_N,
 	DRAM_DQ,
 	DRAM_UDQM,
-	DRAM_LDQM
+	DRAM_LDQM,
+	CHESS_READ,
+	CHESS_READ_DATA,
+	CHESS_WRITE,
+	CHESS_WRITE_DATA,
+	CHESS_CS
 );
 
 
@@ -53,6 +58,11 @@ module lab2(
 	inout [15:0] DRAM_DQ;
 	input DRAM_UDQM;
 	input DRAM_LDQM;
+	input CHESS_READ;
+	output [255:0] CHESS_READ_DATA;
+	input CHESS_WRITE; 
+	input [255:0] CHESS_WRITE_DATA;
+	input CHESS_CS;
 
     mysystem u0 (
 	  .memory_mem_a       (HPS_DDR3_ADDR),       //      memory.mem_a
@@ -83,7 +93,15 @@ module lab2(
 	  .sdram_clk_clk          (DRAM_CLK),          //        sdram_clk.clk
 	  .system_ref_clk_clk     (CLOCK_50),     //   system_ref_clk.clk
 	  .system_ref_reset_reset (~KEY[0]), // system_ref_reset.reset
+	  	  .s2_address             (0),             //               s2.address
+        .s2_chipselect          (CHESS_CS),          //                 .chipselect
+        .s2_clken               (1),               //                 .clken
+        .s2_write               (CHESS_WRITE),               //                 .write
+        .s2_readdata            (CHESS_READ_DATA),            //                 .readdata
+        .s2_writedata           (CHESS_WRITE_DATA),           //                 .writedata
+        .s2_byteenable          (0)           //                 .byteenable
  
     );
+	
 	 
 endmodule

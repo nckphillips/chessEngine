@@ -16,6 +16,7 @@
 			memory_mem_odt         : out   std_logic;                                        -- mem_odt
 			memory_mem_dm          : out   std_logic;                                        -- mem_dm
 			memory_oct_rzqin       : in    std_logic                     := 'X';             -- oct_rzqin
+			pushbutton_export      : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- export
 			sdram_clk_clk          : out   std_logic;                                        -- clk
 			sdram_wire_addr        : out   std_logic_vector(12 downto 0);                    -- addr
 			sdram_wire_ba          : out   std_logic_vector(1 downto 0);                     -- ba
@@ -27,7 +28,14 @@
 			sdram_wire_ras_n       : out   std_logic;                                        -- ras_n
 			sdram_wire_we_n        : out   std_logic;                                        -- we_n
 			system_ref_clk_clk     : in    std_logic                     := 'X';             -- clk
-			system_ref_reset_reset : in    std_logic                     := 'X'              -- reset
+			system_ref_reset_reset : in    std_logic                     := 'X';             -- reset
+			s2_address             : in    std_logic_vector(11 downto 0) := (others => 'X'); -- address
+			s2_chipselect          : in    std_logic                     := 'X';             -- chipselect
+			s2_clken               : in    std_logic                     := 'X';             -- clken
+			s2_write               : in    std_logic                     := 'X';             -- write
+			s2_readdata            : out   std_logic_vector(31 downto 0);                    -- readdata
+			s2_writedata           : in    std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			s2_byteenable          : in    std_logic_vector(3 downto 0)  := (others => 'X')  -- byteenable
 		);
 	end component mysystem;
 
@@ -49,6 +57,7 @@
 			memory_mem_odt         => CONNECTED_TO_memory_mem_odt,         --                 .mem_odt
 			memory_mem_dm          => CONNECTED_TO_memory_mem_dm,          --                 .mem_dm
 			memory_oct_rzqin       => CONNECTED_TO_memory_oct_rzqin,       --                 .oct_rzqin
+			pushbutton_export      => CONNECTED_TO_pushbutton_export,      --       pushbutton.export
 			sdram_clk_clk          => CONNECTED_TO_sdram_clk_clk,          --        sdram_clk.clk
 			sdram_wire_addr        => CONNECTED_TO_sdram_wire_addr,        --       sdram_wire.addr
 			sdram_wire_ba          => CONNECTED_TO_sdram_wire_ba,          --                 .ba
@@ -60,6 +69,13 @@
 			sdram_wire_ras_n       => CONNECTED_TO_sdram_wire_ras_n,       --                 .ras_n
 			sdram_wire_we_n        => CONNECTED_TO_sdram_wire_we_n,        --                 .we_n
 			system_ref_clk_clk     => CONNECTED_TO_system_ref_clk_clk,     --   system_ref_clk.clk
-			system_ref_reset_reset => CONNECTED_TO_system_ref_reset_reset  -- system_ref_reset.reset
+			system_ref_reset_reset => CONNECTED_TO_system_ref_reset_reset, -- system_ref_reset.reset
+			s2_address             => CONNECTED_TO_s2_address,             --               s2.address
+			s2_chipselect          => CONNECTED_TO_s2_chipselect,          --                 .chipselect
+			s2_clken               => CONNECTED_TO_s2_clken,               --                 .clken
+			s2_write               => CONNECTED_TO_s2_write,               --                 .write
+			s2_readdata            => CONNECTED_TO_s2_readdata,            --                 .readdata
+			s2_writedata           => CONNECTED_TO_s2_writedata,           --                 .writedata
+			s2_byteenable          => CONNECTED_TO_s2_byteenable           --                 .byteenable
 		);
 

@@ -15,6 +15,7 @@
 		.memory_mem_odt         (<connected-to-memory_mem_odt>),         //                 .mem_odt
 		.memory_mem_dm          (<connected-to-memory_mem_dm>),          //                 .mem_dm
 		.memory_oct_rzqin       (<connected-to-memory_oct_rzqin>),       //                 .oct_rzqin
+		.pushbutton_export      (<connected-to-pushbutton_export>),      //       pushbutton.export
 		.sdram_clk_clk          (<connected-to-sdram_clk_clk>),          //        sdram_clk.clk
 		.sdram_wire_addr        (<connected-to-sdram_wire_addr>),        //       sdram_wire.addr
 		.sdram_wire_ba          (<connected-to-sdram_wire_ba>),          //                 .ba
@@ -26,6 +27,13 @@
 		.sdram_wire_ras_n       (<connected-to-sdram_wire_ras_n>),       //                 .ras_n
 		.sdram_wire_we_n        (<connected-to-sdram_wire_we_n>),        //                 .we_n
 		.system_ref_clk_clk     (<connected-to-system_ref_clk_clk>),     //   system_ref_clk.clk
-		.system_ref_reset_reset (<connected-to-system_ref_reset_reset>)  // system_ref_reset.reset
+		.system_ref_reset_reset (<connected-to-system_ref_reset_reset>), // system_ref_reset.reset
+		.s2_address             (<connected-to-s2_address>),             //               s2.address
+		.s2_chipselect          (<connected-to-s2_chipselect>),          //                 .chipselect
+		.s2_clken               (<connected-to-s2_clken>),               //                 .clken
+		.s2_write               (<connected-to-s2_write>),               //                 .write
+		.s2_readdata            (<connected-to-s2_readdata>),            //                 .readdata
+		.s2_writedata           (<connected-to-s2_writedata>),           //                 .writedata
+		.s2_byteenable          (<connected-to-s2_byteenable>)           //                 .byteenable
 	);
 

@@ -1,7 +1,6 @@
 module chessEngineMemoryWrapper(
         input clk,
 	input reset_n,	
-	input read, 
 	output [255:0] readdata, 
 	input write, 
 	input [255:0] writedata,
@@ -21,18 +20,18 @@ begin
 		end
 	end
 end
-        wire initialize;
-        wire [3:0] pt_calc;
-        wire [63:0] occupying_piece_color;
-        wire [63:0] is_occupied_wires;
-        wire [5:0] square_currently_calculating;
-        wire [63:0] move_wires;
+  wire initialize;
+  wire [3:0] pt_calc;
+  wire [63:0] occupying_piece_color;
+  wire [63:0] is_occupied_wires;
+  wire [5:0] square_currently_calculating;
+  wire [63:0] move_wires;
 
 	assign initialize = data[255];
-	assign pt_calc[3:0] = data[247:244];
-	assign square_currently_calculating = data[243:238];
-	assign occupying_piece_color = data[237:174];
-	assign is_occupied_wires = data[173:110];
+	assign pt_calc[3:0] = data[254:251];
+	assign square_currently_calculating = data[247:241];
+	assign occupying_piece_color = data[239:176];
+	assign is_occupied_wires = data[175:112];
 
 	assign readdata[63:0] = move_wires;
 
